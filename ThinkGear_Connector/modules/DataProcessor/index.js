@@ -1,7 +1,7 @@
+import { createConnection } from 'net'
+
 import { connectionOptions } from './options/ConnectionsOptions.js'
 import { recordingCommands } from './options/RecordingCommands.js'
-
-import { createConnection } from 'net'
 
 export const createSocketToNeuroskyHeadset = createConnection(connectionOptions, () => {
     createSocketToNeuroskyHeadset.write(JSON.stringify(recordingCommands.get_as_json))

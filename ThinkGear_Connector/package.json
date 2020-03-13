@@ -8,5 +8,8 @@
   },
   "author": "Shoham Roditi & Uri Elimelech",
   "license": "ISC",
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "socket.io-client": "^2.3.0"
+  }
 }
