@@ -2,7 +2,6 @@ import { createSocketToNeuroskyHeadset } from '../DataProcessor/index.js'
 import { recordingCommands } from '../DataProcessor/options/RecordingCommands.js'
 // import { execFile } from 'child_process'
 // import { existsSync, appendFile } from 'fs'
-import { createSocketToSessionServer } from '../SessionTransfer/index.js'
 import { socketToWebServer } from '../SessionTransfer/DataToWebServer.js'
 
 // const TGC = execFile('ThinkGear Connector.exe', (error, stdout, stderr) => {
@@ -14,11 +13,6 @@ import { socketToWebServer } from '../SessionTransfer/DataToWebServer.js'
 
 // var numberOfSession = 1
 const timeout = 5000
-var sessionData = {
-    startTimeStamp: 0,
-    endTimeStamp: 0,
-    monitorData: []
-}
 
 export const recorder = () => {
 
