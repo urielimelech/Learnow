@@ -24,7 +24,7 @@ export const recorder = () => {
     neuroskySocket.setTimeout(timeout)
     neuroskySocket.on('timeout', () => {
         console.log("socket timeout")
-        socketToWebServer.emit('end session', )
+        socketToWebServer.emit('session ended from headset', )
         neuroskySocket.write(JSON.stringify(recordingCommands.stop_recording))
         neuroskySocket.end()
         neuroskySocket.destroy()
@@ -49,10 +49,16 @@ export const recorder = () => {
         }
     })
     neuroskySocket.on('error', (err) => {
-        socketToWebServer.emit('end session', )
+        socketToWebServer.emit('session ended from headset', )
         neuroskySocket.write(JSON.stringify(recordingCommands.stop_recording))
         neuroskySocket.end()
         neuroskySocket.destroy()
         // TGC.kill()
+    })
+    socketToWebServer.on('session ended by video', () => {
+        neuroskySocket.write(JSON.stringify(recordingCommands.stop_recording))
+        neuroskySocket.end()
+        neuroskySocket.destroy()
+        socketToWebServer.disconnect(true)
     })
 }
