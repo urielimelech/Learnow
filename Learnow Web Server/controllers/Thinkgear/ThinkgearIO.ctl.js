@@ -16,13 +16,15 @@ var ready = false
 var sessionData = {
     startTimeStamp: 0,
     endTimeStamp: 0,
-    monitorData: []
+    monitorData: [],
+    startQuizStamp: 0
 }
 
 const resetSessionData = () => {
     sessionData.startTimeStamp = 0
     sessionData.endTimeStamp = 0
     sessionData.monitorData = []
+    sessionData.startQuizStamp = 0
 }
 
 /** define a socket to database */
@@ -85,6 +87,16 @@ export const connectionToServerIO = soc => {
     /** get notification from client if video ended */
     soc.on('end of video', () => {
         console.log('end of video')
+        sessionData.startQuizStamp = sessionData.monitorData[sessionData.monitorData.length-1].timeStamp
+
+        // writeSessionToDataBase()
+        // serverIOService.sockets.emit('session ended by video', )
+        // console.log('session ended')
+        // ready = false
+    })
+
+    soc.on('end quiz', data =>{
+        console.log('data quiz', data)
         writeSessionToDataBase()
         serverIOService.sockets.emit('session ended by video', )
         console.log('session ended')
