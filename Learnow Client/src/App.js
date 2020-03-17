@@ -3,13 +3,16 @@ import React from 'react'
 // import { NeuroSkyConnector } from './DataProcessor'
 import { VideoPlayer } from './ReactPlayer/VideoPlayer'
 import { NavBar } from './NavBar/NavBar'
+import { Quiz} from './Quiz/Quiz'
 
-function App() {
+
+const App = () => {
   return (
     <div style={{width:'100%'}}>
-    {/* {NeuroSkyConnector()} */}
-    <NavBar/>
-    <VideoPlayer/>
+      {/* {NeuroSkyConnector()} */}
+      <NavBar/>
+      <VideoPlayer/>
+      <Quiz/>
     </div>
   );
 }
