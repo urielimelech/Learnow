@@ -17,7 +17,8 @@ var sessionData = {
     startTimeStamp: 0,
     endTimeStamp: 0,
     monitorData: [],
-    startQuizStamp: 0
+    startQuizStamp: 0,
+    quizData:{}
 }
 
 const resetSessionData = () => {
@@ -25,6 +26,7 @@ const resetSessionData = () => {
     sessionData.endTimeStamp = 0
     sessionData.monitorData = []
     sessionData.startQuizStamp = 0
+    sessionData.quizData= {}
 }
 
 /** define a socket to database */
@@ -72,7 +74,8 @@ export const connectionToServerIO = soc => {
     soc.on('session ended from headset', () => {
         serverIOService.sockets.emit('session ended from headset', )
         console.log('session ended from serverIOService')
-        writeSessionToDataBase()
+        if (sessionData.monitorData.length > 0)
+            writeSessionToDataBase()
         console.log('session ended')
         soc.disconnect(true)
         ready = false
@@ -87,18 +90,17 @@ export const connectionToServerIO = soc => {
     /** get notification from client if video ended */
     soc.on('end of video', () => {
         console.log('end of video')
-        sessionData.startQuizStamp = sessionData.monitorData[sessionData.monitorData.length-1].timeStamp
-
-        // writeSessionToDataBase()
-        // serverIOService.sockets.emit('session ended by video', )
-        // console.log('session ended')
-        // ready = false
+        if (sessionData.monitorData.length > 0)
+            sessionData.startQuizStamp = sessionData.monitorData[sessionData.monitorData.length-1].timeStamp
     })
 
+    /** when user complete the quiz */
     soc.on('end quiz', data =>{
-        console.log('data quiz', data)
-        writeSessionToDataBase()
-        serverIOService.sockets.emit('session ended by video', )
+        sessionData.quizData = data
+        console.log('quizdata', sessionData.quizData)
+        if(sessionData.monitorData.length > 0)
+            writeSessionToDataBase()
+        serverIOService.sockets.emit('session ended by quiz', )
         console.log('session ended')
         ready = false
     })

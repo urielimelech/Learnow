@@ -1,18 +1,14 @@
 import React from 'react'
-// import socketIOClient from 'socket.io-client'
 import { WrapperVideo, Video } from './VideoStyle'
 import {useDispatch} from 'react-redux'
-import {isVideo} from '../Actions/QuizAction'
+import {isVideoEnded} from '../Actions/VideoAction'
 import {socketToWebServer} from '../SocketIoClient'
 
 
 
 export const VideoPlayer = ()=>{ 
-      const _dispatch = useDispatch()
-
-
-  // const webServerURL = 'http://127.0.0.1:13855'
-  // const socketToWebServer = socketIOClient(webServerURL)
+  
+  const _dispatch = useDispatch()
 
   socketToWebServer.on('connected', data => console.log(data, 'with web server'))
   socketToWebServer.on('session ended from headset', () => {
@@ -28,7 +24,7 @@ export const VideoPlayer = ()=>{
 
   const onEndVideo = () => {
     socketToWebServer.emit('end of video', )
-        _dispatch(isVideo(true))
+        _dispatch(isVideoEnded(true))
         // console.log(isVideo)
 
   }

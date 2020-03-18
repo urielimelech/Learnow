@@ -1,3 +1,3 @@
-import { recorder } from './modules/SessionRecorder/index.js'
+import { WebServerSocketController } from './modules/SocketToWebserverCtl/index.js'
 
-recorder()
+WebServerSocketController()

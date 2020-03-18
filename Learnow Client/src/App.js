@@ -10,7 +10,7 @@ import {useSelector} from 'react-redux'
 
 const App = () => {
 
-  const IsVideo = useSelector(state => state.QuizReducer.IsVideo)
+  const IsVideo = useSelector(state => state.VideoReducer.IsVideoEnded)
   console.log(IsVideo)
 
 

@@ -1,9 +1,7 @@
-import {
-  IS_VIDEO_ENDED
-} from '../ActionTypes/QuizActionType'
+import { IS_VIDEO_ENDED } from '../ActionTypes/VideoActionType'
 
 const initialState = {
-  IsVideo: false
+  IsVideoEnded: false
 }
 
 export default (state = initialState, action) => {
@@ -12,7 +10,7 @@ export default (state = initialState, action) => {
     case IS_VIDEO_ENDED:
       return {
         ...state,
-        IsVideo: action.data
+        IsVideoEnded: action.data
       }
     default:
       return state

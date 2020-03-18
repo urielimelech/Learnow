@@ -1,4 +1,4 @@
-import { serverIOService, connectionToServerIO/*, clientIOService, connectionToClientIO */} from './controllers/Thinkgear/ThinkgearIO.ctl.js'
+import { serverIOService, connectionToServerIO/*, clientIOService, connectionToClientIO */} from './controllers/SessionRecorder/ThinkgearIO.ctl.js'
 // import { } from './controllers/Client/ClientIO.ctl.js'
 
 serverIOService.on('connection', soc => connectionToServerIO(soc))

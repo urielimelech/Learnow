@@ -2,7 +2,7 @@ import { createSocketToNeuroskyHeadset } from '../DataProcessor/index.js'
 import { recordingCommands } from '../DataProcessor/options/RecordingCommands.js'
 // import { execFile } from 'child_process'
 // import { existsSync, appendFile } from 'fs'
-import { socketToWebServer } from '../SessionTransfer/DataToWebServer.js'
+import { socketToWebServer } from '../ConnectionToWebServer/index.js'
 
 // const TGC = execFile('ThinkGear Connector.exe', (error, stdout, stderr) => {
 //     if (error){
@@ -14,7 +14,7 @@ import { socketToWebServer } from '../SessionTransfer/DataToWebServer.js'
 // var numberOfSession = 1
 const timeout = 5000
 
-export const recorder = () => {
+export const WebServerSocketController = () => {
 
     socketToWebServer.on('connected', res => {
         console.log(res)
@@ -55,7 +55,7 @@ export const recorder = () => {
         neuroskySocket.destroy()
         // TGC.kill()
     })
-    socketToWebServer.on('session ended by video', () => {
+    socketToWebServer.on('session ended by quiz', () => {
         neuroskySocket.write(JSON.stringify(recordingCommands.stop_recording))
         neuroskySocket.end()
         neuroskySocket.destroy()

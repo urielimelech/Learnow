@@ -2,7 +2,9 @@ var mongoose    = require('mongoose'),
     session        = new mongoose.Schema({
         startTimeStamp:   Number,
         endTimeStamp: Number,
-        monitorData:  []
+        monitorData:  [],
+        startQuizStamp: Number,
+        quizData: {}
     });
 
 

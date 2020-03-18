@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
-import QuizReducer from './reducers/QuizReducer'
+import VideoReducer from './reducers/VideoReducer'
 
 
 export const rootReducer = combineReducers({
-  QuizReducer
+  VideoReducer
 })
