@@ -1,10 +1,16 @@
-var mongoose    = require('mongoose'),
-    session        = new mongoose.Schema({
-        startTimeStamp:   Number,
-        endTimeStamp: Number,
-        monitorData:  [],
-        startQuizStamp: Number,
-        quizData: {}
+var mongoose    =               require('mongoose'),
+    session     =               new mongoose.Schema({
+        startTimeStamp:         Number,
+        endTimeStamp:           Number,
+        monitorData:            [],
+        startQuizStamp:         Number,
+        avarageAttention:       Number,
+        avarageMeditation:      Number,
+        lowestAttentionLevel:   [],
+        highestAttentionLevel:  [],
+        lowestMeditationLevel:  [],
+        highestMeditationLevel: [],
+        quizData:               {}
     });
 
 

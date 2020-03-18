@@ -4,6 +4,14 @@ import io from 'socket.io'
 import { serverConnectionOptions } from './ThinkgearOptions.js'
 import { dataBaseOptions } from './DataBaseOptions.js'
 
+import { 
+    getAvarageAttention, 
+    getAvarageMeditation, 
+    lowestAttentionLevel, 
+    lowestMeditationLevel, 
+    highestAttentionLevel, 
+    highestMeditationLevel } from '../SessionAnalyzer/index.js'
+
 /** create http server to serve io requests */
 const serverPort = serverConnectionOptions.port
 const serverHost = serverConnectionOptions.host
@@ -14,19 +22,31 @@ export const serverIOService = io(serverApp)
 
 var ready = false
 var sessionData = {
-    startTimeStamp: 0,
-    endTimeStamp: 0,
-    monitorData: [],
-    startQuizStamp: 0,
-    quizData:{}
+    startTimeStamp:             0,
+    endTimeStamp:               0,
+    monitorData:                [],
+    startQuizStamp:             0,
+    avarageAttention:           0,
+    avarageMeditation:          0,
+    lowestAttentionLevel:       [],
+    highestAttentionLevel:      [],
+    lowestMeditationLevel:      [],
+    highestMeditationLevel:     [],
+    quizData:                   {}
 }
 
 const resetSessionData = () => {
-    sessionData.startTimeStamp = 0
-    sessionData.endTimeStamp = 0
-    sessionData.monitorData = []
-    sessionData.startQuizStamp = 0
-    sessionData.quizData= {}
+    sessionData.startTimeStamp          = 0
+    sessionData.endTimeStamp            = 0
+    sessionData.monitorData             = []
+    sessionData.startQuizStamp          = 0
+    sessionData.quizData                = {}
+    sessionData.avarageAttention        = 0,
+    sessionData.avarageMeditation       = 0,
+    sessionData.lowestAttentionLevel    = [],
+    sessionData.highestAttentionLevel   = [],
+    sessionData.lowestMeditationLevel   = [],
+    sessionData.highestMeditationLevel  = []
 }
 
 /** define a socket to database */
@@ -48,6 +68,18 @@ const createSocketToDataBase = () => {
 const writeSessionToDataBase = () => {
     sessionData.startTimeStamp = sessionData.monitorData[0].timeStamp
     sessionData.endTimeStamp = sessionData.monitorData[sessionData.monitorData.length-1].timeStamp
+    sessionData.avarageAttention = getAvarageAttention(sessionData.monitorData)
+    sessionData.avarageMeditation = getAvarageMeditation(sessionData.monitorData)
+    // console.log('average attention', sessionData.avarageAttention)
+    // console.log('average meditation', sessionData.avarageMeditation)
+    sessionData.lowestAttentionLevel = lowestAttentionLevel(sessionData.monitorData)
+    // console.log('lowest attention level', sessionData.lowestAttentionLevel)
+    sessionData.lowestMeditationLevel = lowestMeditationLevel(sessionData.monitorData)
+    // console.log('lowest meditation level', sessionData.lowestMeditationLevel)
+    sessionData.highestAttentionLevel = highestAttentionLevel(sessionData.monitorData)
+    // console.log('highest attention level', sessionData.highestAttentionLevel)
+    sessionData.highestMeditationLevel = highestMeditationLevel(sessionData.monitorData)
+    // console.log('highest meditation level', sessionData.highestMeditationLevel)
     const socketToDataBase = createSocketToDataBase()
     socketToDataBase.write(JSON.stringify(sessionData))
     socketToDataBase.end()

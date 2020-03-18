@@ -3,11 +3,34 @@ const   Session      = require('../models/session.js')
 
 module.exports = {
     addSession: (req, res) => {
-
         req.on('data', data=>{
             console.log('data db server',data.toString())
-            const {startTimeStamp = null, endTimeStamp = null, monitorData=[], startQuizStamp = null, quizData = {}} = JSON.parse(data.toString())
-            const session = new Session({startTimeStamp, endTimeStamp,monitorData, startQuizStamp, quizData});
+            const {
+                startTimeStamp          = null,
+                endTimeStamp            = null, 
+                monitorData             = [], 
+                startQuizStamp          = null, 
+                avarageAttention        = null,
+                avarageMeditation       = null,
+                lowestAttentionLevel    = [],
+                highestAttentionLevel   = [],
+                lowestMeditationLevel   = [],
+                highestMeditationLevel  = [],
+                quizData = {}
+            } = JSON.parse(data.toString())
+            const session = new Session({
+                startTimeStamp, 
+                endTimeStamp, 
+                monitorData, 
+                startQuizStamp, 
+                avarageAttention,
+                avarageMeditation,
+                lowestAttentionLevel,
+                highestAttentionLevel,
+                lowestMeditationLevel,
+                highestMeditationLevel, 
+                quizData
+            });
             session.save().then( (result) => {
                 console.log(result);
                 res.status(200).send(`{"result": "Success", "params": ${JSON.stringify(result)}}`);
@@ -17,13 +40,7 @@ module.exports = {
                     res.status(404).send(`{"result": "Failure", "params":{"startTimeStamp": "${startTimeStamp}", "endTimeStamp": "${endTimeStamp}"}, "error": ${JSON.stringify(err)}}`);
                 });
         })
-
-        const {startTimeStamp = null, endTimeStamp = null, monitorData=[]} = req.body;
-        
-        
-        
-        
-        
+        // const {startTimeStamp = null, endTimeStamp = null, monitorData=[]} = req.body;
     }
 }
 
