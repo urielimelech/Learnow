@@ -16,7 +16,8 @@ module.exports = {
                 highestAttentionLevel   = [],
                 lowestMeditationLevel   = [],
                 highestMeditationLevel  = [],
-                quizData = {}
+                quizData                = {},
+                answersQuiz             = []
             } = JSON.parse(data.toString())
             const session = new Session({
                 startTimeStamp, 
@@ -29,7 +30,8 @@ module.exports = {
                 highestAttentionLevel,
                 lowestMeditationLevel,
                 highestMeditationLevel, 
-                quizData
+                quizData,
+                answersQuiz
             });
             session.save().then( (result) => {
                 console.log(result);

@@ -11,6 +11,7 @@ import {
     lowestMeditationLevel, 
     highestAttentionLevel, 
     highestMeditationLevel } from '../SessionAnalyzer/index.js'
+import { ActivityAnalyzer } from '../ActivityAnalyzer.js'
 
 /** create http server to serve io requests */
 const serverPort = serverConnectionOptions.port
@@ -32,7 +33,8 @@ var sessionData = {
     highestAttentionLevel:      [],
     lowestMeditationLevel:      [],
     highestMeditationLevel:     [],
-    quizData:                   {}
+    quizData:                   {},
+    answersQuiz:                []
 }
 
 const resetSessionData = () => {
@@ -46,7 +48,8 @@ const resetSessionData = () => {
     sessionData.lowestAttentionLevel    = [],
     sessionData.highestAttentionLevel   = [],
     sessionData.lowestMeditationLevel   = [],
-    sessionData.highestMeditationLevel  = []
+    sessionData.highestMeditationLevel  = [],
+    sessionData.answersQuiz             = []
 }
 
 /** define a socket to database */
@@ -80,6 +83,8 @@ const writeSessionToDataBase = () => {
     // console.log('highest attention level', sessionData.highestAttentionLevel)
     sessionData.highestMeditationLevel = highestMeditationLevel(sessionData.monitorData)
     // console.log('highest meditation level', sessionData.highestMeditationLevel)
+    sessionData.answersQuiz = ActivityAnalyzer(sessionData.quizData)
+    // console.log('answersQuiz', sessionData.answersQuiz)
     const socketToDataBase = createSocketToDataBase()
     socketToDataBase.write(JSON.stringify(sessionData))
     socketToDataBase.end()
@@ -129,7 +134,8 @@ export const connectionToServerIO = soc => {
     /** when user complete the quiz */
     soc.on('end quiz', data =>{
         sessionData.quizData = data
-        console.log('quizdata', sessionData.quizData)
+        // console.log('quizdata', sessionData.quizData)
+        // ActivityAnalyzer(data)
         if(sessionData.monitorData.length > 0)
             writeSessionToDataBase()
         serverIOService.sockets.emit('session ended by quiz', )

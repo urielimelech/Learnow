@@ -1,6 +1,6 @@
 import React, {useEffect } from 'react'
 import {QuestionsJson} from './Questions'
-import QuizComponent from 'react-quiz-component' 
+import QuizComponent from 'react-quiz-component-timestamp-per-answer' 
 import {WrapperQuiz} from './styleQuiz'
 import {useSelector} from 'react-redux'
 import {socketToWebServer} from '../SocketIoClient'
