@@ -1,12 +1,31 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { WrapperVideo, Video } from './VideoStyle'
-import {useDispatch} from 'react-redux'
-import {isVideoEnded} from '../Actions/VideoAction'
-import {socketToWebServer} from '../SocketIoClient'
+import { useDispatch } from 'react-redux'
+import { isVideoEnded } from '../Actions/VideoAction'
+import { socketToWebServer } from '../SocketIoClient'
+import { QuestionsJson } from '../Quiz/Questions'
 
+export const VideoPlayer = ()=>{
 
+  const [index, setIndex] = useState(0)
+  const [videoState, setVideoState] = useState(null)
 
-export const VideoPlayer = ()=>{ 
+  useEffect(() => {
+    if(videoState)
+      emitWhenAnswerOccuredInVideo()
+  },[videoState])
+
+  const emitWhenAnswerOccuredInVideo = () => {
+    if (Math.floor(videoState.playedSeconds) === answerTimeInVideo[index]) {
+      socketToWebServer.emit('answer in video', Date.now())
+      const i = index + 1
+      setIndex(i)
+    }
+  }
+
+  const answerTimeInVideo = QuestionsJson.questions.map(elem => {
+    return Number(elem.timeOfAnswerInVideoBySeconds)
+  }).sort( (a,b) => a-b )
   
   const _dispatch = useDispatch()
 
@@ -24,9 +43,11 @@ export const VideoPlayer = ()=>{
 
   const onEndVideo = () => {
     socketToWebServer.emit('end of video', )
-        _dispatch(isVideoEnded(true))
-        // console.log(isVideo)
+      _dispatch(isVideoEnded(true))
+  }
 
+  const onProgressVideo = videoState => {
+    setVideoState(videoState)
   }
 
   // socketToWebServer.on('session ended by headset', () => {
@@ -38,6 +59,7 @@ export const VideoPlayer = ()=>{
               controls={true}
               onStart = {onStartVideo}
               onEnded = {onEndVideo}
+              onProgress = {onProgressVideo}
               // wrapper={Video}
               // width={'50%'}
               // height={450}

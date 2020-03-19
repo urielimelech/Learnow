@@ -14,7 +14,8 @@ export const QuestionsJson =  {
       "messageForCorrectAnswer": "Correct answer. Good job.",
       "messageForIncorrectAnswer": "Incorrect answer.",
       "explanation": "when we need to solve an exercise with long division, we begin our division with the most left digit to the most right digit.",
-      "point": "30"
+      "point": "30",
+      "timeOfAnswerInVideoBySeconds": "45"
     },
     {
       "question": "If the digit is smaller than the divider, what should we do?",
@@ -27,7 +28,8 @@ export const QuestionsJson =  {
       "messageForCorrectAnswer": "Correct answer. Good job.",
       "messageForIncorrectAnswer": "Incorrect answer.",
       "explanation": "If the number is smaller than the divider, we need to advance to the next digit and try to divide again until it is possible to divide the number by the divider.",
-      "point": "30"
+      "point": "30",
+      "timeOfAnswerInVideoBySeconds": "52"
     },
     {
       "question": "What is the result of 141 / 3? calculate with long division?",
@@ -40,7 +42,8 @@ export const QuestionsJson =  {
       "messageForCorrectAnswer": "Correct answer. Good job.",
       "messageForIncorrectAnswer": "Incorrect answer.",
       "explanation": "go to: https://divisible.info/LongDivision/How-to-calculate-141/divided-by-3-using-long-division.html",
-      "point": "40"
+      "point": "40",
+      "timeOfAnswerInVideoBySeconds": "187"
     },
     // {
     //   "question": "Which of the following concepts is/are key to ReactJS?",
