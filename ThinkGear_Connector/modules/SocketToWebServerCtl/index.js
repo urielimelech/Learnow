@@ -3,18 +3,22 @@ import { recordingCommands } from '../DataProcessor/options/RecordingCommands.js
 import { execFile } from 'child_process'
 import { socketToWebServer } from '../ConnectionToWebServer/index.js'
 
-const TGC = execFile('ThinkGear Connector.exe', (error, stdout, stderr) => {
-    if (error){
-        if (error.killed)
+const newTGCProcess = () => {
+    return execFile('ThinkGear Connector.exe', (error, stdout, stderr) => {
+        if (error){
+            if (error.killed)
+                return
+            console.log('Error: ', error)
             return
-        console.log('Error: ', error)
-        return
-    }
-})
+        }
+    })
+}
 
 const timeout = 5000
 
 export const WebServerSocketController = () => {
+
+    const TGC = newTGCProcess()
 
     socketToWebServer.on('connected', res => {
         console.log(res)

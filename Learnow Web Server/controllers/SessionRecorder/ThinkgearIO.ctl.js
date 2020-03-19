@@ -4,6 +4,7 @@ import io from 'socket.io'
 import { serverConnectionOptions } from './ThinkgearOptions.js'
 import { dataBaseOptions } from './DataBaseOptions.js'
 
+
 import { 
     getAvarageAttention, 
     getAvarageMeditation, 
@@ -11,7 +12,8 @@ import {
     lowestMeditationLevel, 
     highestAttentionLevel, 
     highestMeditationLevel } from '../SessionAnalyzer/index.js'
-import { ActivityAnalyzer } from '../ActivityAnalyzer.js'
+import { ActivityAnalyzer } from '../ActivityAnalyzer/index.js'
+import { Correlator } from '../correlator/index.js'
 
 /** create http server to serve io requests */
 const serverPort = serverConnectionOptions.port
@@ -34,7 +36,8 @@ var sessionData = {
     lowestMeditationLevel:      [],
     highestMeditationLevel:     [],
     quizData:                   {},
-    answersQuiz:                []
+    answersQuiz:                [],
+    timeAnswersInVideo:         []
 }
 
 const resetSessionData = () => {
@@ -43,13 +46,14 @@ const resetSessionData = () => {
     sessionData.monitorData             = []
     sessionData.startQuizStamp          = 0
     sessionData.quizData                = {}
-    sessionData.avarageAttention        = 0,
-    sessionData.avarageMeditation       = 0,
-    sessionData.lowestAttentionLevel    = [],
-    sessionData.highestAttentionLevel   = [],
-    sessionData.lowestMeditationLevel   = [],
-    sessionData.highestMeditationLevel  = [],
+    sessionData.avarageAttention        = 0
+    sessionData.avarageMeditation       = 0
+    sessionData.lowestAttentionLevel    = []
+    sessionData.highestAttentionLevel   = []
+    sessionData.lowestMeditationLevel   = []
+    sessionData.highestMeditationLevel  = []
     sessionData.answersQuiz             = []
+    sessionData.timeAnswersInVideo      = []
 }
 
 /** define a socket to database */
@@ -85,6 +89,7 @@ const writeSessionToDataBase = () => {
     // console.log('highest meditation level', sessionData.highestMeditationLevel)
     sessionData.answersQuiz = ActivityAnalyzer(sessionData.quizData)
     // console.log('answersQuiz', sessionData.answersQuiz)
+    console.log(Correlator(sessionData))
     const socketToDataBase = createSocketToDataBase()
     socketToDataBase.write(JSON.stringify(sessionData))
     socketToDataBase.end()
@@ -141,5 +146,10 @@ export const connectionToServerIO = soc => {
         serverIOService.sockets.emit('session ended by quiz', )
         console.log('session ended')
         ready = false
+    })
+
+    soc.on('answer in video', data =>{
+        console.log('timeque', Date(data).toString())
+        sessionData.timeAnswersInVideo.push(data)
     })
 }
