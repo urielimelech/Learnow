@@ -19,12 +19,12 @@ const timeout = 5000
 export const WebServerSocketController = () => {
 
     const TGC = newTGCProcess()
+    const neuroskySocket = createSocketToNeuroskyHeadset
 
     socketToWebServer.on('connected', res => {
         console.log(res)
     })
 
-    const neuroskySocket = createSocketToNeuroskyHeadset
     neuroskySocket.setTimeout(timeout)
     neuroskySocket.on('timeout', () => {
         console.log("socket timeout")
@@ -34,6 +34,7 @@ export const WebServerSocketController = () => {
         neuroskySocket.destroy()
         TGC.kill()
     })
+
     neuroskySocket.on('data', (data) => {
         console.log("neurosky data: " + data.toString())
         if (data.includes('{')){
@@ -52,6 +53,7 @@ export const WebServerSocketController = () => {
             }
         }
     })
+
     neuroskySocket.on('error', (err) => {
         socketToWebServer.emit('session ended from headset', )
         neuroskySocket.write(JSON.stringify(recordingCommands.stop_recording))
@@ -59,6 +61,7 @@ export const WebServerSocketController = () => {
         neuroskySocket.destroy()
         TGC.kill()
     })
+    
     socketToWebServer.on('session ended by quiz', () => {
         neuroskySocket.write(JSON.stringify(recordingCommands.stop_recording))
         neuroskySocket.end()
