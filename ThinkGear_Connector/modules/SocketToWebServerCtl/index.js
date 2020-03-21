@@ -20,9 +20,21 @@ export const WebServerSocketController = () => {
 
     const TGC = newTGCProcess()
     const neuroskySocket = createSocketToNeuroskyHeadset
+    var isConnectedToRoom = false
+    var myRoom = ''
 
     socketToWebServer.on('connected', res => {
         console.log(res)
+    })
+
+    socketToWebServer.on('room name for client', room => {
+        console.log('connect to: ', room)
+        myRoom = room
+        console.log({myRoom})
+    })
+
+    socketToWebServer.on('TGC collector and React are connected', () => {
+        console.log('TGC collector and React are connected')
     })
 
     neuroskySocket.setTimeout(timeout)
@@ -40,13 +52,18 @@ export const WebServerSocketController = () => {
         if (data.includes('{')){
             try {
                 const jsonData = JSON.parse(data.toString())
-                if (jsonData.poorSignalLevel < 200){
+                if (jsonData.poorSignalLevel < 200) {
+                    if (!isConnectedToRoom) {
+                        socketToWebServer.emit('new TGC connection', )
+                        isConnectedToRoom = true
+                    }
                     const currentMeasure = {
                         timeStamp: Date.now(),
                         attention: jsonData.eSense.attention,
                         meditation: jsonData.eSense.meditation
                     }
-                    socketToWebServer.emit('session data', JSON.stringify(currentMeasure))
+                    console.log('my room that i want to send to webserver as a parameter', myRoom)
+                    socketToWebServer.emit('session data', { data: JSON.stringify(currentMeasure), myRoom: myRoom })
                 }
             } catch {
                 console.log("parsing json was failed")
@@ -61,7 +78,7 @@ export const WebServerSocketController = () => {
         neuroskySocket.destroy()
         TGC.kill()
     })
-    
+
     socketToWebServer.on('session ended by quiz', () => {
         neuroskySocket.write(JSON.stringify(recordingCommands.stop_recording))
         neuroskySocket.end()

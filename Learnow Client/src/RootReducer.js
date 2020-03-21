@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
-import VideoReducer from './reducers/VideoReducer'
+import MainReducer from './Reducers'
 
 
 export const rootReducer = combineReducers({
-  VideoReducer
+  MainReducer
 })

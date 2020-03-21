@@ -1,1 +1,0 @@
-export const IS_VIDEO_ENDED = 'IS_VIDEO_ENDED'

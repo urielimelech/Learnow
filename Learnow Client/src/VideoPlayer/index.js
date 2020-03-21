@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { WrapperVideo, Video } from './VideoStyle'
-import { useDispatch } from 'react-redux'
-import { isVideoEnded } from '../Actions/VideoAction'
+import { useDispatch, useSelector } from 'react-redux'
+import { isVideoEnded } from '../Actions'
 import { socketToWebServer } from '../SocketIoClient'
 import { QuestionsJson } from '../Quiz/Questions'
 
@@ -10,6 +10,8 @@ export const VideoPlayer = ()=>{
   const _dispatch = useDispatch()
   const [index, setIndex] = useState(0)
   const [videoState, setVideoState] = useState(null)
+
+  const roomNumber = useSelector(state => state.MainReducer.roomNumber)
 
   useEffect(() => {
     if(videoState)
@@ -38,7 +40,8 @@ export const VideoPlayer = ()=>{
   })
 
   const onStartVideo = () => {
-    socketToWebServer.emit('ready for data stream', )
+    console.log(roomNumber)
+    socketToWebServer.emit('ready for data stream', roomNumber)
     socketToWebServer.on('data to client', data => {
       console.log(data)
     })

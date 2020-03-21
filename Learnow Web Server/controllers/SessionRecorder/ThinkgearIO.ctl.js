@@ -29,20 +29,48 @@ var sessionData = {
     timeAnswersInVideo:         [],
     correlation:                {}
 }
+var rooms = []
 
 /** on connection to serverIO to start serve */
 export const connectionToServerIO = soc => {
+
     soc.emit('connected', 'connection established')
 
     /** fetch data from neurosky TGC server and send it to react client */
-    soc.on('session data', data => {
-        console.log(ready)
-        console.log('data: ', data)
-        if (ready){
+    soc.on('session data', ({ data, myRoom }) => {
+        if (rooms.some(e => e.roomName === myRoom && e.isReadyForVideo )){
             serverIOService.sockets.emit('data to client', data)
             data = JSON.parse(data)
             console.log('data after parse: ', data)
             sessionData.monitorData.push(data)
+        }
+    })
+
+    /** create room for TGC and react */
+    soc.on('new TGC connection', () => {
+        console.log('new TGC connection')
+        const roomNumber = rooms.length + 1
+        const roomName = `room ${roomNumber}`
+        const obj = {
+            roomName: roomName,
+            roomNumber: roomNumber,
+            isReadyForVideo: false
+        }
+        rooms.push(obj)
+        soc.join(roomName)
+        soc.emit('room name for client', roomName)
+    })
+
+    /** add the react client to the room specified */
+    soc.on('add client to room', roomNumber => {
+        if (rooms.some(e => e.roomNumber === Number(roomNumber)) && serverIOService.sockets.adapter.rooms[`room ${roomNumber}`] !== undefined) {
+            soc.join(`room ${roomNumber}`)
+            serverIOService.sockets.in(`room ${roomNumber}`).emit('TGC collector and React are connected', )
+            console.log('connection established between react and TGC in room', roomNumber)
+        }
+        else {
+            soc.emit('room connection failed', )
+            console.log('room connection failure')
         }
     })
 
@@ -58,9 +86,15 @@ export const connectionToServerIO = soc => {
     })
 
     /** get notification from client if video started */
-    soc.on('ready for data stream', () => {
-        console.log('user started video')
-        ready = true
+    soc.on('ready for data stream', roomNumber => {
+        console.log('user started video in room', roomNumber)
+        rooms.forEach(e => {
+            console.log('room number', e.roomNumber, 'gotten number', roomNumber)
+            if (e.roomNumber === Number(roomNumber))
+                e.isReadyForVideo = true
+        })
+        console.log(rooms)
+        // ready = true
     })
 
     /** get notification from client if video ended */
@@ -83,6 +117,7 @@ export const connectionToServerIO = soc => {
         ready = false
     })
 
+    /** take the exact timestamp when the video played the answer */
     soc.on('answer in video', data =>{
         console.log('timeque', Date(data).toString())
         sessionData.timeAnswersInVideo.push(data)
