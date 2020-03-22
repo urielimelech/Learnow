@@ -40,7 +40,7 @@ export const WebServerSocketController = () => {
     neuroskySocket.setTimeout(timeout)
     neuroskySocket.on('timeout', () => {
         console.log("socket timeout")
-        socketToWebServer.emit('session ended from headset', )
+        socketToWebServer.emit('session ended from headset', myRoom )
         neuroskySocket.write(JSON.stringify(recordingCommands.stop_recording))
         neuroskySocket.end()
         neuroskySocket.destroy()
@@ -72,7 +72,7 @@ export const WebServerSocketController = () => {
     })
 
     neuroskySocket.on('error', (err) => {
-        socketToWebServer.emit('session ended from headset', )
+        socketToWebServer.emit('session ended from headset', myRoom)
         neuroskySocket.write(JSON.stringify(recordingCommands.stop_recording))
         neuroskySocket.end()
         neuroskySocket.destroy()

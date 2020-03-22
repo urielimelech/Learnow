@@ -39,7 +39,7 @@ export const connectionToServerIO = soc => {
     /** fetch data from neurosky TGC server and send it to react client */
     soc.on('session data', ({ data, myRoom }) => {
         if (rooms.some(e => e.roomName === myRoom && e.isReadyForVideo )){
-            serverIOService.sockets.emit('data to client', data)
+            serverIOService.sockets.in(myRoom).emit('data to client', data)
             data = JSON.parse(data)
             console.log('data after parse: ', data)
             sessionData.monitorData.push(data)
@@ -75,8 +75,9 @@ export const connectionToServerIO = soc => {
     })
 
     /** get notification if headset stopped from sending data */
-    soc.on('session ended from headset', () => {
-        serverIOService.sockets.emit('session ended from headset', )
+    soc.on('session ended from headset', myRoom => {
+        console.log({myRoom})
+        serverIOService.sockets.in(myRoom).emit('session ended from headset', )
         console.log('session ended from serverIOService')
         if (sessionData.monitorData.length > 0)
             sessionData = writeSessionToDataBase(sessionData)

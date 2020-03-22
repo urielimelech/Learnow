@@ -6,6 +6,7 @@ export const getAvarageAttention = monitorData => {
             monitorDataLength--
         sumAttention = element.attention + sumAttention
     })
+    if(monitorDataLength === 0) return 0
     const attentionAvarage = sumAttention / monitorDataLength
     return attentionAvarage
 }
@@ -18,6 +19,7 @@ export const getAvarageMeditation = monitorData => {
             monitorDataLength--
         sumMeditation = element.meditation + sumMeditation
     })
+    if(monitorDataLength === 0) return 0
     const meditationAvarage = sumMeditation / monitorDataLength
     return meditationAvarage
 }
@@ -29,8 +31,9 @@ export const lowestAttentionLevel = monitorData => {
         return 101
     })
     const minAttentionValue = Math.min(...attentionArr)
+    console.log({minAttentionValue})
     return monitorData.map(element => {
-        if (element.attention <= minAttentionValue + 10)
+        if (element.attention !== 0 && element.attention <= minAttentionValue + 10 )
             return element
     }).filter(item => {
         return item !== undefined
@@ -44,11 +47,12 @@ export const lowestMeditationLevel = monitorData => {
         return 101
     })
     const minMeditationValue = Math.min(...meditationArr)
+    console.log({minMeditationValue})
     return monitorData.map(element => {
-        if (element.meditation <= minMeditationValue + 10)
+        if (element.meditation !== 0 && element.meditation <= minMeditationValue + 10)
             return element
     }).filter(item => {
-        return item !== undefined
+        return item !== undefined 
     })
 }
 

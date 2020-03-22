@@ -9,12 +9,12 @@ import { RoomNumberForm } from '../RoomNumberForm'
 export const Logged = () => {
 
     const isInRoom = useSelector(state => state.MainReducer.isConnectedToRoom)
-    const IsVideo = useSelector(state => state.MainReducer.IsVideoEnded)
+    const IsVideoEnded = useSelector(state => state.MainReducer.IsVideoEnded)
     console.log(isInRoom)
   
     return (
       <div style={{width:'100%'}}>
-        {isInRoom ? IsVideo ? <Quiz/> : <VideoPlayer/> : <RoomNumberForm/>}
+        {isInRoom ? IsVideoEnded ? <Quiz/> : <VideoPlayer/> : <RoomNumberForm/>}
       </div>
     );
   }
