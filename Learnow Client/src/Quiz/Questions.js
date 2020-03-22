@@ -8,7 +8,7 @@ export const QuestionsJson =  {
       "questionType": "text",
       "answerSelectionType": "single",
       "answers": [
-        "Units", "Thousands", "The most right digit", "The most left digit"
+        "Units", "Thousands", "The right most  digit", "The left most digit"
       ],
       "correctAnswer": "4",
       "messageForCorrectAnswer": "Correct answer. Good job.",

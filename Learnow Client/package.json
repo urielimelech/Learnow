@@ -11,7 +11,7 @@
     "react-bootstrap": "^1.0.0-beta.17",
     "react-dom": "^16.13.0",
     "react-player": "^1.15.2",
-    "react-quiz-component-timestamp-per-answer": "^0.3.3",
+    "react-quiz-component-timestamp-per-answer": "0.3.4",
     "react-redux": "^7.2.0",
     "react-scripts": "3.4.0",
     "redux": "^4.0.5",

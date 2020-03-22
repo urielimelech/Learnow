@@ -10,6 +10,7 @@ import {
 import { ActivityAnalyzer } from '../ActivityAnalyzer/index.js'
 import { Correlator } from '../Correlator/index.js'
 import { dataBaseOptions } from './DataBaseOptions.js'
+import { ResultFeedback } from '../Feedback/ResultFeedback/index.js'
 
 
 const resetSessionData = sessionData => {
@@ -56,9 +57,10 @@ export const writeSessionToDataBase = sessionData => {
     sessionData.highestMeditationLevel = highestMeditationLevel(sessionData.monitorData)
     sessionData.answersQuiz = ActivityAnalyzer(sessionData.quizData)
     sessionData.correlation = Correlator(sessionData)
-    console.log(sessionData)
+    // console.log(sessionData)
     const socketToDataBase = createSocketToDataBase()
     socketToDataBase.write(JSON.stringify(sessionData))
     socketToDataBase.end()
+    // ResultFeedback(sessionData)
     return resetSessionData(sessionData)
 }
