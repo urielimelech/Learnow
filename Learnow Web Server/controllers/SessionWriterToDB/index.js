@@ -12,7 +12,6 @@ import { Correlator } from '../Correlator/index.js'
 import { dataBaseOptions } from './DataBaseOptions.js'
 import { ResultFeedback } from '../Feedback/ResultFeedback/index.js'
 
-
 const resetSessionData = sessionData => {
     sessionData.startTimeStamp          = 0
     sessionData.endTimeStamp            = 0
@@ -28,6 +27,7 @@ const resetSessionData = sessionData => {
     sessionData.answersQuiz             = []
     sessionData.timeAnswersInVideo      = []
     sessionData.correlation             = {}
+    sessionData.feedback                = []
     return sessionData
 }
 
@@ -46,7 +46,7 @@ const createSocketToDataBase = () => {
     })
 }
 
-export const writeSessionToDataBase = sessionData => {
+export const dataSessionAnalysis = sessionData => {
     sessionData.startTimeStamp = sessionData.monitorData[0].timeStamp
     sessionData.endTimeStamp = sessionData.monitorData[sessionData.monitorData.length-1].timeStamp
     sessionData.avarageAttention = getAvarageAttention(sessionData.monitorData)
@@ -57,10 +57,27 @@ export const writeSessionToDataBase = sessionData => {
     sessionData.highestMeditationLevel = highestMeditationLevel(sessionData.monitorData)
     sessionData.answersQuiz = ActivityAnalyzer(sessionData.quizData)
     sessionData.correlation = Correlator(sessionData)
-    // console.log(sessionData)
+    sessionData.feedback = ResultFeedback(sessionData)
+    return sessionData
+}
+
+export const writeSessionToDataBase = sessionData => {
+    // sessionData.startTimeStamp = sessionData.monitorData[0].timeStamp
+    // sessionData.endTimeStamp = sessionData.monitorData[sessionData.monitorData.length-1].timeStamp
+    // sessionData.avarageAttention = getAvarageAttention(sessionData.monitorData)
+    // sessionData.avarageMeditation = getAvarageMeditation(sessionData.monitorData)
+    // sessionData.lowestAttentionLevel = lowestAttentionLevel(sessionData.monitorData)
+    // sessionData.lowestMeditationLevel = lowestMeditationLevel(sessionData.monitorData)
+    // sessionData.highestAttentionLevel = highestAttentionLevel(sessionData.monitorData)
+    // sessionData.highestMeditationLevel = highestMeditationLevel(sessionData.monitorData)
+    // sessionData.answersQuiz = ActivityAnalyzer(sessionData.quizData)
+    // sessionData.correlation = Correlator(sessionData)
+    // sessionData.feedback = ResultFeedback(sessionData)
+    sessionData = dataSessionAnalysis(sessionData)
+    console.log(sessionData)
     const socketToDataBase = createSocketToDataBase()
     socketToDataBase.write(JSON.stringify(sessionData))
     socketToDataBase.end()
-    // ResultFeedback(sessionData)
-    return resetSessionData(sessionData)
+    return sessionData
+    // return resetSessionData(sessionData)
 }

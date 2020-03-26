@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { WrapperVideo, Video } from './VideoStyle'
 import { useDispatch, useSelector } from 'react-redux'
-import { isVideoEnded } from '../Actions'
-import { socketToWebServer } from '../SocketIoClient'
+import { isVideoEnded } from '../../Redux/Actions'
+import { socketToWebServer } from '../../SocketIoClient'
 import { QuestionsJson } from '../Quiz/Questions'
 
 export const VideoPlayer = ()=>{
@@ -12,6 +12,10 @@ export const VideoPlayer = ()=>{
   const [videoState, setVideoState] = useState(null)
 
   const roomNumber = useSelector(state => state.MainReducer.roomNumber)
+
+  useEffect(()=>{
+    console.log({roomNumber})
+  },[])
 
   useEffect(() => {
     if(videoState)

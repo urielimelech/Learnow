@@ -3,6 +3,7 @@ import io from 'socket.io'
 
 import { serverConnectionOptions } from './ThinkgearOptions.js'
 import { writeSessionToDataBase } from '../SessionWriterToDB/index.js'
+import { dataSessionAnalysis } from '../SessionWriterToDB/index.js'
 
 /** create http server to serve io requests */
 const serverPort = serverConnectionOptions.port
@@ -27,7 +28,8 @@ var sessionData = {
     quizData:                   {},
     answersQuiz:                [],
     timeAnswersInVideo:         [],
-    correlation:                {}
+    correlation:                {},
+    feedback:                   []
 }
 var rooms = []
 
@@ -109,7 +111,6 @@ export const connectionToServerIO = soc => {
     soc.on('end quiz', data =>{
         sessionData.quizData = data
         if(sessionData.monitorData.length > 0){
-            console.log(sessionData)
             sessionData = writeSessionToDataBase(sessionData)
             console.log(sessionData)
         }
@@ -122,5 +123,11 @@ export const connectionToServerIO = soc => {
     soc.on('answer in video', data =>{
         console.log('timeque', Date(data).toString())
         sessionData.timeAnswersInVideo.push(data)
+    })
+
+    /**  */
+    soc.on('get last ended session', () => {
+        sessionData = dataSessionAnalysis(sessionData)
+        soc.emit('last ended session', sessionData)
     })
 }

@@ -1,21 +1,39 @@
-import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
-import { socketToWebServer } from '../SocketIoClient'
-import { isConnectedToRoom, updateRoomNumber } from '../Actions'
-
-
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { socketToWebServer } from '../../SocketIoClient'
+import { isConnectedToRoom, updateRoomNumber } from '../../Redux/Actions'
 
 export const RoomNumberForm = () => {
 
     const _dispatch = useDispatch()
     const [input, setInput] = useState('')
+    const [isConnected, setIsConnected] = useState(false)
+    const roomNumber = useSelector(state => state.MainReducer.roomNumber)
+    // console.log({roomNumber})
+
+
+    useEffect(()=>{
+        console.log({roomNumber})
+        _dispatch(updateRoomNumber(input))
+        console.log(input)
+        console.log({roomNumber})
+      },[roomNumber])
+
+    useEffect(()=>{
+    console.log({roomNumber})
+    _dispatch(updateRoomNumber(input))
+    console.log(input)
+    console.log({roomNumber})
+    },[isConnected])
 
     const handleSubmit = event => {
         event.preventDefault()
         socketToWebServer.emit('add client to room', input)
         socketToWebServer.on('TGC collector and React are connected', () => {
             /** dispatch a variable to render video */
-            _dispatch(updateRoomNumber(input))
+            setIsConnected(true)
+            // _dispatch(updateRoomNumber(input))
+            // console.log(input)
             _dispatch(isConnectedToRoom(true))
         })
         socketToWebServer.on('room connection failed', () => {
