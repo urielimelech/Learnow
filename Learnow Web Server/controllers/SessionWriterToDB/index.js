@@ -47,32 +47,23 @@ const createSocketToDataBase = () => {
 }
 
 export const dataSessionAnalysis = sessionData => {
-    sessionData.startTimeStamp = sessionData.monitorData[0].timeStamp
-    sessionData.endTimeStamp = sessionData.monitorData[sessionData.monitorData.length-1].timeStamp
-    sessionData.avarageAttention = getAvarageAttention(sessionData.monitorData)
-    sessionData.avarageMeditation = getAvarageMeditation(sessionData.monitorData)
-    sessionData.lowestAttentionLevel = lowestAttentionLevel(sessionData.monitorData)
-    sessionData.lowestMeditationLevel = lowestMeditationLevel(sessionData.monitorData)
-    sessionData.highestAttentionLevel = highestAttentionLevel(sessionData.monitorData)
-    sessionData.highestMeditationLevel = highestMeditationLevel(sessionData.monitorData)
-    sessionData.answersQuiz = ActivityAnalyzer(sessionData.quizData)
-    sessionData.correlation = Correlator(sessionData)
-    sessionData.feedback = ResultFeedback(sessionData)
+    if (sessionData.monitorData.length !== 0) {
+        sessionData.startTimeStamp = sessionData.monitorData[0].timeStamp
+        sessionData.endTimeStamp = sessionData.monitorData[sessionData.monitorData.length-1].timeStamp
+        sessionData.avarageAttention = getAvarageAttention(sessionData.monitorData)
+        sessionData.avarageMeditation = getAvarageMeditation(sessionData.monitorData)
+        sessionData.lowestAttentionLevel = lowestAttentionLevel(sessionData.monitorData)
+        sessionData.lowestMeditationLevel = lowestMeditationLevel(sessionData.monitorData)
+        sessionData.highestAttentionLevel = highestAttentionLevel(sessionData.monitorData)
+        sessionData.highestMeditationLevel = highestMeditationLevel(sessionData.monitorData)
+        sessionData.answersQuiz = ActivityAnalyzer(sessionData.quizData)
+        sessionData.correlation = Correlator(sessionData)
+        sessionData.feedback = ResultFeedback(sessionData)
+    }
     return sessionData
 }
 
 export const writeSessionToDataBase = sessionData => {
-    // sessionData.startTimeStamp = sessionData.monitorData[0].timeStamp
-    // sessionData.endTimeStamp = sessionData.monitorData[sessionData.monitorData.length-1].timeStamp
-    // sessionData.avarageAttention = getAvarageAttention(sessionData.monitorData)
-    // sessionData.avarageMeditation = getAvarageMeditation(sessionData.monitorData)
-    // sessionData.lowestAttentionLevel = lowestAttentionLevel(sessionData.monitorData)
-    // sessionData.lowestMeditationLevel = lowestMeditationLevel(sessionData.monitorData)
-    // sessionData.highestAttentionLevel = highestAttentionLevel(sessionData.monitorData)
-    // sessionData.highestMeditationLevel = highestMeditationLevel(sessionData.monitorData)
-    // sessionData.answersQuiz = ActivityAnalyzer(sessionData.quizData)
-    // sessionData.correlation = Correlator(sessionData)
-    // sessionData.feedback = ResultFeedback(sessionData)
     sessionData = dataSessionAnalysis(sessionData)
     console.log(sessionData)
     const socketToDataBase = createSocketToDataBase()
