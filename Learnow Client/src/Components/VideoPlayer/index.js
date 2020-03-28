@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
-import { WrapperVideo, Video } from './VideoStyle'
 import { useDispatch, useSelector } from 'react-redux'
+
+import { WrapperVideo, Video } from './VideoStyle'
 import { isVideoEnded } from '../../Redux/Actions'
 import { socketToWebServer } from '../../SocketIoClient'
 import { QuestionsJson } from '../Quiz/Questions'

@@ -1,10 +1,10 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { socketToWebServer } from '../../SocketIoClient'
 import { useDispatch, useSelector } from 'react-redux'
-import { getLastSessionData } from '../../Redux/Actions'
-// import useChartConfig from 'hooks/useChartConfig'
 import { Chart } from 'react-charts'
 
+import { socketToWebServer } from '../../SocketIoClient'
+import { getLastSessionData } from '../../Redux/Actions'
+// import useChartConfig from 'hooks/useChartConfig'
 
 export const Results = () => {
 

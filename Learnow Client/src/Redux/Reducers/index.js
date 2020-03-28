@@ -1,11 +1,10 @@
-import { IS_VIDEO_ENDED, IS_CONNECTED_TO_ROOM, UPDATE_ROOM_NUMBER, IS_QUIZ_ENDED, LAST_SESSION_DATA} from '../ActionTypes'
+import { IS_VIDEO_ENDED, IS_CONNECTED_TO_ROOM, UPDATE_ROOM_NUMBER, LAST_SESSION_DATA} from '../ActionTypes'
 
 const initialState = {
   navigation: '',
   IsVideoEnded: false,
   isConnectedToRoom: false,
   roomNumber: '',
-  isQuizEnded: false,
   lastSessionData: {}
 }
 
@@ -26,11 +25,6 @@ export default (state = initialState, action) => {
       return {
         ...state,
         roomNumber: action.data
-      }
-    case IS_QUIZ_ENDED:
-      return {
-        ...state,
-        isQuizEnded: action.data
       }
     case LAST_SESSION_DATA:
       return {
