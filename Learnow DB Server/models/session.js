@@ -12,7 +12,8 @@ var mongoose    =               require('mongoose'),
         highestMeditationLevel: [],
         quizData:               {},
         answersQuiz:            [],
-        correlation:            {}
+        correlation:            {},
+        feedback:               []
     });
 
 

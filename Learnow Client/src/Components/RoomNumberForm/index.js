@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { socketToWebServer } from '../../SocketIoClient'
 import { isConnectedToRoom, updateRoomNumber } from '../../Redux/Actions'
+import { navigate } from 'hookrouter'
+
 
 export const RoomNumberForm = () => {
 
@@ -35,6 +37,7 @@ export const RoomNumberForm = () => {
             // _dispatch(updateRoomNumber(input))
             // console.log(input)
             _dispatch(isConnectedToRoom(true))
+            navigate('/Session')
         })
         socketToWebServer.on('room connection failed', () => {
             /** try connect to the right room number */
