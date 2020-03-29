@@ -9,11 +9,11 @@ export const StartSessionComponent = () => {
 
     const isConnectedToRoom = useSelector(state => state.MainReducer.isConnectedToRoom)
     const IsVideoEnded = useSelector(state => state.MainReducer.IsVideoEnded)
-    const roomNumber = useSelector(state => state.MainReducer.roomNumber)
+    // const roomNumber = useSelector(state => state.MainReducer.roomNumber)
 
-  useEffect(()=>{
-    console.log({roomNumber})
-  },[roomNumber])
+  // useEffect(()=>{
+  //   console.log({roomNumber})
+  // },[roomNumber])
 
   useEffect(() => {
     if (!isConnectedToRoom)

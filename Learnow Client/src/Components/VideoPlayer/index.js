@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import HyperModal from 'react-hyper-modal'
 
 import { WrapperVideo, Video } from './VideoStyle'
 import { isVideoEnded } from '../../Redux/Actions'
@@ -11,6 +12,7 @@ export const VideoPlayer = ()=>{
   const _dispatch = useDispatch()
   const [index, setIndex] = useState(0)
   const [videoState, setVideoState] = useState(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const roomNumber = useSelector(state => state.MainReducer.roomNumber)
 
@@ -31,6 +33,7 @@ export const VideoPlayer = ()=>{
     }
     else if (Math.floor(videoState.playedSeconds) > answerTimeInVideo[index]) {
       console.log('user need to watch the full video')
+      setIsModalOpen(true)
     }
   }
 
@@ -61,6 +64,15 @@ export const VideoPlayer = ()=>{
     setVideoState(videoState)
   }
 
+  const ModalContent = () => {
+    return (
+      <div>
+        user need to watch the full video
+        <button onClick={() => setIsModalOpen(false)}> OK </button>
+      </div>
+    )
+  }
+
   // socketToWebServer.on('session ended by headset', () => {
   //   console.log('session ended from headset')
   // })
@@ -75,5 +87,6 @@ export const VideoPlayer = ()=>{
             // width={'50%'}
             // height={450}
             />
+            <HyperModal isOpen={isModalOpen}><ModalContent/></HyperModal>
           </WrapperVideo>
 }

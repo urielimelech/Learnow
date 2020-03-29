@@ -6,6 +6,8 @@ import { socketToWebServer } from '../../SocketIoClient'
 import { getLastSessionData } from '../../Redux/Actions'
 // import useChartConfig from 'hooks/useChartConfig'
 
+// import { Chart } from "react-google-charts";
+
 export const Results = () => {
 
     const _dispatch = useDispatch()
@@ -13,33 +15,57 @@ export const Results = () => {
 
     const [attentionData, setAttentionData] = useState(null)
     const [meditationData, setMeditationData] = useState(null)
-    const [data, setData] = useState(null)
+    const [videoAttentionData, setVideoAttentionData] = useState(null)
+    const [videoMeditationData, setVideoMeditationData] = useState(null)
+    const [quizAttentionData, setQuizAttentionData] = useState(null)
+    const [quizMeditationData, setQuizMeditationData] = useState(null)
+
+    const [sessionDataResults, setSessionDataResults] = useState(null)
+    const [sessionVideoDataResults, setSessionVideoDataResults] = useState(null)
+    const [sessionQuizDataResults, setSessionQuizDataResults] = useState(null)
+
+    const fromMiliToSec = startTimeStamp => {
+        const milisecToSec = 1000
+        return Math.round(startTimeStamp / milisecToSec)
+    }
+
+    const differenceInSec = (currentTimeStamp, startTimeStamp) => {
+        return fromMiliToSec(currentTimeStamp) - fromMiliToSec(startTimeStamp)
+    }
+
+    const getArrayAsData = (dataArray, diff) => {
+        return dataArray.map(e => {
+            if (e.x < diff) {
+                return {x: e.x, y: e.y}
+            }
+        }).filter(item => {
+            return item !== undefined
+        })
+    }
 
     const getAttentionSerie = lastSessionData => {
         return lastSessionData.monitorData.map(e => {
-            const timeStamp = Math.round((e.timeStamp - lastSessionData.startTimeStamp) / 1000)
-            var l = Date((e.timeStamp))
-            console.log(new Date(e.timeStamp).toLocaleTimeString())
-            console.log(timeStamp)
+            const timeStamp = differenceInSec(e.timeStamp, lastSessionData.startTimeStamp)
             return {x: timeStamp, y: e.attention }
         })
     }
     
     const getMeditationSerie = lastSessionData => {
         return lastSessionData.monitorData.map(e => {
-            const timeStamp = Math.round((e.timeStamp - lastSessionData.startTimeStamp) / 1000)
-            var l = Date((e.timeStamp))
-            console.log(new Date(e.timeStamp).toLocaleTimeString())
-            console.log(timeStamp)
+            const timeStamp = differenceInSec(e.timeStamp, lastSessionData.startTimeStamp)
             return {x: timeStamp, y: e.meditation }
         })
     }
 
-    // setAttentionData(lastSessionData => {
-    //     return lastSessionData.monitorData.map(e => {
-    //         return {x: e.timeStamp, y: e.attention }
-    //     })
-    // })
+    const getVideoAttentionSerie = (lastSessionData, attentionData) => {
+        const diffStartEndVideo = differenceInSec(lastSessionData.startQuizStamp, lastSessionData.startTimeStamp)
+        return getArrayAsData(attentionData, diffStartEndVideo)
+    }
+
+    const getVideoMeditationSerie = (lastSessionData, meditationData) => {
+        const diffStartEndVideo = differenceInSec(lastSessionData.startQuizStamp, lastSessionData.startTimeStamp)
+        return getArrayAsData(meditationData, diffStartEndVideo)
+    }
 
     useEffect(() => {
         if(Object.keys(lastSessionData).length !== 0){
@@ -48,6 +74,15 @@ export const Results = () => {
         }
     },[lastSessionData])
 
+    useEffect(() => {
+        if (attentionData !== null)
+            setVideoAttentionData(getVideoAttentionSerie(lastSessionData, attentionData))
+    },[attentionData])
+
+    useEffect(() => {
+        if (meditationData !== null)
+            setVideoMeditationData(getVideoMeditationSerie(lastSessionData, meditationData))
+    },[meditationData])
 
     useEffect(() => {
         console.log({attentionData})
@@ -56,25 +91,19 @@ export const Results = () => {
                 {label: 'attention', data: attentionData},
                 {label: 'meditation', data: meditationData}
             ]
-            // const data1 = useMemo(() => 
-            // [{
-            //     label: 'attention',
-            //     data: attentionData
-            // }])
-            setData(dataChart)
-            console.log(data)
+            setSessionDataResults(dataChart)
         }
     },[attentionData])
 
-    // useEffect(()=>{
-    //     if(!meditationData){
-    //         const data2=
-    //     }
-    // })
-
     useEffect(() => {
-        console.log(data)
-    },[data])
+        if (videoAttentionData !== null){
+            const dataChart = [
+                {label: 'attention', data: videoAttentionData},
+                {label: 'meditation', data: videoMeditationData}
+            ]
+            setSessionVideoDataResults(dataChart)
+        }
+    },[videoAttentionData])
 
     useEffect(() => {
         socketToWebServer.emit('get last ended session', )
@@ -115,7 +144,7 @@ export const Results = () => {
           { type: 'linear', position: 'left' }
         ])
 
-    return ( data === null ? 
+    return ( sessionVideoDataResults === null ? 
         <div> test result </div>
         :
         // <div> {JSON.stringify(lastSessionData)}</div>
@@ -123,7 +152,8 @@ export const Results = () => {
             width: '600px',
             height: '300px'
           }}> Your Results in session <br/>
-        <Chart data={data} axes={axes} tooltip /></div>
+        <Chart data={sessionDataResults} axes={axes} tooltip />  your parmas in Video <Chart data={sessionVideoDataResults} axes={axes} tooltip /> </div>
+        
         // <div>{lastSessionData}</div>
     )
 }
