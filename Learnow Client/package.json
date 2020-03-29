@@ -12,6 +12,8 @@
     "react-bootstrap": "^1.0.0-beta.17",
     "react-charts": "^2.0.0-beta.6",
     "react-dom": "^16.13.0",
+    "react-google-charts": "^3.0.15",
+    "react-hyper-modal": "^1.2.5",
     "react-player": "^1.15.2",
     "react-quiz-component-timestamp-per-answer": "0.3.4",
     "react-redux": "^7.2.0",
