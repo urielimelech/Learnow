@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.min.css'
 
@@ -36,7 +35,7 @@ export const VideoPlayer = ()=>{
 
   const emitWhenAnswerOccuredInVideo = () => {
     if (Math.floor(videoState.playedSeconds) === answerTimeInVideo[index]) {
-      socketToWebServer.emit('answer in video', Date.now())
+      socketToWebServer.emit('answer in video', ({date: Date.now(), roomNumber: roomNumber}))
       const i = index + 1
       setIndex(i)
     }
@@ -65,7 +64,7 @@ export const VideoPlayer = ()=>{
   }
 
   const onEndVideo = () => {
-    socketToWebServer.emit('end of video', )
+    socketToWebServer.emit('end of video', roomNumber)
       _dispatch(isVideoEnded(true))
   }
 

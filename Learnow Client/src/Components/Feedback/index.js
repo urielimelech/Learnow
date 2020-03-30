@@ -7,6 +7,7 @@ import { socketToWebServer } from '../../SocketIoClient'
 import { CardStyle, CardImgStyle, CardTitleStyle, CardTextStyle, CardLinkStyle, FeedbackComponent, CardsContainer } from './FeedbackStyle'
 
 export const Feedback = () => {
+
     const [groupCard, setGroupCard] = useState([])
 
     const roomNumber = useSelector(state => state.MainReducer.roomNumber)
@@ -23,7 +24,7 @@ export const Feedback = () => {
     const renderCards = groupCards => {
         return groupCards.map(e => {
             return (
-                <Card style={CardStyle}>
+                <Card style={CardStyle} key={e.CardNumber}>
                     <Card.Img variant="top" src={e.ImgCard} style={CardImgStyle}/>
                     <Card.Body>
                         <Card.Title style={CardTitleStyle}>{e.TitleCard}</Card.Title>
