@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import HyperModal from 'react-hyper-modal'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.min.css'
 
 import { WrapperVideo, Video } from './VideoStyle'
 import { isVideoEnded } from '../../Redux/Actions'
@@ -13,6 +14,7 @@ export const VideoPlayer = ()=>{
   const [index, setIndex] = useState(0)
   const [videoState, setVideoState] = useState(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [isAlreadyOpened, setIsAlreadyOpened] = useState(false)
 
   const roomNumber = useSelector(state => state.MainReducer.roomNumber)
 
@@ -25,11 +27,16 @@ export const VideoPlayer = ()=>{
       emitWhenAnswerOccuredInVideo()
   },[videoState])
 
+  useEffect(()=>{
+    if (isModalOpen)
+      setIsAlreadyOpened(true)
+  },[isModalOpen])
+
   const emitWhenAnswerOccuredInVideo = () => {
     if (Math.floor(videoState.playedSeconds) === answerTimeInVideo[index]) {
-      socketToWebServer.emit('answer in video', ({date: Date.now(), roomNumber: roomNumber}))
-      const i = index + 1
-      setIndex(i)
+        socketToWebServer.emit('answer in video', ({date: Date.now(), roomNumber: roomNumber}))
+        const i = index + 1
+        setIndex(i)
     }
     else if (Math.floor(videoState.playedSeconds) > answerTimeInVideo[index]) {
       console.log('user need to watch the full video')
@@ -64,29 +71,49 @@ export const VideoPlayer = ()=>{
     setVideoState(videoState)
   }
 
-  const ModalContent = () => {
-    return (
-      <div>
-        user need to watch the full video
-        <button onClick={() => setIsModalOpen(false)}> OK </button>
-      </div>
-    )
+  const optionsToast = {
+    // onOpen:false, 
+    // onClose:true,  
+    // closeToast:  true,
+    position: "top-center",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+  }
+
+  const warningVideo = () =>{
+    toast.warn('please, watch the full video', optionsToast)
   }
 
   // socketToWebServer.on('session ended by headset', () => {
   //   console.log('session ended from headset')
   // })
+
   return  <WrapperVideo>
             <Video
-            url="https://www.youtube.com/watch?v=DIJYAWB3MhI"
-            controls={true}
-            onStart = {onStartVideo}
-            onEnded = {onEndVideo}
-            onProgress = {onProgressVideo}
-            // wrapper={Video}
-            // width={'50%'}
-            // height={450}
+              url="https://www.youtube.com/watch?v=DIJYAWB3MhI"
+              controls={true}
+              onStart = {onStartVideo}
+              onEnded = {onEndVideo}
+              onProgress = {onProgressVideo}
+              // wrapper={Video}
+              // width={'50%'}
+              // height={450}
             />
-            <HyperModal isOpen={isModalOpen}><ModalContent/></HyperModal>
+
+            <ToastContainer
+              position="top-center"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnVisibilityChange
+              draggable
+              pauseOnHover
+            />     
+            {isModalOpen && !isAlreadyOpened ? warningVideo() : null} 
           </WrapperVideo>
 }
