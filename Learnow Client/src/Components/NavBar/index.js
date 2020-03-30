@@ -9,14 +9,16 @@ import { NavBarIcon } from './NavBarStyles'
 export const NavBar = () => {
    return <div>
             <Navbar bg="dark" variant="dark">
-                <Navbar.Brand href="#home">
-                    <NavBarIcon  alt="learnow-logo" src={require('../../images/learnow icon.png')}/>
+                <Navbar.Brand>
+                    <Nav.Link onClick={() => navigate('/')}>
+                        <NavBarIcon alt="learnow-logo" src={require('../../images/learnow icon.png')}/>
+                    </Nav.Link>
                 </Navbar.Brand>
                 {/* <NavBarIcon  alt="learnow-logo" src={require('../images/learnow icon.png')}/> */}
                 <Nav className="mr-auto">
                     {/* <Nav.Link onClick={() => navigate('/Session')}>Your Activity</Nav.Link> */}
                     <Nav.Link onClick={() => navigate('/Results')}>Your Results</Nav.Link>
-                    <Nav.Link href="#recommendations">Recommendations</Nav.Link>
+                    <Nav.Link onClick={() => navigate('/Recommendations')}>Recommendations</Nav.Link>
                 </Nav>
 
                 <Nav>

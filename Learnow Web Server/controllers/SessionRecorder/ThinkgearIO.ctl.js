@@ -4,6 +4,7 @@ import io from 'socket.io'
 import { serverConnectionOptions } from './ThinkgearOptions.js'
 import { writeSessionToDataBase } from '../SessionWriterToDB/index.js'
 import { dataSessionAnalysis } from '../SessionWriterToDB/index.js'
+import { SuggestionFeedback } from '../Feedback/SuggestionFeedback/index.js'
 
 /** create http server to serve io requests */
 const serverPort = serverConnectionOptions.port
@@ -140,4 +141,16 @@ export const connectionToServerIO = soc => {
         // sessionData = dataSessionAnalysis(sessionData)
         // soc.emit('last ended session', sessionData)
     })
+
+    /** sends to client the suggestions cards */
+    soc.on('get suggestions cards', roomNumber => {
+        rooms.forEach(e => {
+            if (e.roomNumber === Number(roomNumber))
+                soc.emit('suggestions cards', SuggestionFeedback)
+        })
+    })
+
+    // soc.on('get suggestions cards', () => {
+    //     soc.emit('suggestions cards', SuggestionFeedback)
+    // })
 }

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.min.css'
 
@@ -27,16 +28,17 @@ export const VideoPlayer = ()=>{
       emitWhenAnswerOccuredInVideo()
   },[videoState])
 
+
   useEffect(()=>{
-    if (isModalOpen)
+    if(isModalOpen)
       setIsAlreadyOpened(true)
   },[isModalOpen])
 
   const emitWhenAnswerOccuredInVideo = () => {
     if (Math.floor(videoState.playedSeconds) === answerTimeInVideo[index]) {
-        socketToWebServer.emit('answer in video', ({date: Date.now(), roomNumber: roomNumber}))
-        const i = index + 1
-        setIndex(i)
+      socketToWebServer.emit('answer in video', Date.now())
+      const i = index + 1
+      setIndex(i)
     }
     else if (Math.floor(videoState.playedSeconds) > answerTimeInVideo[index]) {
       console.log('user need to watch the full video')
@@ -63,7 +65,7 @@ export const VideoPlayer = ()=>{
   }
 
   const onEndVideo = () => {
-    socketToWebServer.emit('end of video', roomNumber)
+    socketToWebServer.emit('end of video', )
       _dispatch(isVideoEnded(true))
   }
 
@@ -91,6 +93,7 @@ export const VideoPlayer = ()=>{
   //   console.log('session ended from headset')
   // })
 
+  const Img = <img src={'../../images/warn.png'}> </img>
   return  <WrapperVideo>
             <Video
               url="https://www.youtube.com/watch?v=DIJYAWB3MhI"
@@ -113,7 +116,8 @@ export const VideoPlayer = ()=>{
               pauseOnVisibilityChange
               draggable
               pauseOnHover
-            />     
+            />    
+
             {isModalOpen && !isAlreadyOpened ? warningVideo() : null} 
           </WrapperVideo>
 }
