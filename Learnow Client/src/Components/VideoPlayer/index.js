@@ -27,7 +27,7 @@ export const VideoPlayer = ()=>{
 
   const emitWhenAnswerOccuredInVideo = () => {
     if (Math.floor(videoState.playedSeconds) === answerTimeInVideo[index]) {
-      socketToWebServer.emit('answer in video', Date.now())
+      socketToWebServer.emit('answer in video', ({date: Date.now(), roomNumber: roomNumber}))
       const i = index + 1
       setIndex(i)
     }
@@ -56,7 +56,7 @@ export const VideoPlayer = ()=>{
   }
 
   const onEndVideo = () => {
-    socketToWebServer.emit('end of video', )
+    socketToWebServer.emit('end of video', roomNumber)
       _dispatch(isVideoEnded(true))
   }
 

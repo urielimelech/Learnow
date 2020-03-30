@@ -13,24 +13,6 @@ serverApp.listen(serverPort, serverHost)
 
 export const serverIOService = io(serverApp)
 
-var ready = false
-var sessionData = {
-    startTimeStamp:             0,
-    endTimeStamp:               0,
-    monitorData:                [],
-    startQuizStamp:             0,
-    avarageAttention:           0,
-    avarageMeditation:          0,
-    lowestAttentionLevel:       [],
-    highestAttentionLevel:      [],
-    lowestMeditationLevel:      [],
-    highestMeditationLevel:     [],
-    quizData:                   {},
-    answersQuiz:                [],
-    timeAnswersInVideo:         [],
-    correlation:                {},
-    feedback:                   []
-}
 var rooms = []
 
 /** on connection to serverIO to start serve */
@@ -40,12 +22,14 @@ export const connectionToServerIO = soc => {
 
     /** fetch data from neurosky TGC server and send it to react client */
     soc.on('session data', ({ data, myRoom }) => {
-        if (rooms.some(e => e.roomName === myRoom && e.isReadyForVideo )){
-            serverIOService.sockets.in(myRoom).emit('data to client', data)
-            data = JSON.parse(data)
-            console.log('data after parse: ', data)
-            sessionData.monitorData.push(data)
-        }
+        rooms.forEach(e => {
+            if (e.roomName === myRoom && e.isReadyForVideo) {
+                serverIOService.sockets.in(myRoom).emit('data to client', data)
+                data = JSON.parse(data)
+                // console.log('data after parse: ', data)
+                e.sessionData.monitorData.push(data)
+            }
+        })
     })
 
     /** create room for TGC and react */
@@ -56,7 +40,24 @@ export const connectionToServerIO = soc => {
         const obj = {
             roomName: roomName,
             roomNumber: roomNumber,
-            isReadyForVideo: false
+            isReadyForVideo: false,
+            sessionData: {
+                startTimeStamp:             0,
+                endTimeStamp:               0,
+                monitorData:                [],
+                startQuizStamp:             0,
+                avarageAttention:           0,
+                avarageMeditation:          0,
+                lowestAttentionLevel:       [],
+                highestAttentionLevel:      [],
+                lowestMeditationLevel:      [],
+                highestMeditationLevel:     [],
+                quizData:                   {},
+                answersQuiz:                [],
+                timeAnswersInVideo:         [],
+                correlation:                {},
+                feedback:                   []
+            }
         }
         rooms.push(obj)
         soc.join(roomName)
@@ -68,7 +69,6 @@ export const connectionToServerIO = soc => {
         if (rooms.some(e => e.roomNumber === Number(roomNumber)) && serverIOService.sockets.adapter.rooms[`room ${roomNumber}`] !== undefined) {
             soc.join(`room ${roomNumber}`)
             serverIOService.sockets.in(`room ${roomNumber}`).emit('TGC collector and React are connected', )
-            console.log('connection established between react and TGC in room', roomNumber)
         }
         else {
             soc.emit('room connection failed', )
@@ -78,56 +78,66 @@ export const connectionToServerIO = soc => {
 
     /** get notification if headset stopped from sending data */
     soc.on('session ended from headset', myRoom => {
-        console.log({myRoom})
         serverIOService.sockets.in(myRoom).emit('session ended from headset', )
-        console.log('session ended from serverIOService')
-        if (sessionData.monitorData.length > 0)
-            sessionData = writeSessionToDataBase(sessionData)
-        console.log('session ended')
+        rooms.forEach(e => {
+            if (e.roomName === myRoom && e.sessionData.monitorData.length > 0){
+                e.sessionData = writeSessionToDataBase(e.sessionData)
+                e.isReadyForVideo = false
+            }
+        })
+        console.log('session ended in', myRoom)
         soc.disconnect(true)
-        ready = false
     })
 
     /** get notification from client if video started */
     soc.on('ready for data stream', roomNumber => {
         console.log('user started video in room', roomNumber)
         rooms.forEach(e => {
-            console.log('room number', e.roomNumber, 'gotten number', roomNumber)
             if (e.roomNumber === Number(roomNumber))
                 e.isReadyForVideo = true
         })
-        console.log(rooms)
-        // ready = true
+        // console.log(rooms)
     })
 
     /** get notification from client if video ended */
-    soc.on('end of video', () => {
+    soc.on('end of video', roomNumber => {
         console.log('end of video')
-        if (sessionData.monitorData.length > 0)
-            sessionData.startQuizStamp = sessionData.monitorData[sessionData.monitorData.length-1].timeStamp
+        rooms.forEach(e => {
+            if (e.roomNumber === Number(roomNumber) && e.sessionData.monitorData.length > 0)
+                e.sessionData.startQuizStamp = e.sessionData.monitorData[e.sessionData.monitorData.length - 1].timeStamp
+        })
     })
 
     /** when user complete the quiz */
-    soc.on('end quiz', data =>{
-        sessionData.quizData = data
-        if(sessionData.monitorData.length > 0){
-            sessionData = writeSessionToDataBase(sessionData)
-            console.log(sessionData)
-        }
-        serverIOService.sockets.emit('session ended by quiz', )
-        console.log('session ended')
-        ready = false
+    soc.on('end quiz', ({data, roomNumber}) =>{
+        rooms.forEach(e => {
+            if (e.roomNumber === Number(roomNumber) && e.sessionData.monitorData.length > 0){
+                e.sessionData.quizData = data
+                e.sessionData = writeSessionToDataBase(e.sessionData)
+                e.isReadyForVideo = false
+                serverIOService.sockets.in(`room ${roomNumber}`).emit('session ended by quiz', )
+            }
+        })
+        console.log(`session ended in room ${roomNumber}`)
+        // console.log(rooms)
     })
 
     /** take the exact timestamp when the video played the answer */
-    soc.on('answer in video', data =>{
-        console.log('timeque', Date(data).toString())
-        sessionData.timeAnswersInVideo.push(data)
+    soc.on('answer in video', ({date, roomNumber}) =>{
+        console.log('timeque', Date(date).toString())
+        rooms.forEach(e => {
+            if (e.roomNumber === Number(roomNumber))
+                e.sessionData.timeAnswersInVideo.push(date)
+        })
     })
 
     /**  */
-    soc.on('get last ended session', () => {
-        sessionData = dataSessionAnalysis(sessionData)
-        soc.emit('last ended session', sessionData)
+    soc.on('get last ended session', roomNumber => {
+        rooms.forEach(e => {
+            if (e.roomNumber === Number(roomNumber))
+                soc.emit('last ended session', e.sessionData)
+        })
+        // sessionData = dataSessionAnalysis(sessionData)
+        // soc.emit('last ended session', sessionData)
     })
 }

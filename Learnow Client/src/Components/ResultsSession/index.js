@@ -9,6 +9,7 @@ export const Results = () => {
 
     const _dispatch = useDispatch()
     const lastSessionData = useSelector(state => state.MainReducer.lastSessionData)
+    const roomNumber = useSelector(state => state.MainReducer.roomNumber)
 
     const [sessionData, setSessionData] = useState(null)
     const [videoSessionData, setVideoSessionData] = useState(null)
@@ -70,7 +71,7 @@ export const Results = () => {
     },[sessionData])
 
     useEffect(() => {
-        socketToWebServer.emit('get last ended session', )
+        socketToWebServer.emit('get last ended session', roomNumber)
         socketToWebServer.on('last ended session', sessionData => {
             console.log('last session data', sessionData)
             _dispatch(getLastSessionData(sessionData))

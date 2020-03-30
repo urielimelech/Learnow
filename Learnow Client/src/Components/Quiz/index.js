@@ -1,6 +1,6 @@
 import React from 'react'
 import { navigate } from 'hookrouter'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import QuizComponent from 'react-quiz-component-timestamp-per-answer' 
 
 import { QuestionsJson } from './Questions'
@@ -11,6 +11,7 @@ import { isVideoEnded, isConnectedToRoom } from '../../Redux/Actions'
 export const Quiz = () => {
 
     const _dispatch = useDispatch()
+    const roomNumber = useSelector(state => state.MainReducer.roomNumber)
 
     const turnOffIsVideoEnded = () => {
         _dispatch(isVideoEnded(false))
@@ -19,7 +20,7 @@ export const Quiz = () => {
     }
 
     const onCompleteAction = obj => {
-        socketToWebServer.emit('end quiz', obj)
+        socketToWebServer.emit('end quiz', {data: obj, roomNumber: roomNumber})
         console.log('how many times')
         return <button onClick={turnOffIsVideoEnded}> go and see your Results </button> 
     }
