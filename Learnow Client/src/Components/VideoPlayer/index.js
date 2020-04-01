@@ -6,9 +6,8 @@ import 'react-toastify/dist/ReactToastify.min.css'
 import { WrapperVideo, Video } from './VideoStyle'
 import { isVideoEnded } from '../../Redux/Actions'
 import { socketToWebServer } from '../../SocketIoClient'
-import { QuestionsJson } from '../Quiz/Questions'
 
-export const VideoPlayer = ()=>{
+export const VideoPlayer = ({sessionVideo, sessionQuiz}) =>{
 
   const _dispatch = useDispatch()
   const [index, setIndex] = useState(0)
@@ -19,17 +18,21 @@ export const VideoPlayer = ()=>{
   const roomNumber = useSelector(state => state.MainReducer.roomNumber)
 
   const warnImageSrc = 'https://png2.cleanpng.com/sh/e7d54f647617ebfe6feb8fa64ae5d38d/L0KzQYi4UsE3N5dpSpGAYUO4QrOCg8dmbJRoSJC9MES2Q4SBVcE2OWQ5S6Y5MUK4QYq9TwBvbz==/5a352b9c7edcc0.4043338515134340125196.png'
-  const videoUrl = 'https://www.youtube.com/watch?v=DIJYAWB3MhI'
 
-  useEffect(()=>{
-    console.log({roomNumber})
-  },[])
+  const answerTimeInVideo = sessionQuiz.questions.map(elem => {
+    return Number(elem.timeOfAnswerInVideoBySeconds)
+  }).sort( (a,b) => a-b )
+    
+  socketToWebServer.on('connected', data => console.log(data, 'with web server'))
+
+  socketToWebServer.on('session ended from headset', () => {
+    console.log('session ended from headset')
+  })
 
   useEffect(() => {
     if(videoState)
       emitWhenAnswerOccuredInVideo()
   },[videoState])
-
 
   useEffect(()=>{
     if(isModalOpen)
@@ -47,16 +50,6 @@ export const VideoPlayer = ()=>{
       setIsModalOpen(true)
     }
   }
-
-  const answerTimeInVideo = QuestionsJson.questions.map(elem => {
-    return Number(elem.timeOfAnswerInVideoBySeconds)
-  }).sort( (a,b) => a-b )
-  
-  socketToWebServer.on('connected', data => console.log(data, 'with web server'))
-
-  socketToWebServer.on('session ended from headset', () => {
-    console.log('session ended from headset')
-  })
 
   const onStartVideo = () => {
     console.log(roomNumber)
@@ -76,9 +69,6 @@ export const VideoPlayer = ()=>{
   }
 
   const optionsToast = {
-    // onOpen:false, 
-    // onClose:true,  
-    // closeToast:  true,
     position: "top-center",
     autoClose: 5000,
     hideProgressBar: false,
@@ -107,7 +97,7 @@ export const VideoPlayer = ()=>{
 
   return  <WrapperVideo>
             <Video
-              url={videoUrl}
+              url={sessionVideo}
               controls={true}
               onStart = {onStartVideo}
               onEnded = {onEndVideo}

@@ -5,8 +5,7 @@ import { Results } from "./Components/ResultsSession"
 import { Feedback } from "./Components/Feedback"
 
 const routes = {
-
-  "/": () => <RoomNumberForm />,
+  "/": () => <RoomNumberForm/>,
   "/Session": () => <StartSessionComponent/>,
   "/Results": () => <Results/>,
   "/Recommendations" : () => <Feedback/>

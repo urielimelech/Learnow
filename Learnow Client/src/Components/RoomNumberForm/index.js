@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { navigate } from 'hookrouter'
 
 import { socketToWebServer } from '../../SocketIoClient'
-import { isConnectedToRoom, updateRoomNumber } from '../../Redux/Actions'
+import { isConnectedToRoom, updateRoomNumber, isFirstSession } from '../../Redux/Actions'
 
 export const RoomNumberForm = () => {
 
@@ -11,8 +11,6 @@ export const RoomNumberForm = () => {
     const [input, setInput] = useState('')
     const [isConnected, setIsConnected] = useState(false)
     const roomNumber = useSelector(state => state.MainReducer.roomNumber)
-    // console.log({roomNumber})
-
 
     useEffect(()=>{
         console.log({roomNumber})
@@ -34,8 +32,6 @@ export const RoomNumberForm = () => {
         socketToWebServer.on('TGC collector and React are connected', () => {
             /** dispatch a variable to render video */
             setIsConnected(true)
-            // _dispatch(updateRoomNumber(input))
-            // console.log(input)
             _dispatch(isConnectedToRoom(true))
             navigate('/Session')
         })
@@ -50,7 +46,13 @@ export const RoomNumberForm = () => {
             <form onSubmit={handleSubmit}>
                 <label>
                     Connect to Room Number: 
-                    <input type="text" value={input} onChange={e => setInput(e.target.value)} />
+                    <input type='text' value={input} onChange={e => setInput(e.target.value)} />
+                    <button onClick={() => {
+                        _dispatch(isFirstSession(true))
+                        }}>first</button>
+                    <button onClick={() => {
+                        _dispatch(isFirstSession(false))
+                        }}>not first</button>
                 </label>
                 <input type="submit" value="Submit" />
             </form>

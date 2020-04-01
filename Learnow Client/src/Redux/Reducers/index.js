@@ -1,11 +1,12 @@
-import { IS_VIDEO_ENDED, IS_CONNECTED_TO_ROOM, UPDATE_ROOM_NUMBER, LAST_SESSION_DATA} from '../ActionTypes'
+import { IS_VIDEO_ENDED, IS_CONNECTED_TO_ROOM, UPDATE_ROOM_NUMBER, LAST_SESSION_DATA, IS_FIRST_SESSION} from '../ActionTypes'
 
 const initialState = {
   navigation: '',
   IsVideoEnded: false,
   isConnectedToRoom: false,
   roomNumber: '',
-  lastSessionData: {}
+  lastSessionData: {},
+  isFirstSession: null
 }
 
 export default (state = initialState, action) => {
@@ -30,6 +31,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         lastSessionData: action.data
+      }
+    case IS_FIRST_SESSION:
+      return {
+        ...state,
+        isFirstSession: action.data
       }
     default:
       return state
