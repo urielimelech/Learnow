@@ -20,6 +20,7 @@ app.use((req, res, next) => {
     next();
 });
 
+app.get('/getAllSessions', sessionCtl.getAllSessions);
 app.post('/addSession', sessionCtl.addSession);
 
 

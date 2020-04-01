@@ -18,6 +18,9 @@ export const VideoPlayer = ()=>{
 
   const roomNumber = useSelector(state => state.MainReducer.roomNumber)
 
+  const warnImageSrc = 'https://png2.cleanpng.com/sh/e7d54f647617ebfe6feb8fa64ae5d38d/L0KzQYi4UsE3N5dpSpGAYUO4QrOCg8dmbJRoSJC9MES2Q4SBVcE2OWQ5S6Y5MUK4QYq9TwBvbz==/5a352b9c7edcc0.4043338515134340125196.png'
+  const videoUrl = 'https://www.youtube.com/watch?v=DIJYAWB3MhI'
+
   useEffect(()=>{
     console.log({roomNumber})
   },[])
@@ -84,18 +87,27 @@ export const VideoPlayer = ()=>{
     draggable: true,
   }
 
-  const warningVideo = () =>{
-    toast.warn('please, watch the full video', optionsToast)
+  const Img = () => {
+    return (
+      <div>
+        <img style={{objectFit: 'contain', height: '40px'}} src={warnImageSrc}/>
+        please, watch the full video
+      </div>
+    )
   }
 
+  const warningVideo = () =>{
+    toast.warn(<Img/>, optionsToast)
+  }
+
+  //stop the video if the neurosky disconnected
   // socketToWebServer.on('session ended by headset', () => {
   //   console.log('session ended from headset')
   // })
 
-  const Img = <img src={'../../images/warn.png'}> </img>
   return  <WrapperVideo>
             <Video
-              url="https://www.youtube.com/watch?v=DIJYAWB3MhI"
+              url={videoUrl}
               controls={true}
               onStart = {onStartVideo}
               onEnded = {onEndVideo}

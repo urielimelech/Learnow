@@ -15,10 +15,10 @@ export const StartSessionComponent = () => {
   //   console.log({roomNumber})
   // },[roomNumber])
 
-  useEffect(() => {
-    if (!isConnectedToRoom)
-      navigate('/')
-  },[isConnectedToRoom])
+  // useEffect(() => {
+  //   if (!isConnectedToRoom)
+  //     navigate('/')
+  // },[isConnectedToRoom])
   
     return IsVideoEnded ? <Quiz/> : <VideoPlayer/>
   }

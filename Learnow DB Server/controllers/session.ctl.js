@@ -47,6 +47,16 @@ module.exports = {
                 });
         })
         // const {startTimeStamp = null, endTimeStamp = null, monitorData=[]} = req.body;
+    },
+    getAllSessions: async (req, res) => {
+        Session.find({}).then(result => {
+            console.log({result})
+            if(result)
+                res.send(JSON.stringify(result));
+            else res.status(404).send(`{"Failure": "No Documents Were Found"}`);
+        }, err =>{
+            res.status(404).send(`{"Failure": "No Documents Were Found"}`);
+        });
     }
 }
 

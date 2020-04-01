@@ -21,7 +21,6 @@ export const Quiz = () => {
 
     const onCompleteAction = obj => {
         socketToWebServer.emit('end quiz', {data: obj, roomNumber: roomNumber})
-        console.log('how many times')
         return <button onClick={turnOffIsVideoEnded}> go and see your Results </button> 
     }
 
