@@ -3,8 +3,8 @@ import io from 'socket.io'
 
 import { serverConnectionOptions } from './ThinkgearOptions.js'
 import { writeSessionToDataBase } from '../SessionWriterToDB/index.js'
-import { dataSessionAnalysis } from '../SessionWriterToDB/index.js'
 import { SuggestionFeedback } from '../Feedback/SuggestionFeedback/index.js'
+import { Comparator } from '../Comparator/index.js'
 
 /** create http server to serve io requests */
 const serverPort = serverConnectionOptions.port
@@ -148,6 +148,11 @@ export const connectionToServerIO = soc => {
             if (e.roomNumber === Number(roomNumber))
                 soc.emit('suggestions cards', SuggestionFeedback)
         })
+    })
+
+    soc.on('compare sessions', async sessionData =>{
+        const comparison = await Comparator(sessionData)
+        soc.emit('compared sessions', comparison)
     })
 
     // soc.on('get suggestions cards', () => {

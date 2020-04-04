@@ -65,7 +65,6 @@ export const dataSessionAnalysis = sessionData => {
 
 export const writeSessionToDataBase = sessionData => {
     sessionData = dataSessionAnalysis(sessionData)
-    console.log(sessionData)
     const socketToDataBase = createSocketToDataBase()
     socketToDataBase.write(JSON.stringify(sessionData))
     socketToDataBase.end()

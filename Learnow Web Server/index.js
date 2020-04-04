@@ -1,4 +1,5 @@
 import { serverIOService, connectionToServerIO/*, clientIOService, connectionToClientIO */} from './controllers/SessionRecorder/ThinkgearIO.ctl.js'
+import { Comparator } from './controllers/Comparator/index.js'
 // import { } from './controllers/Client/ClientIO.ctl.js'
 
 serverIOService.on('connection', soc => connectionToServerIO(soc))

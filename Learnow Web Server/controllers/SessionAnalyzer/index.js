@@ -31,7 +31,6 @@ export const lowestAttentionLevel = monitorData => {
         return 101
     })
     const minAttentionValue = Math.min(...attentionArr)
-    console.log({minAttentionValue})
     return monitorData.map(element => {
         if (element.attention !== 0 && element.attention <= minAttentionValue + 10 )
             return element
@@ -47,7 +46,6 @@ export const lowestMeditationLevel = monitorData => {
         return 101
     })
     const minMeditationValue = Math.min(...meditationArr)
-    console.log({minMeditationValue})
     return monitorData.map(element => {
         if (element.meditation !== 0 && element.meditation <= minMeditationValue + 10)
             return element
