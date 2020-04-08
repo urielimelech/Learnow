@@ -28,7 +28,7 @@ app.post('/addSession', sessionCtl.addSession);
 
 /** User routes */
 app.get('/login', [userCtl.getUser, userHandler.login]);
-// app.post('/register', userCtl.addUser, userHandler.register);
+app.post('/register', [userCtl.addUser, userHandler.register]);
 
 const server = app.listen(port, () => {
     console.log(`listening on port ${port}`);

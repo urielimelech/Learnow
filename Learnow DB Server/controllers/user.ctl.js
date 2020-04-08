@@ -2,13 +2,20 @@ const   User      = require('../models/user.js')
         // ObjectId  = require('mongoose').Types.ObjectId
 
 module.exports = {
-    addUser: (req, res, next) => {
+    addUser: async (req, res, next) => {
         const {email = null, name = null, password = null} = req.body
         const user = new User({name, email, password})
+
+        const response =  await User.findOne({email: email})
+        if(response){
+            console.log('user is already register, try to login')
+            return res.status(409).json({
+                message: `user with ${email} is already exist`
+            });
+        }
         
         user.save().then( (result) => {
-            console.log(result._id)
-            res.status(200).send(`{"result": "Success", "params": ${JSON.stringify(result)}}`)
+            req.result = result
             next()
         },
         (err) =>{

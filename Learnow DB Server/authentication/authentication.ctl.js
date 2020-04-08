@@ -10,26 +10,16 @@ module.exports = {
         const enteredPassword = req.query.password
 
         const dbEmail = req.result.email
-        const dbPass = req.result.password
+        const dbPass = req.result.password  
 
         if (enteredEmail && enteredPassword) {
             if (enteredEmail === dbEmail && enteredPassword === dbPass) {
-                const token = jwt.sign({email: enteredEmail},
-                secret,
-                { 
-                    expiresIn: '5h'
-                }
-                )
-                // return the JWT token for the future API calls
-                res.status(200).json({
-                success: true,
-                message: 'Authentication successful!',
-                token: token
-                })
+                const token = getToken(enteredEmail)
+                res.status(200).json(token)
             } else {
                 res.status(403).json({
                 success: false,
-                message: 'Incorrect username or password'
+                message: 'Incorrect email or password'
                 })
             }
         }
@@ -47,10 +37,26 @@ module.exports = {
         })
     },
     register: (req, res) => {
-        console.log('in register')
-        console.log(req.body)
-        // console.log(req)
+        const email = req.result.email
+        const token = getToken(email)
+        return res.status(200).send(token)
     }
+}
+
+const getToken = email => {
+    const token = jwt.sign(
+        {email: email},
+        secret,
+        { 
+            expiresIn: '5h'
+        }
+        )
+    // return the JWT token for the future API calls
+    return ({
+    success: true,
+    message: 'Authentication successful!',
+    token: token
+    })
 }
 
 // Starting point of the server
