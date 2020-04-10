@@ -8,12 +8,11 @@ module.exports = {
 
         const response =  await User.findOne({email: email})
         if(response){
-            console.log('user is already register, try to login')
             return res.status(409).json({
+                success: false,
                 message: `user with ${email} is already exist`
             });
         }
-        
         user.save().then( (result) => {
             req.result = result
             next()

@@ -6,6 +6,7 @@ const   express      = require('express'),
         sessionCtl   = require('./controllers/session.ctl'),
         userCtl      = require('./controllers/user.ctl'),
         userHandler  = require('./authentication/authentication.ctl')
+        middleware   = require('./authentication/middleware')
 
 app.set('port', port);
 app.use(cors());
@@ -29,6 +30,7 @@ app.post('/addSession', sessionCtl.addSession);
 /** User routes */
 app.get('/login', [userCtl.getUser, userHandler.login]);
 app.post('/register', [userCtl.addUser, userHandler.register]);
+app.get('/checkUserToken', middleware.checkToken)
 
 const server = app.listen(port, () => {
     console.log(`listening on port ${port}`);
