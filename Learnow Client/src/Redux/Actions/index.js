@@ -1,4 +1,4 @@
-import { IS_VIDEO_ENDED, IS_CONNECTED_TO_ROOM, UPDATE_ROOM_NUMBER, LAST_SESSION_DATA, IS_FIRST_SESSION, LOGIN, LOGOUT, REGISTER } from '../ActionTypes'
+import { IS_VIDEO_ENDED, IS_CONNECTED_TO_ROOM, UPDATE_ROOM_NUMBER, LAST_SESSION_DATA, IS_FIRST_SESSION, LOGIN, LOGOUT, REGISTER, IS_VERIFY } from '../ActionTypes'
 
 export const isVideoEnded = data => ({ type: IS_VIDEO_ENDED, data: data })
 
@@ -15,3 +15,5 @@ export const login = loginData => ({type: LOGIN, data: loginData})
 export const logout = () => ({type: LOGOUT, data: {}})
 
 export const register = registerData => ({type: REGISTER, data: registerData})
+
+export const isVerify = verified => ({type: IS_VERIFY, data: verified})

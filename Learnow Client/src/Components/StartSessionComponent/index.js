@@ -14,13 +14,14 @@ export const StartSessionComponent = () => {
 
     const [currSessionActivityData, setCurrSessionActivityData] = useState([])
 
-    // const roomNumber = useSelector(state => state.MainReducer.roomNumber)
+    const roomNumber = useSelector(state => state.MainReducer.roomNumber)
 
-  // useEffect(()=>{
-  //   console.log({roomNumber})
-  // },[roomNumber])
+  useEffect(()=>{
+    console.log({roomNumber})
+  },[roomNumber])
   
   useEffect(() => {
+    setCurrSessionActivityData(sessionActivity[0])
     if (IsFirstSession !== null){
       switch (IsFirstSession) {
         case (true): return setCurrSessionActivityData(sessionActivity[0])
@@ -42,6 +43,6 @@ export const StartSessionComponent = () => {
             <VideoPlayer sessionVideo={currSessionActivityData.videoUrl} sessionQuiz={currSessionActivityData.quizSummary}/>
         )
       :
-        null
+        <div>null</div>
     )
   }

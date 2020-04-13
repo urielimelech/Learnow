@@ -37,5 +37,5 @@ const server = app.listen(port, () => {
 });
 
 app.all('*', (req, res) => {
-    res.status(404).send(`{"result": "Failure", "error": "Bad Route"}`)
+    res.status(404).send(`{"success": false, "message": "Bad Route"}`)
 });

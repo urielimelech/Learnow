@@ -6,6 +6,15 @@ import axios from 'axios'
 
 export const socketWithReact = (serverIOService, soc, rooms) => {
 
+    soc.on('validate token', token => {
+        axios.get(`${dbURL}/checkUserToken`, { headers: { 'x-jwt-token': token } })
+            .then(res => {
+                soc.emit('get dbToken', {success: res.data.success, message: res.data.message, token: res.data.token})
+            })
+            .catch(err=> soc.emit('get dbToken', {success: err.response.data.success, message: err.response.data.message})
+            )
+    })
+
     /** get register parameters from react and send to db if user can register */
     soc.on('register data', ({name, email, password}) => {
         const body = {
@@ -26,8 +35,12 @@ export const socketWithReact = (serverIOService, soc, rooms) => {
                 password: password
             }
         })
-        .then(res => soc.emit('logged data', {email: email, name: res.data.name, token: res.data.token, success: res.data.success, message: res.data.message}))
-        .catch(err => soc.emit('logged data', {success: err.response.data.success, message: err.response.data.message}))
+        .then(res => {
+            soc.emit('logged data', {email: email, name: res.data.name, token: res.data.token, success: res.data.success, message: res.data.message})
+        })
+        .catch(err => {
+            soc.emit('logged data', {success: err.response.data.success, message: err.response.data.message})
+        })
     })
     
     /** add the react client to the room specified */

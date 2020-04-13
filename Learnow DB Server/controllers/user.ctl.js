@@ -19,7 +19,7 @@ module.exports = {
         },
         (err) =>{
             console.log(err)
-            res.status(404).send(`{"result": "Failure", "params":{"email": "${email}", "name": "${name}", "password": "${password}"}, "error": ${JSON.stringify(err)}}`)
+            res.status(404).send(`{"success": false, "params":{"email": "${email}", "name": "${name}", "password": "${password}"}, "message": ${JSON.stringify(err)}}`)
         })
     },
 
@@ -30,9 +30,10 @@ module.exports = {
                 req.result = result
                 next()
             }
-            else res.status(200).send(`{"result": "Failure", "response": "No Documents Were Found"}`)
+            else 
+            res.status(404).send(`{"success": false, "message": "No Documents Were Found"}`)
         }, err =>{
-            res.status(404).send(`{"result": "Failure", "response": "No Documents Were Found"}`)
+            res.status(404).send(`{"success": false, "message": "No Documents Were Found"}`)
         })
     }
 }

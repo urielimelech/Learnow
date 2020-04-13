@@ -4,7 +4,7 @@ const secret = require('../consts.js').secret
 const checkToken = (req, res, next) => {
     const token = req.headers['x-jwt-token']
     if (!token) 
-        return res.json({
+        return res.status(401).json({
             success: false,
             message: 'Auth token is not supplied'
         })
@@ -19,7 +19,7 @@ const checkToken = (req, res, next) => {
         // next()
     }
     catch (err) {
-        return res.json({
+        return res.status(403).json({
             success: false,
             message: 'Token is not valid'
         })

@@ -23,6 +23,7 @@ export const ToastNotification = ({ renderComponent, autoClose, position }) => {
 
     useEffect(() => {
         toast.warn(renderNotification(renderComponent), optionsToast)
+        return
     },[])
 
     return  <ToastContainer

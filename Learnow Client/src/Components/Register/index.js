@@ -43,7 +43,12 @@ export const Register = () => {
             navigate ('/Session')
         }
         else {
-            setErrorRegister(<ToastNotification renderComponent={message}/>)
+            Object.keys(message).length > 0 ? 
+                setErrorRegister(<ToastNotification renderComponent={message.message}/>) : 
+                setErrorRegister(<ToastNotification renderComponent={message}/>)
+            setTimeout(() => {
+                setErrorRegister(null)
+            },6000)
         }
     })
 
@@ -60,7 +65,7 @@ export const Register = () => {
                 </div>
                 <div className="form-group">
                     <label>Email</label>
-                    <input type="text" name="email" value={user.email} onChange={handleChange} className={'form-control' + (submitted && !user.email ? ' is-invalid' : '')} />
+                    <input type="email" name="email" value={user.email} onChange={handleChange} className={'form-control' + (submitted && !user.email ? ' is-invalid' : '')} />
                     {submitted && !user.email &&
                         <div className="invalid-feedback">Email is required</div>
                     }

@@ -17,6 +17,7 @@
     "react-quiz-component-timestamp-per-answer": "0.3.4",
     "react-redux": "^7.2.0",
     "react-scripts": "3.4.0",
+    "react-toastify": "^5.5.0",
     "redux": "^4.0.5",
     "socket.io-client": "^2.3.0",
     "styled-components": "^5.0.1"

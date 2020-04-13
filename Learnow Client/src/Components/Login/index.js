@@ -50,7 +50,7 @@ export const Login = () => {
             <form name="form" onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label>Email</label>
-                    <input type="text" name="email" value={email} onChange={handleChange} className={'form-control' + (submitted && !email ? ' is-invalid' : '')} />
+                    <input type="email" name="email" value={email} onChange={handleChange} className={'form-control' + (submitted && !email ? ' is-invalid' : '')} />
                     {submitted && !email && <div className="invalid-feedback">Email is required</div>}
                 </div>
                 <div className="form-group">

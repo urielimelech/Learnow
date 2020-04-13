@@ -1,6 +1,6 @@
 var mongoose    =               require('mongoose'),
+    validator   = require('email-validator')
     user        =               new mongoose.Schema({
-
         name:
                 {
                     type: String,
@@ -16,29 +16,41 @@ var mongoose    =               require('mongoose'),
                     type: String,
                     required: true
                 }
-    });
-
+    })
 
 /* Validations */
-// user.path('email').validate( 
-//     (val) => {
-//         if (!val)
-//             return false;
+user.path('email').validate( 
+    (val) => {
+        if (!val)
+            return false
         
-//         if(!validator.validate(val))
-//             return false;
+        if(!validator.validate(val))
+            return false
         
-//         return true;
-//     }, "Email was not defined correctly.");
+        return true
+    }, "Email was not defined correctly.")
     
-// user.path('name').validate( 
-//     (val) => {
-//         if (!val)
-//             return false;
+user.path('password').validate( 
+    (val) => {
+        const minSize = 8
+        const maxSize = 14
+        if (val.length < minSize || val.length > maxSize)
+            return false
         
-//         return true;
-//     }, "Name was not defined correctly.");
+        return true
+    }, "Password was not defined correctly: password must have at least 8 characters.")
 
-var User = mongoose.model('User', user);
+user.path('name').validate( 
+    (val) => {
+        const minSize = 2
+        const regex = /^[a-zA-Z]+$/
 
-module.exports = User;
+        if (val.length < minSize || !val.match(regex))
+            return false
+        
+        return true
+    }, "Name was not defined correctly.")
+
+var User = mongoose.model('User', user)
+
+module.exports = User

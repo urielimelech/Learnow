@@ -41,7 +41,7 @@ const getToken = (email, name) => {
     const token = jwt.sign(
         { email: email },
         secret,
-        { expiresIn: '5h' }
+        { expiresIn: '2h' }
     )
     // return the JWT token for the future API calls
     return ({

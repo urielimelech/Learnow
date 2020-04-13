@@ -6,13 +6,16 @@ import { Feedback } from "./Components/Feedback"
 import { SessionsComparator } from "./Components/SessionsComparator"
 import { Login } from './Components/Login'
 import { Register } from './Components/Register'
+import { VerifyTokenJwt } from "./Components/VerifyTokenJwt"
+
 
 const routes = {
-  "/": () => <RoomNumberForm/>,
-  "/Session": () => <StartSessionComponent/>,
-  "/Results": () => <Results/>,
-  "/Recommendations" : () => <Feedback/>,
-  "/SessionsComparator" : () => <SessionsComparator/>,
+  // "/": () =>  <VerifyTokenJwt><RoomNumberForm/></VerifyTokenJwt>,
+  "/": () =>  <Login/>,
+  "/Session": () => <VerifyTokenJwt children={<StartSessionComponent/>} />,
+  "/Results": () => <VerifyTokenJwt children={<Results/>} />,
+  "/Recommendations" : () => <VerifyTokenJwt children={<Feedback/>} />,
+  "/SessionsComparator" : () => <VerifyTokenJwt children={<SessionsComparator/>} />,
   "/Login" : () => <Login/>,
   "/Register" : () => <Register/>
 }
