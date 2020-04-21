@@ -3,8 +3,10 @@ const   express      = require('express'),
         cors         = require('cors');
         parser       = require('body-parser'),
         port         = process.env.PORT || 13860,
-        sessionCtl      = require('./controllers/session.ctl'),
-
+        sessionCtl   = require('./controllers/session.ctl'),
+        userCtl      = require('./controllers/user.ctl'),
+        userHandler  = require('./authentication/authentication.ctl')
+        middleware   = require('./authentication/middleware')
 
 app.set('port', port);
 app.use(cors());
@@ -20,14 +22,20 @@ app.use((req, res, next) => {
     next();
 });
 
+/** Session routes */
 app.get('/getAllSessions', sessionCtl.getAllSessions);
 app.post('/addSession', sessionCtl.addSession);
 
+
+/** User routes */
+app.get('/login', [userCtl.getUser, userHandler.login]);
+app.post('/register', [userCtl.addUser, userHandler.register]);
+app.get('/checkUserToken', middleware.checkToken)
 
 const server = app.listen(port, () => {
     console.log(`listening on port ${port}`);
 });
 
 app.all('*', (req, res) => {
-    res.status(404).send(`{"result": "Failure", "error": "Bad Route"}`)
+    res.status(404).send(`{"success": false, "message": "Bad Route"}`)
 });

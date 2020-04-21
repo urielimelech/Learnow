@@ -15,7 +15,7 @@ export const VideoPlayer = ({sessionVideo, sessionQuiz}) =>{
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [isAlreadyOpened, setIsAlreadyOpened] = useState(false)
 
-  const roomNumber = useSelector(state => state.MainReducer.roomNumber)
+  const ip = useSelector(state => state.MainReducer.ip)
 
   const warnImageSrc = 'https://png2.cleanpng.com/sh/e7d54f647617ebfe6feb8fa64ae5d38d/L0KzQYi4UsE3N5dpSpGAYUO4QrOCg8dmbJRoSJC9MES2Q4SBVcE2OWQ5S6Y5MUK4QYq9TwBvbz==/5a352b9c7edcc0.4043338515134340125196.png'
 
@@ -41,7 +41,7 @@ export const VideoPlayer = ({sessionVideo, sessionQuiz}) =>{
 
   const emitWhenAnswerOccuredInVideo = () => {
     if (Math.floor(videoState.playedSeconds) === answerTimeInVideo[index]) {
-      socketToWebServer.emit('answer in video', ({date: Date.now(), roomNumber: roomNumber}))
+      socketToWebServer.emit('answer in video', ({date: Date.now(), ip: ip}))
       const i = index + 1
       setIndex(i)
     }
@@ -52,15 +52,14 @@ export const VideoPlayer = ({sessionVideo, sessionQuiz}) =>{
   }
 
   const onStartVideo = () => {
-    console.log(roomNumber)
-    socketToWebServer.emit('ready for data stream', roomNumber)
+    socketToWebServer.emit('ready for data stream', ip)
     socketToWebServer.on('data to client', data => {
       console.log(data)
     })
   }
 
   const onEndVideo = () => {
-    socketToWebServer.emit('end of video', roomNumber)
+    socketToWebServer.emit('end of video', ip)
       _dispatch(isVideoEnded(true))
   }
 

@@ -6,7 +6,8 @@ import {
     lowestAttentionLevel, 
     lowestMeditationLevel, 
     highestAttentionLevel, 
-    highestMeditationLevel } from '../SessionAnalyzer/index.js'
+    highestMeditationLevel 
+} from '../SessionAnalyzer/index.js'
 import { ActivityAnalyzer } from '../ActivityAnalyzer/index.js'
 import { Correlator } from '../Correlator/index.js'
 import { dataBaseOptions } from './DataBaseOptions.js'
