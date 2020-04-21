@@ -6,6 +6,7 @@ module.exports = {
         req.on('data', data=>{
             console.log('data db server',data.toString())
             const {
+                userEmail               = null,
                 startTimeStamp          = null,
                 endTimeStamp            = null, 
                 monitorData             = [], 
@@ -22,6 +23,7 @@ module.exports = {
                 feedback                = []
             } = JSON.parse(data.toString())
             const session = new Session({
+                userEmail,
                 startTimeStamp, 
                 endTimeStamp, 
                 monitorData, 
