@@ -1,5 +1,6 @@
 var mongoose    =               require('mongoose'),
     session     =               new mongoose.Schema({
+        userEmail:              String,
         startTimeStamp:         Number,
         endTimeStamp:           Number,
         monitorData:            [],
