@@ -10,7 +10,7 @@ export const VerifyTokenJwt = ({children}) => {
     const loggedUser = useSelector(state => state.MainReducer.loggedUser)
     const verified = useSelector(state => state.MainReducer.isVerify)
     const _dispatch = useDispatch()
-    const check15Min = 1000 * 60 * 15
+    const check15Min = 1000 * 60 * 15 
 
     const checkTokenWithServer = () => {
         socketToWebServer.emit('validate token', loggedUser.token)
@@ -29,7 +29,7 @@ export const VerifyTokenJwt = ({children}) => {
 
     useEffect(() => {
         if (verified === false){
-            navigate('/Login')
+            navigate('/')
             /** add a message to user that the token is not valid anymore and need to reconnect */
             return 
         }

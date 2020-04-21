@@ -1,63 +1,54 @@
 import { writeSessionToDataBase } from '../../SessionWriterToDB/index.js'
+import { sessionObj } from '../SessionObject.js'
 import open from 'open'
 
 export const socketWithThinkgear = (serverIOService, soc, rooms) => {
 
+    /** when TGC is disconnecting */
+    // soc.on('disconnect', () => {
+        
+    // })
+
     /** create room for TGC and react */
-    soc.on('new TGC connection', () => {
-        console.log('new TGC connection')
-        const roomNumber = rooms.length + 1
-        const roomName = `room ${roomNumber}`
-        const obj = {
-            roomName: roomName,
-            roomNumber: roomNumber,
-            isReadyForVideo: false,
-            sessionData: {
-                startTimeStamp:             0,
-                endTimeStamp:               0,
-                monitorData:                [],
-                startQuizStamp:             0,
-                avarageAttention:           0,
-                avarageMeditation:          0,
-                lowestAttentionLevel:       [],
-                highestAttentionLevel:      [],
-                lowestMeditationLevel:      [],
-                highestMeditationLevel:     [],
-                quizData:                   {},
-                answersQuiz:                [],
-                timeAnswersInVideo:         [],
-                correlation:                {},
-                feedback:                   []
-            }
+    soc.on('new TGC connection', ip => {
+        console.log('new TGC connection', ip)
+        const roomData = serverIOService.sockets.adapter.rooms[ip]
+        /** check if room does not exist */
+        if (!roomData){
+            /** if room does not exist, update parameters in session object */
+            const obj = sessionObj()
+            obj.roomName = ip
+            obj.roomNumber = rooms.length + 1
+            obj.neuro = true
+            /** save session object in the array of all active objects */
+            rooms.push(obj)
+            /** create a room with the same name as ip address obtained from the client PC */
+            soc.join(ip)
         }
-        rooms.push(obj)
-        soc.join(roomName)
-        serverIOService.sockets.in(roomName).emit('room name for client', roomName)
-        open('http://localhost:3000/Session'/*, {app: 'google chrome'}*/)
+        serverIOService.sockets.in(ip).emit('TGC connected to room', ip)
+        // open('http://localhost:3000/Session'/*, {app: 'google chrome'}*/)
     })
 
      /** fetch data from neurosky TGC server and send it to react client */
-     soc.on('session data', ({ data, myRoom }) => {
+     soc.on('session data', ({ data, ip }) => {
         rooms.forEach(e => {
-            if (e.roomName === myRoom && e.isReadyForVideo) {
-                serverIOService.sockets.in(myRoom).emit('data to client', data)
-                data = JSON.parse(data)
-                // console.log('data after parse: ', data)
+            if (e.roomName === ip && e.isReadyForVideo) {
+                serverIOService.sockets.in(ip).emit('data to client', data)
                 e.sessionData.monitorData.push(data)
             }
         })
     })
 
     /** get notification if headset stopped from sending data */
-    soc.on('session ended from headset', myRoom => {
-        serverIOService.sockets.in(myRoom).emit('session ended from headset', )
+    soc.on('session ended from headset', ip => {
+        serverIOService.sockets.in(ip).emit('session ended from headset', )
         rooms.forEach(e => {
-            if (e.roomName === myRoom && e.sessionData.monitorData.length > 0){
+            if (e.roomName === ip && e.sessionData.monitorData.length > 0){
                 e.sessionData = writeSessionToDataBase(e.sessionData)
                 e.isReadyForVideo = false
             }
         })
-        console.log('session ended in', myRoom)
+        console.log('session ended in', ip)
         soc.disconnect(true)
     })
 

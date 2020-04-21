@@ -23,7 +23,7 @@ export const NavBar = () => {
                 </Nav>
 
                 <Nav>
-                    <Nav.Link onClick={() => navigate('/Login')}>Sign In</Nav.Link>
+                    <Nav.Link onClick={() => navigate('/')}>Sign In</Nav.Link>
                     <Nav.Link onClick={() => navigate('/Register')}>Register </Nav.Link>
                 </Nav>
             </Navbar>

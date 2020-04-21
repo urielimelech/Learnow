@@ -10,7 +10,7 @@ import { isVideoEnded, isConnectedToRoom } from '../../Redux/Actions'
 export const Quiz = ({sessionQuiz}) => {
 
     const _dispatch = useDispatch()
-    const roomNumber = useSelector(state => state.MainReducer.roomNumber)
+    const ip = useSelector(state => state.MainReducer.ip)
 
     const turnOffIsVideoEnded = () => {
         _dispatch(isVideoEnded(false))
@@ -19,7 +19,7 @@ export const Quiz = ({sessionQuiz}) => {
     }
 
     const onCompleteAction = obj => {
-        socketToWebServer.emit('end quiz', {data: obj, roomNumber: roomNumber})
+        socketToWebServer.emit('end quiz', {data: obj, ip: ip})
         return <button onClick={turnOffIsVideoEnded}> go and see your Results </button> 
     }
 

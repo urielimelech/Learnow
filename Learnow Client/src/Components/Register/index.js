@@ -17,11 +17,34 @@ export const Register = () => {
     const [submitted, setSubmitted] = useState(false)
     const { name, email, password } = user
 
+    const loggedUser = useSelector(state => state.MainReducer.loggedUser)
+
     const _dispatch = useDispatch()
+
+    const userSignUp = () => {
+        socketToWebServer.on('registration data', ({name, token, success, message}) => {
+            if (success){
+                _dispatch(register({name: name, token: token}))
+            }
+            else {
+                console.log(message)
+                setErrorRegister(<ToastNotification renderComponent={message}/>)
+                setTimeout(() => {
+                    setErrorRegister(null)
+                },6000)
+            }
+        })
+    }
 
     useEffect(() => {
         _dispatch(logout())
+        userSignUp()
     }, [])
+
+    useEffect(() => {
+        if (Object.keys(loggedUser).length > 0)
+            navigate('/Session')
+    },[loggedUser])
 
     const handleChange = e => {
         const { name, value } = e.target
@@ -32,25 +55,9 @@ export const Register = () => {
         e.preventDefault()
         setSubmitted(true)
         if (user.email && user.password && user.name) {
-            _dispatch(register(user))
             socketToWebServer.emit('register data', ({name: name, email: email, password: password}))
         }
     }
-
-    socketToWebServer.on('registration data', ({name, token, success, message}) => {
-        if (success){
-            _dispatch(register({name: name, token: token}))
-            navigate ('/Session')
-        }
-        else {
-            Object.keys(message).length > 0 ? 
-                setErrorRegister(<ToastNotification renderComponent={message.message}/>) : 
-                setErrorRegister(<ToastNotification renderComponent={message}/>)
-            setTimeout(() => {
-                setErrorRegister(null)
-            },6000)
-        }
-    })
 
     return (
         <div className="col-lg-8 offset-lg-2">

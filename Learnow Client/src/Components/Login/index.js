@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { navigate } from 'hookrouter'
 
 import { login, logout } from '../../Redux/Actions'
@@ -12,14 +12,34 @@ export const Login = () => {
         email: '',
         password: ''
     })
+    
     const [submitted, setSubmitted] = useState(false)
     const [errorLogin, setErrorLogin] = useState(null)
     const { email, password } = inputs
     const _dispatch = useDispatch()
 
+    const loggedUser = useSelector(state => state.MainReducer.loggedUser)
+
+    const userSignIn = () =>{
+        socketToWebServer.on('logged data', ({email, name, token, success, message}) => {
+            if (success){
+                _dispatch(login({email: email, name: name, token: token}))
+            }
+            else {
+                setErrorLogin(<ToastNotification renderComponent={message}/>)
+            }
+        })
+    }
+
     useEffect(() => { 
         _dispatch(logout())
+        userSignIn()
     }, [])
+
+    useEffect(() => {
+        if (Object.keys(loggedUser).length > 0)
+            navigate('/Session')
+    },[loggedUser])
 
     const handleChange = e => {
         const { name, value } = e.target
@@ -33,16 +53,6 @@ export const Login = () => {
             socketToWebServer.emit('login data', ({email: email, password: password}))
         }
     }
-
-    socketToWebServer.on('logged data', ({email, name, token, success, message}) => {
-        if (success){
-            _dispatch(login({email: email, name: name, token: token}))
-            navigate ('/Session')
-        }
-        else {
-            setErrorLogin(<ToastNotification renderComponent={message}/>)
-        }
-    })
 
     return (
         <div className="col-lg-8 offset-lg-2"> 
