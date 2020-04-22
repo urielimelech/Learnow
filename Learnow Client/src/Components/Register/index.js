@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { navigate } from 'hookrouter'
 
-import { register, logout } from '../../Redux/Actions'
+import { register, logout, notificationVisible } from '../../Redux/Actions'
 import { socketToWebServer } from '../../SocketIoClient'
 import { ToastNotification } from '../Toastify'
 
@@ -18,6 +18,7 @@ export const Register = () => {
     const { name, email, password } = user
 
     const loggedUser = useSelector(state => state.MainReducer.loggedUser)
+    const isNotificationVisible = useSelector(state => state.MainReducer.isNotificationVisible)
 
     const _dispatch = useDispatch()
 
@@ -27,11 +28,9 @@ export const Register = () => {
                 _dispatch(register({name: name, token: token}))
             }
             else {
-                console.log(message)
+                _dispatch(notificationVisible(true))
                 setErrorRegister(<ToastNotification renderComponent={message}/>)
-                setTimeout(() => {
-                    setErrorRegister(null)
-                },6000)
+                setSubmitted(false)
             }
         })
     }
@@ -45,6 +44,11 @@ export const Register = () => {
         if (Object.keys(loggedUser).length > 0)
             navigate('/Session')
     },[loggedUser])
+
+    useEffect(() => {
+        if (!isNotificationVisible)
+            setErrorRegister(null)
+    },[isNotificationVisible])
 
     const handleChange = e => {
         const { name, value } = e.target

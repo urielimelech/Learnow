@@ -1,31 +1,28 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.min.css'
 
 import { WrapperVideo, Video } from './VideoStyle'
-import { isVideoEnded } from '../../Redux/Actions'
+import { isVideoEnded, notificationVisible } from '../../Redux/Actions'
 import { socketToWebServer } from '../../SocketIoClient'
+import { ToastNotification } from '../Toastify'
+import { VideoWarning } from './VideoWarning'
 
 export const VideoPlayer = ({sessionVideo, sessionQuiz}) =>{
 
   const _dispatch = useDispatch()
   const [index, setIndex] = useState(0)
   const [videoState, setVideoState] = useState(null)
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const [isAlreadyOpened, setIsAlreadyOpened] = useState(false)
+  const [watchVideoWarning, setWatchVideoWarning] = useState(null)
 
   const ip = useSelector(state => state.MainReducer.ip)
   const loggedUser = useSelector(state => state.MainReducer.loggedUser)
-
-  const warnImageSrc = 'https://png2.cleanpng.com/sh/e7d54f647617ebfe6feb8fa64ae5d38d/L0KzQYi4UsE3N5dpSpGAYUO4QrOCg8dmbJRoSJC9MES2Q4SBVcE2OWQ5S6Y5MUK4QYq9TwBvbz==/5a352b9c7edcc0.4043338515134340125196.png'
+  const isNotificationVisible = useSelector(state => state.MainReducer.isNotificationVisible)
 
   const answerTimeInVideo = sessionQuiz.questions.map(elem => {
     return Number(elem.timeOfAnswerInVideoBySeconds)
   }).sort( (a,b) => a-b )
     
-  socketToWebServer.on('connected', data => console.log(data, 'with web server'))
-
   socketToWebServer.on('session ended from headset', () => {
     console.log('session ended from headset')
   })
@@ -35,10 +32,10 @@ export const VideoPlayer = ({sessionVideo, sessionQuiz}) =>{
       emitWhenAnswerOccuredInVideo()
   },[videoState])
 
-  useEffect(()=>{
-    if(isModalOpen)
-      setIsAlreadyOpened(true)
-  },[isModalOpen])
+  useEffect(() => {
+    if (!isNotificationVisible)
+      setWatchVideoWarning(null)
+  },[isNotificationVisible])
 
   const emitWhenAnswerOccuredInVideo = () => {
     if (Math.floor(videoState.playedSeconds) === answerTimeInVideo[index]) {
@@ -47,8 +44,10 @@ export const VideoPlayer = ({sessionVideo, sessionQuiz}) =>{
       setIndex(i)
     }
     else if (Math.floor(videoState.playedSeconds) > answerTimeInVideo[index]) {
-      console.log('user need to watch the full video')
-      setIsModalOpen(true)
+      if (watchVideoWarning === null){
+        _dispatch(notificationVisible(true))
+        setWatchVideoWarning(<ToastNotification renderComponent={<VideoWarning/>}/>)
+      }
     }
   }
 
@@ -62,33 +61,11 @@ export const VideoPlayer = ({sessionVideo, sessionQuiz}) =>{
 
   const onEndVideo = () => {
     socketToWebServer.emit('end of video', ip)
-      _dispatch(isVideoEnded(true))
+    _dispatch(isVideoEnded(true))
   }
 
   const onProgressVideo = videoState => {
     setVideoState(videoState)
-  }
-
-  const optionsToast = {
-    position: "top-center",
-    autoClose: 5000,
-    hideProgressBar: false,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-  }
-
-  const Img = () => {
-    return (
-      <div>
-        <img style={{objectFit: 'contain', height: '40px'}} src={warnImageSrc}/>
-        please, watch the full video
-      </div>
-    )
-  }
-
-  const warningVideo = () =>{
-    toast.warn(<Img/>, optionsToast)
   }
 
   //stop the video if the neurosky disconnected
@@ -103,23 +80,7 @@ export const VideoPlayer = ({sessionVideo, sessionQuiz}) =>{
               onStart = {onStartVideo}
               onEnded = {onEndVideo}
               onProgress = {onProgressVideo}
-              // wrapper={Video}
-              // width={'50%'}
-              // height={450}
             />
-
-            <ToastContainer
-              position="top-center"
-              autoClose={5000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnVisibilityChange
-              draggable
-              pauseOnHover
-            />    
-
-            {isModalOpen && !isAlreadyOpened ? warningVideo() : null} 
+            {watchVideoWarning}
           </WrapperVideo>
 }

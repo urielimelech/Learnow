@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import axios from 'axios'
 
-import { setIp, isConnectedToRoom } from '../../Redux/Actions'
+import { setIp, isConnectedToRoom, notificationVisible } from '../../Redux/Actions'
 import { VideoPlayer } from '../VideoPlayer'
 import { Quiz } from '../Quiz'
 import { sessionActivity } from '../SessionActivity'
@@ -20,6 +20,7 @@ export const StartSessionComponent = () => {
 
   const ip = useSelector(state => state.MainReducer.ip)
   const connectedToRoom = useSelector(state => state.MainReducer.isConnectedToRoom)
+  const isNotificationVisible = useSelector(state => state.MainReducer.isNotificationVisible)
 
   const _dispatch = useDispatch()
 
@@ -27,13 +28,14 @@ export const StartSessionComponent = () => {
     if (status)
       _dispatch(isConnectedToRoom(status))
     else {
+      _dispatch(notificationVisible(true))
       setErrorNeuro(<ToastNotification renderComponent={'wait for neurosky headset to connect or check if the headset is turned on'}/>)
     }
   })
 
   useEffect(() => {
-    getComputerIp()
-    // _dispatch(setIp('176.231.7.135'))
+    // getComputerIp()
+    _dispatch(setIp('176.231.3.171'))
     enteredRoom()
   },[])
   
@@ -60,6 +62,11 @@ export const StartSessionComponent = () => {
       clearInterval(roomCheck)
     }
   },[connectedToRoom])
+
+  useEffect(() => {
+    if (!isNotificationVisible)
+        setErrorNeuro(null)
+  },[isNotificationVisible])
 
   const getComputerIp = async () => {
     try {
