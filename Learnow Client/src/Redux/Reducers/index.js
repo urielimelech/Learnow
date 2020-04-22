@@ -1,4 +1,4 @@
-import { IS_VIDEO_ENDED, IS_CONNECTED_TO_ROOM, LAST_SESSION_DATA, IS_FIRST_SESSION, LOGIN, LOGOUT, REGISTER, IS_VERIFY, SET_IP } from '../ActionTypes'
+import { IS_VIDEO_ENDED, IS_CONNECTED_TO_ROOM, LAST_SESSION_DATA, IS_FIRST_SESSION, LOGIN, LOGOUT, REGISTER, IS_VERIFY, SET_IP, SET_NOTIFICATION_VISIBLE } from '../ActionTypes'
 
 const initialState = {
   navigation: '',
@@ -8,7 +8,8 @@ const initialState = {
   isFirstSession: null,
   loggedUser: {},
   isVerify: null,
-  ip: ''
+  ip: '',
+  isNotificationVisible: false
 }
 
 export default (state = initialState, action) => {
@@ -57,6 +58,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         ip: action.data
+      }
+    case SET_NOTIFICATION_VISIBLE:
+      return {
+        ...state,
+        isNotificationVisible: action.data
       }
     default:
       return state

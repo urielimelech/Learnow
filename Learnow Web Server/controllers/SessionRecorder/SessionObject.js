@@ -4,7 +4,7 @@ export const sessionObj = () => {
         roomNumber: 0,
         isReadyForVideo: false,
         sessionData: {
-            userEmail: '',
+            userEmail:                  '',
             startTimeStamp:             0,
             endTimeStamp:               0,
             monitorData:                [],
