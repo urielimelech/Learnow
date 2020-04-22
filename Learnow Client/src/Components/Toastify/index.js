@@ -20,12 +20,8 @@ export const ToastNotification = ({ renderComponent, autoClose, position }) => {
 
     const isNotificationVisible = useSelector(state => state.MainReducer.isNotificationVisible)
 
-    const renderNotification = renderComponent => {
-        return renderComponent
-    }
-
     useEffect(() => {
-        toast.warn(renderNotification(renderComponent), optionsToast)
+        toast.warn(renderComponent, optionsToast)
         setTimeout(() => {
             _dispatch(notificationVisible(false))
         }, optionsToast.autoClose + 1000)

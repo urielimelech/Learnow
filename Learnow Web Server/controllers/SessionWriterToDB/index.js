@@ -13,25 +13,6 @@ import { Correlator } from '../Correlator/index.js'
 import { dataBaseOptions } from './DataBaseOptions.js'
 import { ResultFeedback } from '../Feedback/ResultFeedback/index.js'
 
-const resetSessionData = sessionData => {
-    sessionData.startTimeStamp          = 0
-    sessionData.endTimeStamp            = 0
-    sessionData.monitorData             = []
-    sessionData.startQuizStamp          = 0
-    sessionData.quizData                = {}
-    sessionData.avarageAttention        = 0
-    sessionData.avarageMeditation       = 0
-    sessionData.lowestAttentionLevel    = []
-    sessionData.highestAttentionLevel   = []
-    sessionData.lowestMeditationLevel   = []
-    sessionData.highestMeditationLevel  = []
-    sessionData.answersQuiz             = []
-    sessionData.timeAnswersInVideo      = []
-    sessionData.correlation             = {}
-    sessionData.feedback                = []
-    return sessionData
-}
-
 const createSocketToDataBase = () => {
     return http.request(dataBaseOptions, (res) => {
         res.on('data', data => {
@@ -70,5 +51,4 @@ export const writeSessionToDataBase = sessionData => {
     socketToDataBase.write(JSON.stringify(sessionData))
     socketToDataBase.end()
     return sessionData
-    // return resetSessionData(sessionData)
 }
