@@ -42,7 +42,8 @@ export default (state = initialState, action) => {
     case LOGOUT:
       return {
         ...state,
-        loggedUser: action.data
+        loggedUser: action.data,
+        isVerify: null
       }
     case REGISTER:
       return {

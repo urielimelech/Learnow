@@ -23,9 +23,9 @@ export const Register = () => {
     const _dispatch = useDispatch()
 
     const userSignUp = () => {
-        socketToWebServer.on('registration data', ({name, token, success, message}) => {
+        socketToWebServer.on('registration data', ({email, name, token, success, message}) => {
             if (success){
-                _dispatch(register({name: name, token: token}))
+                _dispatch(register({email: email, name: name, token: token}))
             }
             else {
                 _dispatch(notificationVisible(true))
