@@ -51,5 +51,4 @@ export const socketWithThinkgear = (serverIOService, soc, rooms) => {
         console.log('session ended in', ip)
         soc.disconnect(true)
     })
-
 }

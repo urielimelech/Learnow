@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { Chart } from 'react-google-charts';
-
-import { socketToWebServer } from '../../SocketIoClient'
-import { getLastSessionData } from '../../Redux/Actions'
 
 export const Results = () => {
 
-    const _dispatch = useDispatch()
     const lastSessionData = useSelector(state => state.MainReducer.lastSessionData)
-    const ip = useSelector(state => state.MainReducer.ip)
 
     const [sessionData, setSessionData] = useState(null)
     const [videoSessionData, setVideoSessionData] = useState(null)
@@ -69,14 +64,6 @@ export const Results = () => {
             setQuizSessionData(getQuizSessionSerie(lastSessionData, sessionData))
         }
     },[sessionData])
-
-    useEffect(() => {
-        socketToWebServer.emit('get last ended session', ip)
-        socketToWebServer.on('last ended session', sessionData => {
-            console.log('last session data', sessionData)
-            _dispatch(getLastSessionData(sessionData))
-        })
-    },[])
 
     const options = {
         hAxis: {

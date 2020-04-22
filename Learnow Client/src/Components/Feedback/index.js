@@ -10,11 +10,10 @@ export const Feedback = () => {
 
     const [groupCard, setGroupCard] = useState([])
 
-    const ip = useSelector(state => state.MainReducer.ip)
+    const loggedUser = useSelector(state => state.MainReducer.loggedUser)
 
     useEffect(()=>{
-        socketToWebServer.emit('get suggestions cards', ip)
-        // socketToWebServer.emit('get suggestions cards', )
+        socketToWebServer.emit('get suggestions cards', loggedUser.email)
         socketToWebServer.on('suggestions cards', data => {
             setGroupCard(data)
         })
