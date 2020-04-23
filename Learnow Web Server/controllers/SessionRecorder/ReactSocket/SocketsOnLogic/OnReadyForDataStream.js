@@ -4,6 +4,5 @@ export const onReadyForDataStream = (rooms, ip, email) => {
         if (e.roomName === ip)
             e.isReadyForVideo = true
             e.sessionData.userEmail = email
-            console.log(e)
     })
 }
