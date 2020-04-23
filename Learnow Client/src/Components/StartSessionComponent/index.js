@@ -45,6 +45,7 @@ export const StartSessionComponent = () => {
       switch (IsFirstSession) {
         case (true): return setCurrSessionActivityData(sessionActivity[0])
         case (false): return setCurrSessionActivityData(sessionActivity[1])
+        default: return
       }
     }
   },[IsFirstSession])

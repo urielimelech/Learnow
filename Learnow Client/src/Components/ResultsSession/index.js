@@ -24,7 +24,7 @@ export const Results = () => {
             if (shift <= e[0] && e[0] <= diff + shift) 
                 return e
             else if (e[0] === 'x')
-                return
+                return undefined
         }).filter(item => {
             return item !== undefined
         })
