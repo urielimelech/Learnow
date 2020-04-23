@@ -7,6 +7,7 @@ import { isVideoEnded, notificationVisible } from '../../Redux/Actions'
 import { socketToWebServer } from '../../SocketIoClient'
 import { ToastNotification } from '../Toastify'
 import { VideoWarning } from './VideoWarning'
+import { CheckMeasureAvarage } from '../CheckMeasureAvarage'
 
 export const VideoPlayer = ({sessionVideo, sessionQuiz}) =>{
 
@@ -23,9 +24,11 @@ export const VideoPlayer = ({sessionVideo, sessionQuiz}) =>{
     return Number(elem.timeOfAnswerInVideoBySeconds)
   }).sort( (a,b) => a-b )
     
-  socketToWebServer.on('session ended from headset', () => {
-    console.log('session ended from headset')
-  })
+  useEffect(() => {
+    socketToWebServer.on('session ended from headset', () => {
+      console.log('session ended from headset')
+    })
+  },[])
 
   useEffect(() => {
     if(videoState)
@@ -82,5 +85,6 @@ export const VideoPlayer = ({sessionVideo, sessionQuiz}) =>{
               onProgress = {onProgressVideo}
             />
             {watchVideoWarning}
+            <CheckMeasureAvarage/>
           </WrapperVideo>
 }

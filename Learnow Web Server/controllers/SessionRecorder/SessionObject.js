@@ -3,6 +3,8 @@ export const sessionObj = () => {
         roomName: '',
         roomNumber: 0,
         isReadyForVideo: false,
+        counter: 0,
+        stopIndex: 0,
         sessionData: {
             userEmail:                  '',
             startTimeStamp:             0,

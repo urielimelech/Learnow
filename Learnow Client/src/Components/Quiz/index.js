@@ -6,6 +6,7 @@ import QuizComponent from 'react-quiz-component-timestamp-per-answer'
 import { WrapperQuiz } from './styleQuiz'
 import { socketToWebServer } from '../../SocketIoClient'
 import { isVideoEnded, isConnectedToRoom, getLastSessionData } from '../../Redux/Actions'
+import { CheckMeasureAvarage } from '../CheckMeasureAvarage'
 
 export const Quiz = ({sessionQuiz}) => {
 
@@ -30,6 +31,7 @@ export const Quiz = ({sessionQuiz}) => {
     }
 
     return <WrapperQuiz>
+        <CheckMeasureAvarage/>
         <QuizComponent quiz={sessionQuiz} onComplete={onCompleteAction}/>
     </WrapperQuiz>
 }
