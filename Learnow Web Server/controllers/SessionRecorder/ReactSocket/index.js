@@ -38,8 +38,8 @@ export const socketWithReact = (serverIOService, soc, rooms) => {
     })
 
     /** get register parameters from react and send to db if user can register */
-    soc.on('register data', ({name, email, password}) => {
-        onRegisterData(soc, name, email, password)
+    soc.on('register data', ({name, email, password, userType}) => {
+        onRegisterData(soc, name, email, password, userType)
     })
 
     /** get login parameters from react and send to db if user can login */

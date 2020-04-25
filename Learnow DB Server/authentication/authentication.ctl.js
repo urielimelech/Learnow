@@ -10,10 +10,12 @@ module.exports = {
         const dbEmail = req.result.email
         const dbPass = req.result.password 
         const dbName = req.result.name 
+        const userType = req.result.userType
 
         if (enteredEmail && enteredPassword) {
             if (enteredEmail === dbEmail && enteredPassword === dbPass) {
                 const token = getToken(enteredEmail, dbName)
+                token.userType = userType
                 res.status(200).json(token)
             } else {
                 res.status(403).json({
@@ -45,9 +47,9 @@ const getToken = (email, name) => {
     )
     // return the JWT token for the future API calls
     return ({
-    success: true,
-    message: 'Authentication successful!',
-    token: token,
-    name: name
+        success: true,
+        message: 'Authentication successful!',
+        token: token,
+        name: name
     })
 }

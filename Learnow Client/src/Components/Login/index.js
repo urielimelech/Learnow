@@ -22,9 +22,9 @@ export const Login = () => {
     const isNotificationVisible = useSelector(state => state.MainReducer.isNotificationVisible)
 
     const userSignIn = () =>{
-        socketToWebServer.on('logged data', ({email, name, token, success, message}) => {
+        socketToWebServer.on('logged data', ({email, name, userType, token, success, message}) => {
             if (success){
-                _dispatch(login({email: email, name: name, token: token}))
+                _dispatch(login({email: email, name: name, userType: userType, token: token}))
             }
             else {
                 _dispatch(notificationVisible(true))

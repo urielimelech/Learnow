@@ -3,8 +3,8 @@ const   User      = require('../models/user.js')
 
 module.exports = {
     addUser: async (req, res, next) => {
-        const {email = null, name = null, password = null} = req.body
-        const user = new User({name, email, password})
+        const {email = null, name = null, password = null, userType = null} = req.body
+        const user = new User({name, email, password, userType})
 
         const response =  await User.findOne({email: email})
         if(response){
