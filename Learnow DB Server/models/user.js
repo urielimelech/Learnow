@@ -1,21 +1,26 @@
-var mongoose    =               require('mongoose'),
+var mongoose    = require('mongoose'),
     validator   = require('email-validator')
-    user        =               new mongoose.Schema({
+    user        = new mongoose.Schema({
         name:
-                {
-                    type: String,
-                    required: true
-                },
+            {
+                type: String,
+                required: true
+            },
         email:
-                {
-                    type: String,
-                    required: true
-                },
+            {
+                type: String,
+                required: true
+            },
         password:
-                {
-                    type: String,
-                    required: true
-                }
+            {
+                type: String,
+                required: true
+            },
+        userType:
+            {
+                type: String,
+                required: true
+            }
     })
 
 /* Validations */
@@ -50,6 +55,15 @@ user.path('name').validate(
         
         return true
     }, "Name was not defined correctly.")
+
+user.path('userType').validate(
+    val => {
+        if (!val)
+            return false
+        else 
+            return true
+    }, "userType was not define correctly."
+)
 
 var User = mongoose.model('User', user)
 
