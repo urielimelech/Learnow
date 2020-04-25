@@ -5,17 +5,19 @@ import { navigate } from 'hookrouter'
 import { register, logout, notificationVisible } from '../../Redux/Actions'
 import { socketToWebServer } from '../../SocketIoClient'
 import { ToastNotification } from '../Toastify'
+import { SelectUserType } from './SelectUserType'
 
 export const Register = () => {
 
     const [errorRegister, setErrorRegister] = useState(null)
     const [user, setUser] = useState({
-        name:'',
+        name: '',
         email: '',
-        password: ''
+        password: '',
+        userType: ''
     })
     const [submitted, setSubmitted] = useState(false)
-    const { name, email, password } = user
+    const { name, email, password, userType } = user
 
     const loggedUser = useSelector(state => state.MainReducer.loggedUser)
     const isNotificationVisible = useSelector(state => state.MainReducer.isNotificationVisible)
@@ -23,9 +25,9 @@ export const Register = () => {
     const _dispatch = useDispatch()
 
     const userSignUp = () => {
-        socketToWebServer.on('registration data', ({email, name, token, success, message}) => {
+        socketToWebServer.on('registration data', ({email, name, userType, token, success, message}) => {
             if (success){
-                _dispatch(register({email: email, name: name, token: token}))
+                _dispatch(register({email: email, name: name, userType: userType, token: token}))
             }
             else {
                 _dispatch(notificationVisible(true))
@@ -41,7 +43,7 @@ export const Register = () => {
     }, [])
 
     useEffect(() => {
-        if (Object.keys(loggedUser).length > 0)
+        if (Object.keys(loggedUser).length > 0) 
             navigate('/Session')
     },[loggedUser])
 
@@ -58,8 +60,8 @@ export const Register = () => {
     const handleSubmit = e => {
         e.preventDefault()
         setSubmitted(true)
-        if (user.email && user.password && user.name) {
-            socketToWebServer.emit('register data', ({name: name, email: email, password: password}))
+        if (email && password && name) {
+            socketToWebServer.emit('register data', ({name: name, email: email, password: password, userType: userType}))
         }
     }
 
@@ -70,23 +72,27 @@ export const Register = () => {
                 <div className="form-group">
                     <label>Name</label>
                     <input type="text" name="name" value={user.name} onChange={handleChange} className={'form-control' + (submitted && !user.name ? ' is-invalid' : '')} />
-                    {submitted && !user.name &&
-                        <div className="invalid-feedback">name is required</div>
+                    {submitted && !name &&
+                        <div className="invalid-feedback">Name is required</div>
                     }
                 </div>
                 <div className="form-group">
                     <label>Email</label>
                     <input type="email" name="email" value={user.email} onChange={handleChange} className={'form-control' + (submitted && !user.email ? ' is-invalid' : '')} />
-                    {submitted && !user.email &&
+                    {submitted && !email &&
                         <div className="invalid-feedback">Email is required</div>
                     }
                 </div>
                 <div className="form-group">
                     <label>Password</label>
                     <input type="password" name="password" value={user.password} onChange={handleChange} className={'form-control' + (submitted && !user.password ? ' is-invalid' : '')} />
-                    {submitted && !user.password &&
+                    {submitted && !password &&
                         <div className="invalid-feedback">Password is required</div>
                     }
+                </div>
+                <div className="form-group">
+                    <label>User Type</label>
+                    <SelectUserType name='userType' onChange={handleChange} />
                 </div>
                 <div className="form-group">
                     <button className="btn btn-primary">
