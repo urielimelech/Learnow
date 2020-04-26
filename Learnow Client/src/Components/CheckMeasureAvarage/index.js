@@ -14,14 +14,16 @@ export const CheckMeasureAvarage = () => {
     const [lowLevelWarning, setLowLevelWarning] = useState(null)
 
     useEffect(() => {
-        socketToWebServer.on('avarage in worked session', ({attention, meditation}) => {
-          const lowLevel = 30
-          if (attention < lowLevel || meditation < lowLevel){
-            _dispatch(notificationVisible(true))
-            setLowLevelWarning(<ToastNotification renderComponent={'please pay attention to your meditation and attention'}/>)
-          }
-        })
-      }, [])
+      socketToWebServer.on('avarage in worked session', ({attention, meditation}) => {
+        console.log({attention}, {meditation})
+        const lowLevel = 30
+        if (attention < lowLevel || meditation < lowLevel){
+          _dispatch(notificationVisible(true))
+          setLowLevelWarning(<ToastNotification renderComponent={'please pay attention to your meditation and attention'}/>)
+        }
+      })
+      return () => socketToWebServer.off('avarage in worked session')
+    }, [])
       
     useEffect(() => {
         if (!isNotificationVisible)

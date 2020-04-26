@@ -23,11 +23,12 @@ export const VideoPlayer = ({sessionVideo, sessionQuiz}) =>{
   const answerTimeInVideo = sessionQuiz.questions.map(elem => {
     return Number(elem.timeOfAnswerInVideoBySeconds)
   }).sort( (a,b) => a-b )
-    
+  
+  /**
+   * remove listeners for data to client on unmount component
+   */
   useEffect(() => {
-    socketToWebServer.on('session ended from headset', () => {
-      console.log('session ended from headset')
-    })
+    return () => socketToWebServer.off('data to client')
   },[])
 
   useEffect(() => {
@@ -70,11 +71,6 @@ export const VideoPlayer = ({sessionVideo, sessionQuiz}) =>{
   const onProgressVideo = videoState => {
     setVideoState(videoState)
   }
-
-  //stop the video if the neurosky disconnected
-  // socketToWebServer.on('session ended by headset', () => {
-  //   console.log('session ended from headset')
-  // })
 
   return  <WrapperVideo>
             <Video
