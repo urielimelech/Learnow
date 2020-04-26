@@ -5,10 +5,25 @@ import { getAvarageAttention, getAvarageMeditation } from '../../SessionAnalyzer
 
 export const socketWithThinkgear = (serverIOService, soc, rooms) => {
 
-    /** when TGC is disconnecting */
-    // soc.on('disconnect', () => {
-        
-    // })
+    /** when TGC is disconnecting
+     * remove all clients from room when TGC has disconnected in case of forcely power of sensors
+     * remove session data when TGC has disconnected in the middle of a session
+     */
+    soc.on('disconnect', () => {
+        rooms.forEach(obj => {
+            if (obj.neuro === soc.id) {
+                const roomName = obj.roomName
+                serverIOService.sockets.in(roomName).emit('room closed', false)
+                serverIOService.of('/').in(roomName).clients((error, sockets) => {
+                    if (error) throw error
+                    sockets.forEach(s => {
+                        serverIOService.sockets.sockets[s].leave(roomName)
+                    })
+                })
+                rooms.splice(obj.roomNumber - 1, 1)
+            }
+        })
+    })
 
     /** create room for TGC and react */
     soc.on('new TGC connection', ip => {
@@ -20,7 +35,7 @@ export const socketWithThinkgear = (serverIOService, soc, rooms) => {
             const obj = sessionObj()
             obj.roomName = ip
             obj.roomNumber = rooms.length + 1
-            obj.neuro = true
+            obj.neuro = soc.id
             /** save session object in the array of all active objects */
             rooms.push(obj)
             /** create a room with the same name as ip address obtained from the client PC */
@@ -49,18 +64,5 @@ export const socketWithThinkgear = (serverIOService, soc, rooms) => {
                 serverIOService.sockets.in(ip).emit('data to client', data)
             }
         })
-    })
-
-    /** get notification if headset stopped from sending data */
-    soc.on('session ended from headset', ip => {
-        serverIOService.sockets.in(ip).emit('session ended from headset', )
-        rooms.forEach(e => {
-            if (e.roomName === ip && e.sessionData.monitorData.length > 0){
-                e.sessionData = writeSessionToDataBase(e.sessionData)
-                e.isReadyForVideo = false
-            }
-        })
-        console.log('session ended in', ip)
-        soc.disconnect(true)
     })
 }
