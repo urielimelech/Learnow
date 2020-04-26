@@ -7,8 +7,21 @@ export const onEndQuiz = (serverIOService, soc, rooms, data, ip) => {
             e.sessionData = writeSessionToDataBase(e.sessionData)
             e.isReadyForVideo = false
             soc.emit('last ended session', e.sessionData)
+            /**
+             * clear the session data from web server when session ended
+             */
             rooms.splice(e.roomNumber - 1, 1)
-            serverIOService.sockets.in(ip).emit('session ended by quiz', ip)
+            serverIOService.sockets.in(ip).emit('session ended by quiz', )
+            /**
+             * clear all clients from room whe session ended
+             */
+            serverIOService.of('/').in(ip).clients((error, sockets) => {
+                if (error) throw error
+                sockets.forEach(s => {
+                    serverIOService.sockets.sockets[s].leave(ip)
+                })
+            })
+
         }
     })
     console.log(`session ended in room ${ip}`)

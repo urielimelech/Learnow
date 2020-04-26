@@ -3,7 +3,7 @@ export const onIp = (serverIOService, soc, ip) => {
     /** check if room exists */
     if (!roomData){
         console.log('room not exist', ip)
-        soc.emit('enter room', false)
+        soc.emit('room closed', false)
     }
     /** enter to room acoording to the ip */
     else {

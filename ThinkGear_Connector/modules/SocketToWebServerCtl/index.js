@@ -39,10 +39,23 @@ export const WebServerSocketController = () => {
         console.log('TGC collector and React are connected')
     })
 
+    /**
+     * kill the proccess of TGC when the sensors disconnect
+     */
+    socketToWebServer.on('disconnect', () => {
+        neuroskySocket.write(JSON.stringify(recordingCommands.stop_recording))
+        neuroskySocket.end()
+        neuroskySocket.destroy()
+        TGC.kill()
+    })
+
+    /**
+     * disconnect TGC from web server when sensors powered off
+     */
     neuroskySocket.setTimeout(timeout)
     neuroskySocket.on('timeout', () => {
         console.log("socket timeout")
-        socketToWebServer.emit('session ended from headset', ip)
+        socketToWebServer.disconnect()
         neuroskySocket.write(JSON.stringify(recordingCommands.stop_recording))
         neuroskySocket.end()
         neuroskySocket.destroy()
