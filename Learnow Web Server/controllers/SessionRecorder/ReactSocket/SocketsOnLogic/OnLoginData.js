@@ -10,7 +10,7 @@ export const onLoginData = (soc, email, password) => {
         }
     })
     .then(res => {
-        soc.emit('logged data', {email: email, name: res.data.name, token: res.data.token, success: res.data.success, message: res.data.message})
+        soc.emit('logged data', {email: email, name: res.data.name, userType: res.data.userType, token: res.data.token, success: res.data.success, message: res.data.message})
     })
     .catch(err => {
         soc.emit('logged data', {success: err.response.data.success, message: err.response.data.message})
