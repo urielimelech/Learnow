@@ -6,6 +6,7 @@ import { SessionsComparator } from "./Components/SessionsComparator"
 import { Login } from './Components/Login'
 import { Register } from './Components/Register'
 import { VerifyTokenJwt } from "./Components/VerifyTokenJwt"
+import { ConfigComponent } from './Components/ConfigComponent'
 
 
 const routes = {
@@ -14,6 +15,7 @@ const routes = {
   "/Results": () => <VerifyTokenJwt children={<Results/>} />,
   "/Recommendations" : () => <VerifyTokenJwt children={<Feedback/>} />,
   "/SessionsComparator" : () => <VerifyTokenJwt children={<SessionsComparator/>} />,
+  "/Configuration": () => <VerifyTokenJwt children={<ConfigComponent/>} />,
   "/Register" : () => <Register/>
 }
 

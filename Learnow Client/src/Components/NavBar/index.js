@@ -20,6 +20,7 @@ export const NavBar = () => {
                     <Nav.Link onClick={() => navigate('/Results')}>Your Results</Nav.Link>
                     <Nav.Link onClick={() => navigate('/Recommendations')}>Recommendations</Nav.Link>
                     <Nav.Link onClick={() => navigate('/SessionsComparator')}>Sessions Comparator</Nav.Link>
+                    <Nav.Link onClick={() => navigate('/Configuration')}>Configuration</Nav.Link>
                 </Nav>
 
                 <Nav>
