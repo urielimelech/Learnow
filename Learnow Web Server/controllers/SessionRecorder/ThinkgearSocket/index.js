@@ -1,4 +1,3 @@
-import { writeSessionToDataBase } from '../../SessionWriterToDB/index.js'
 import { sessionObj } from '../SessionObject.js'
 import open from 'open'
 import { getAvarageAttention, getAvarageMeditation } from '../../SessionAnalyzer/index.js'
@@ -46,12 +45,12 @@ export const socketWithThinkgear = (serverIOService, soc, rooms) => {
     })
 
      /** fetch data from neurosky TGC server and send it to react client */
-     soc.on('session data', ({ data, ip }) => {
+    soc.on('session data', ({ data, ip }) => {
         rooms.forEach(e => {
             if (e.roomName === ip && e.isReadyForVideo) {
                 e.sessionData.monitorData.push(data)
                 e.counter++
-                if (e.counter % 30 === 0) {
+                if (e.counter % e.config.active_session_avarage_after_seconds === 0) {
                     const tempArr = []
                     for(let i = e.stopIndex; i < e.counter; i++) {
                         tempArr.push(e.sessionData.monitorData[i])
