@@ -1,7 +1,7 @@
 import { getAvarageAttention, getAvarageMeditation } from "../SessionAnalyzer/index.js"
 
-const correlation = (element, monitorData) => {
-    const secondsInRange = 5000
+const correlation = (element, monitorData, userConfig) => {
+    const secondsInRange = userConfig * 1000
     const higherBoundTime= Math.ceil(element) + secondsInRange
     const lowerBoundTime= Math.floor(element) - secondsInRange
     
@@ -22,13 +22,13 @@ const correlation = (element, monitorData) => {
     }
 }
 
-export const Correlator = sessionData => {
+export const Correlator = (sessionData, userConfig) => {
     const monitorData = sessionData.monitorData
     const timeAnswersInVideo = sessionData.timeAnswersInVideo
     const timeAnswersInQuiz = sessionData.quizData.userInput
 
-    const videoCorrelation = timeAnswersInVideo.map(element => correlation(element, monitorData))
-    const quizCorrelation = timeAnswersInQuiz.map(element => correlation(element.timeStamp, monitorData))
+    const videoCorrelation = timeAnswersInVideo.map(element => correlation(element, monitorData, userConfig))
+    const quizCorrelation = timeAnswersInQuiz.map(element => correlation(element.timeStamp, monitorData, userConfig))
 
     return { 
         videoCorrelation: videoCorrelation,
