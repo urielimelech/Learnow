@@ -5,6 +5,7 @@ const   express      = require('express'),
         port         = process.env.PORT || 13860,
         sessionCtl   = require('./controllers/session.ctl'),
         userCtl      = require('./controllers/user.ctl'),
+        userConfig   = require('./controllers/userConfig.ctl')
         userHandler  = require('./authentication/authentication.ctl')
         middleware   = require('./authentication/middleware')
 
@@ -26,11 +27,15 @@ app.use((req, res, next) => {
 app.get('/getAllSessions', sessionCtl.getAllSessions);
 app.post('/addSession', sessionCtl.addSession);
 
-
 /** User routes */
 app.get('/login', [userCtl.getUser, userHandler.login]);
 app.post('/register', [userCtl.addUser, userHandler.register]);
 app.get('/checkUserToken', middleware.checkToken)
+
+/** User configuration routes */
+app.post('/addUserConfig', userConfig.addUserConfig)
+app.get('/getUserConfigByEmail', userConfig.getUserConfigByEmail)
+app.put('/updateUserConfig', userConfig.updateUserConfig)
 
 const server = app.listen(port, () => {
     console.log(`listening on port ${port}`);
