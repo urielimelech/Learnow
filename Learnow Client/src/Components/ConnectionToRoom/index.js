@@ -12,6 +12,7 @@ export const ConnectionToRoom = () => {
     const [errorNeuro, setErrorNeuro] = useState(null)
   
     const ip = useSelector(state => state.MainReducer.ip)
+    const loggedUser = useSelector(state => state.MainReducer.loggedUser)
     const connectedToRoom = useSelector(state => state.MainReducer.isConnectedToRoom)
     const isNotificationVisible = useSelector(state => state.MainReducer.isNotificationVisible)
   
@@ -39,7 +40,7 @@ export const ConnectionToRoom = () => {
     }
 
     const checkConnection = ip => setInterval(() => {
-        socketToWebServer.emit('ip', ip)
+        socketToWebServer.emit('ip', ({ip: ip, email: loggedUser.email}))
     }, 5000)
   
     useEffect(() => {
