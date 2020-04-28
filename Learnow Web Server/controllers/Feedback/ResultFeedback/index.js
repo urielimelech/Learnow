@@ -1,4 +1,4 @@
-export const ResultFeedback = (SessionData) =>{
+export const ResultFeedback = (SessionData, userConfig) =>{
     const answersQuiz = SessionData.answersQuiz
     const correlation = SessionData.correlation
 
@@ -10,7 +10,7 @@ export const ResultFeedback = (SessionData) =>{
     }
 
     const checkBalance = avarage => {
-        const balance = 50
+        const balance = userConfig
         return avarage > balance ? 'high' : 'low'
     }
 
