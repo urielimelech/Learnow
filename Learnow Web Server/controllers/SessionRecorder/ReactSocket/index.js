@@ -8,28 +8,14 @@ import { onAnswerInVideo } from './SocketsOnLogic/OnAnswerInVideo.js'
 import { onEndQuiz } from './SocketsOnLogic/OnEndQuiz.js'
 import { onGetSuggestionsCards } from './SocketsOnLogic/OnGetSuggestionsCards.js'
 import { onCompareSessions } from './SocketsOnLogic/OnCompareSessions.js'
+import { onGetUserConfiguration } from './SocketsOnLogic/OnGetUserConfiguration.js'
+import { onSaveConfiguration } from './SocketsOnLogic/OnSaveConfiguration.js'
 
-export const socketWithReact = (serverIOService, soc, rooms) => {
-
-    /** when react is disconnecting */
-    // soc.on('disconnect', () => {
-    //     // console.log('line 11:', soc.id)
-    //     const roomData = serverIOService.sockets.adapter.rooms
-    //     // console.log({roomData})
-    //     rooms.forEach(e => {
-    //         if (e.react === soc.id){
-    //             // console.log(e.neuro)
-    //             if (e.neuro !== true){
-    //                 // console.log('splice')
-    //                 rooms.splice(e.roomNumber - 1, 1)
-    //             }
-    //         }
-    //     })
-    // })
+export const socketWithReact = (serverIOService, soc, rooms, userConfigs) => {
 
     /** create room with ip as the name of the room or joining the client to an exist room */
-    soc.on('ip', ip => {
-        onIp(serverIOService, soc, ip)
+    soc.on('ip', ({ip, email}) => {
+        onIp(serverIOService, soc, rooms, userConfigs, ip, email)
     })
 
     /** validate token with DB server */
@@ -39,12 +25,12 @@ export const socketWithReact = (serverIOService, soc, rooms) => {
 
     /** get register parameters from react and send to db if user can register */
     soc.on('register data', ({name, email, password, userType}) => {
-        onRegisterData(soc, name, email, password, userType)
+        onRegisterData(soc, userConfigs, name, email, password, userType)
     })
 
     /** get login parameters from react and send to db if user can login */
     soc.on('login data', ({email, password}) => {
-        onLoginData(soc, email, password)
+        onLoginData(soc, userConfigs, email, password)
     })
     
     /** get notification from client if video ended */
@@ -73,7 +59,17 @@ export const socketWithReact = (serverIOService, soc, rooms) => {
     })
 
     /** send to client the comparison result between two sessions */
-    soc.on('compare sessions', sessionData => {
-        onCompareSessions(soc, sessionData)
+    soc.on('compare sessions', ({sessionData, email}) => {
+        onCompareSessions(soc, userConfigs, email, sessionData)
+    })
+
+    /** sends to client the configuration */
+    soc.on('get user configuration', email => {
+        onGetUserConfiguration(soc, userConfigs, email)
+    })
+
+    /** save user configuration to the DB */
+    soc.on('save configuration', ({config, userEmail}) => {
+        onSaveConfiguration(userConfigs, config, userEmail)
     })
 }
