@@ -28,25 +28,25 @@ const createSocketToDataBase = () => {
     })
 }
 
-export const dataSessionAnalysis = sessionData => {
+const dataSessionAnalysis = (sessionData, userConfig) => {
     if (sessionData.monitorData.length !== 0) {
         sessionData.startTimeStamp = sessionData.monitorData[0].timeStamp
         sessionData.endTimeStamp = sessionData.monitorData[sessionData.monitorData.length-1].timeStamp
         sessionData.avarageAttention = getAvarageAttention(sessionData.monitorData)
         sessionData.avarageMeditation = getAvarageMeditation(sessionData.monitorData)
-        sessionData.lowestAttentionLevel = lowestAttentionLevel(sessionData.monitorData)
-        sessionData.lowestMeditationLevel = lowestMeditationLevel(sessionData.monitorData)
-        sessionData.highestAttentionLevel = highestAttentionLevel(sessionData.monitorData)
-        sessionData.highestMeditationLevel = highestMeditationLevel(sessionData.monitorData)
+        sessionData.lowestAttentionLevel = lowestAttentionLevel(sessionData.monitorData, userConfig.analyzer_lowest_attention_range)
+        sessionData.lowestMeditationLevel = lowestMeditationLevel(sessionData.monitorData, userConfig.analyzer_lowest_meditation_range)
+        sessionData.highestAttentionLevel = highestAttentionLevel(sessionData.monitorData, userConfig.analyzer_highest_attention_range)
+        sessionData.highestMeditationLevel = highestMeditationLevel(sessionData.monitorData, userConfig.analyzer_highest_meditation_range)
         sessionData.answersQuiz = ActivityAnalyzer(sessionData.quizData)
-        sessionData.correlation = Correlator(sessionData)
-        sessionData.feedback = ResultFeedback(sessionData)
+        sessionData.correlation = Correlator(sessionData, userConfig.correlator_range_of_seconds)
+        sessionData.feedback = ResultFeedback(sessionData, userConfig.feedback_result_balance)
     }
     return sessionData
 }
 
-export const writeSessionToDataBase = sessionData => {
-    sessionData = dataSessionAnalysis(sessionData)
+export const writeSessionToDataBase = (sessionData, userConfig) => {
+    sessionData = dataSessionAnalysis(sessionData, userConfig)
     const socketToDataBase = createSocketToDataBase()
     socketToDataBase.write(JSON.stringify(sessionData))
     socketToDataBase.end()

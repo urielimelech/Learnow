@@ -48,7 +48,6 @@ module.exports = {
                     res.status(404).send(`{"result": "Failure", "params":{"startTimeStamp": "${startTimeStamp}", "endTimeStamp": "${endTimeStamp}"}, "error": ${JSON.stringify(err)}}`);
                 });
         })
-        // const {startTimeStamp = null, endTimeStamp = null, monitorData=[]} = req.body;
     },
     getAllSessions: async (req, res) => {
         Session.find({}).then(result => {

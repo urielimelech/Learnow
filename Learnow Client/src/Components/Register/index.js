@@ -39,6 +39,9 @@ export const Register = () => {
 
     useEffect(() => {
         _dispatch(logout())
+        if (loggedUser.email) {
+            socketToWebServer.emit('logout', loggedUser.email)
+        }
         userSignUp()
     }, [])
 

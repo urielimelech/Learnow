@@ -17,7 +17,6 @@ var mongoose    =               require('mongoose'),
         feedback:               []
     });
 
-
 var Session = mongoose.model('Session', session);
 
 module.exports = Session;

@@ -14,9 +14,10 @@ serverApp.listen(serverPort, serverHost)
 export const serverIOService = io(serverApp)
 
 var rooms = []
+var userConfigs = []
 
 /** on connection to serverIO to start serve */
 export const connectionToServerIO = soc => {
-    socketWithReact(serverIOService, soc, rooms)
-    socketWithThinkgear(serverIOService, soc, rooms)
+    socketWithReact(serverIOService, soc, rooms, userConfigs)
+    socketWithThinkgear(serverIOService, soc, rooms, userConfigs)
 }

@@ -8,10 +8,10 @@ import { setIp, isConnectedToRoom, notificationVisible, isVideoEnded } from '../
 
 export const ConnectionToRoom = () => {
 
-    const [checkRoomConnection, setCheckRoomConnection] = useState(null)
     const [errorNeuro, setErrorNeuro] = useState(null)
   
     const ip = useSelector(state => state.MainReducer.ip)
+    const loggedUser = useSelector(state => state.MainReducer.loggedUser)
     const connectedToRoom = useSelector(state => state.MainReducer.isConnectedToRoom)
     const isNotificationVisible = useSelector(state => state.MainReducer.isNotificationVisible)
   
@@ -30,18 +30,19 @@ export const ConnectionToRoom = () => {
         setErrorNeuro(<ToastNotification renderComponent={'wait for neurosky headset to connect or check if the headset is turned on'}/>)
     })
 
+    const onNewTGC = () => socketToWebServer.on('new TGC', () => {
+        socketToWebServer.emit('ip', ({ip: ip, email: loggedUser.email}))
+    })
+
     const dismissSocketListener = () => {
         socketToWebServer.off('enter room')
         socketToWebServer.off('room closed')
+        socketToWebServer.off('new TGC')
         _dispatch(isConnectedToRoom(false))
         _dispatch(notificationVisible(true))
         _dispatch(isVideoEnded(false))
     }
 
-    const checkConnection = ip => setInterval(() => {
-        socketToWebServer.emit('ip', ip)
-    }, 5000)
-  
     useEffect(() => {
         // getComputerIp()
         _dispatch(setIp('79.182.104.95'))
@@ -51,11 +52,20 @@ export const ConnectionToRoom = () => {
     },[])
 
     useEffect(() => {
-        if (connectedToRoom){
-            clearInterval(checkRoomConnection)
+        let timeout
+        if (!connectedToRoom) {
+            timeout = setInterval(() => {
+                _dispatch(notificationVisible(true))
+                _dispatch(isVideoEnded(false))
+                setErrorNeuro(<ToastNotification renderComponent={'wait for neurosky headset to connect'}/>)
+            }, 5000)
         }
-        else if (!connectedToRoom && ip.length !== 0){
-            setCheckRoomConnection(checkConnection(ip))
+        return () => clearInterval(timeout)
+    },[connectedToRoom])
+
+    useEffect(() => {
+        if (!connectedToRoom && ip.length !== 0){
+            onNewTGC()
         }
     },[connectedToRoom, ip])
     

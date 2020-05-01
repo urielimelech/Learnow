@@ -1,18 +1,12 @@
 import axios from 'axios'
 
-export const Comparator = (lastSession) => {
+export const Comparator = async (lastSession, config) => {
 
-    const allSessions = Promise.resolve(getSession())
-
-    const sessions = allSessions.then((session)=>{
-        return session
-    })
-    return sessions.then((session)=>{
-        return compareSessions(session[0], lastSession)
-    })
+    const session = await getSession()
+    return compareSessions(session, lastSession, config)
 }
 
-const compareSessions = (session1, session2) => {
+const compareSessions = (session1, session2, config) => {
     const session1Attention = getAttentionValues(session1)
     const session2Attention = getAttentionValues(session2)
     const session1Meditation = getMeditationValues(session1)
@@ -28,12 +22,12 @@ const compareSessions = (session1, session2) => {
     const diffAvarageMeditation = session2Meditation.avarage - session1Meditation.avarage
 
     return {
-        isLowestAttentionImproved: diffLowestAttention > 0 ? 'improved' : 'not improved',
-        isHighestAttentionImproved: diffHighestAttention > 0 ? 'improved' : 'not improved',
-        isLowestMeditationImproved: diffLowestMeditation > 0 ? 'improved' : 'not improved',
-        isHighestMeditationImproved: diffHighestMeditation > 0 ? 'improved' : 'not improved',
-        isAvarageAttentionImproved: diffAvarageAttention > 0 ? 'improved' : 'not improved',
-        isAvarageMeditationImproved: diffAvarageMeditation > 0 ? 'improved' : 'not improved'
+        isLowestAttentionImproved: diffLowestAttention > config.comparator_diff_lowest_attention ? 'improved' : 'not improved',
+        isHighestAttentionImproved: diffHighestAttention > config.comparator_diff_highest_attention ? 'improved' : 'not improved',
+        isLowestMeditationImproved: diffLowestMeditation > config.comparator_diff_lowest_meditation ? 'improved' : 'not improved',
+        isHighestMeditationImproved: diffHighestMeditation > config.comparator_diff_highest_meditation ? 'improved' : 'not improved',
+        isAvarageAttentionImproved: diffAvarageAttention > config.comparator_diff_avarage_attention ? 'improved' : 'not improved',
+        isAvarageMeditationImproved: diffAvarageMeditation > config.comparator_diff_avarage_meditation ? 'improved' : 'not improved'
     }
 }
 
@@ -70,7 +64,8 @@ const getSession = async () => {
         const result = await axios (
             `http://localhost:13860/getAllSessions`
         )
-         return result.data
+        const session = result.data[0]
+        return session
     }
     catch (e){
         console.log('catch', e)

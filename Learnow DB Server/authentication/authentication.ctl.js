@@ -7,15 +7,16 @@ module.exports = {
         const enteredEmail = req.query.email
         const enteredPassword = req.query.password
 
-        const dbEmail = req.result.email
-        const dbPass = req.result.password 
-        const dbName = req.result.name 
-        const userType = req.result.userType
+        const dbEmail = req.loginResult.email
+        const dbPass = req.loginResult.password 
+        const dbName = req.loginResult.name 
+        const userType = req.loginResult.userType
 
         if (enteredEmail && enteredPassword) {
             if (enteredEmail === dbEmail && enteredPassword === dbPass) {
                 const token = getToken(enteredEmail, dbName)
                 token.userType = userType
+                token.configResult = req.configResult
                 res.status(200).json(token)
             } else {
                 res.status(403).json({
@@ -31,10 +32,11 @@ module.exports = {
         })
         }
     },
-    register: (req, res) => {
-        const email = req.result.email
-        const name = req.result.name
+    register: (req, res, next) => {
+        const email = req.registerResult.email
+        const name = req.registerResult.name
         const token = getToken(email, name)
+        token.configResult = req.configResult
         return res.status(200).send(token)
     }
 }

@@ -24,7 +24,7 @@ export const getAvarageMeditation = monitorData => {
     return meditationAvarage
 }
 
-export const lowestAttentionLevel = monitorData => {
+export const lowestAttentionLevel = (monitorData, conf) => {
     const attentionArr = monitorData.map((value) => {
         if (value.attention != 0)
             return value.attention
@@ -32,14 +32,14 @@ export const lowestAttentionLevel = monitorData => {
     })
     const minAttentionValue = Math.min(...attentionArr)
     return monitorData.map(element => {
-        if (element.attention !== 0 && element.attention <= minAttentionValue + 10 )
+        if (element.attention !== 0 && element.attention <= minAttentionValue + conf)
             return element
     }).filter(item => {
         return item !== undefined
     })
 }
 
-export const lowestMeditationLevel = monitorData => {
+export const lowestMeditationLevel = (monitorData, conf) => {
     const meditationArr = monitorData.map((value) => {
         if (value.meditation != 0)
             return value.meditation
@@ -47,33 +47,33 @@ export const lowestMeditationLevel = monitorData => {
     })
     const minMeditationValue = Math.min(...meditationArr)
     return monitorData.map(element => {
-        if (element.meditation !== 0 && element.meditation <= minMeditationValue + 10)
+        if (element.meditation !== 0 && element.meditation <= minMeditationValue + conf)
             return element
     }).filter(item => {
         return item !== undefined 
     })
 }
 
-export const highestAttentionLevel = monitorData => {
+export const highestAttentionLevel = (monitorData, conf) => {
     const attentionArr = monitorData.map((value) => {
         return value.attention
     })
     const maxAttentionValue = Math.max(...attentionArr)
     return monitorData.map(element => {
-        if (element.attention >= maxAttentionValue - 10)
+        if (element.attention >= maxAttentionValue - conf)
             return element
     }).filter(item => {
         return item !== undefined
     })
 }
 
-export const highestMeditationLevel = monitorData => {
+export const highestMeditationLevel = (monitorData, conf) => {
     const meditationArr = monitorData.map((value) => {
         return value.meditation
     })
     const maxMeditationValue = Math.max(...meditationArr)
     return monitorData.map(element => {
-        if (element.meditation >= maxMeditationValue - 10)
+        if (element.meditation >= maxMeditationValue - conf)
             return element
     }).filter(item => {
         return item !== undefined
