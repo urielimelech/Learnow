@@ -10,6 +10,7 @@ import { onGetSuggestionsCards } from './SocketsOnLogic/OnGetSuggestionsCards.js
 import { onCompareSessions } from './SocketsOnLogic/OnCompareSessions.js'
 import { onGetUserConfiguration } from './SocketsOnLogic/OnGetUserConfiguration.js'
 import { onSaveConfiguration } from './SocketsOnLogic/OnSaveConfiguration.js'
+import { onLogout } from './SocketsOnLogic/OnLogout.js'
 
 export const socketWithReact = (serverIOService, soc, rooms, userConfigs) => {
 
@@ -71,5 +72,10 @@ export const socketWithReact = (serverIOService, soc, rooms, userConfigs) => {
     /** save user configuration to the DB */
     soc.on('save configuration', ({config, userEmail}) => {
         onSaveConfiguration(userConfigs, config, userEmail)
+    })
+
+    /** when user logout from react */
+    soc.on('logout', email => {
+        onLogout(userConfigs, email)
     })
 }
