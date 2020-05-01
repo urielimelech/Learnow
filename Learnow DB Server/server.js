@@ -28,13 +28,11 @@ app.get('/getAllSessions', sessionCtl.getAllSessions);
 app.post('/addSession', sessionCtl.addSession);
 
 /** User routes */
-app.get('/login', [userCtl.getUser, userHandler.login]);
-app.post('/register', [userCtl.addUser, userHandler.register]);
+app.get('/login', [userCtl.getUser, userConfig.getUserConfigByEmail, userHandler.login]);
+app.post('/register', [userCtl.addUser, userConfig.addUserConfig, userHandler.register]);
 app.get('/checkUserToken', middleware.checkToken)
 
 /** User configuration routes */
-app.post('/addUserConfig', userConfig.addUserConfig)
-app.get('/getUserConfigByEmail', userConfig.getUserConfigByEmail)
 app.put('/updateUserConfig', userConfig.updateUserConfig)
 
 const server = app.listen(port, () => {

@@ -3,7 +3,7 @@ const   User      = require('../models/user.js')
 
 module.exports = {
     addUser: async (req, res, next) => {
-        const {email = null, name = null, password = null, userType = null} = req.body
+        const {email = null, name = null, password = null, userType = null} = req.body.userBody
         const user = new User({name, email, password, userType})
 
         const response =  await User.findOne({email: email})
@@ -14,7 +14,7 @@ module.exports = {
             });
         }
         user.save().then( (result) => {
-            req.result = result
+            req.registerResult = result
             next()
         },
         (err) =>{
@@ -27,7 +27,7 @@ module.exports = {
         const email = req.query.email
         await User.findOne({email: email}).then(result => {
             if(result){
-                req.result = result
+                req.loginResult = result
                 next()
             }
             else 

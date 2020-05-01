@@ -3,8 +3,7 @@ const   UserConfig      = require('../models/userConfig.js')
 
 module.exports = {
     addUserConfig: async (req, res, next) => {
-        const {userEmail = null, config = null} = req.body
-        console.log(userEmail)
+        const {userEmail = null, config = null} = req.body.userConfig
         const userconfig = new UserConfig({userEmail, config})
         const response = await UserConfig.findOne({userEmail: userEmail})
         if(response){
@@ -15,7 +14,8 @@ module.exports = {
         }
         userconfig.save()
         .then(result => {
-            res.status(200).send(JSON.stringify(result))
+            req.configResult = result
+            next()
         },
         (err) =>{
             console.log(err)
@@ -24,11 +24,11 @@ module.exports = {
     },
 
     getUserConfigByEmail: async (req, res, next) => {
-        const userEmail = req.query.userEmail
+        const userEmail = req.query.email
         await UserConfig.findOne({userEmail: userEmail}).then(result => {
-            result.success = true
             if(result){
-                res.status(200).send(JSON.stringify(result))
+                req.configResult = result
+                next()
             }
             else 
             res.status(404).send(`{"success": false, "message": "No User Configuration Were Found"}`)
