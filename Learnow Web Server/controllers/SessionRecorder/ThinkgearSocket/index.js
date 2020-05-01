@@ -28,6 +28,7 @@ export const socketWithThinkgear = (serverIOService, soc, rooms) => {
     soc.on('new TGC connection', ip => {
         console.log('new TGC connection', ip)
         const roomData = serverIOService.sockets.adapter.rooms[ip]
+        soc.broadcast.emit('new TGC', )
         /** check if room does not exist */
         if (!roomData){
             /** if room does not exist, update parameters in session object */
