@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import { ConnectionToRoom } from '../ConnectionToRoom'
 import { StudentSession } from '../StudentSession'
 import { ResearcherSession } from '../ResearcherSession'
+import { SensorErrors } from '../SensorErrors'
 
 export const StartSessionComponent = () => {
 
@@ -13,6 +14,7 @@ export const StartSessionComponent = () => {
   return (
     <div>
       <ConnectionToRoom/>
+      <SensorErrors/>
       {connectedToRoom ? 
         loggedUser.userType === 'student' ? <StudentSession/> : <ResearcherSession/>
       :
