@@ -65,4 +65,14 @@ export const socketWithThinkgear = (serverIOService, soc, rooms) => {
             }
         })
     })
+
+    /** on poor signal, notify all clients in room to check sensor contacts */
+    soc.on('poor signal', ip => {
+        serverIOService.sockets.in(ip).emit('check sensor', 1)
+    })
+
+    /** on sensor not connected, notify all clients in room to connect the sensor */
+    soc.on('sensor not connected', ip => {
+        serverIOService.sockets.in(ip).emit('check sensor', 2)
+    })
 }
