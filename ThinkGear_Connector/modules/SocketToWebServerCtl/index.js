@@ -34,14 +34,10 @@ export const WebServerSocketController = () => {
     const neuroskySocket = createSocketToNeuroskyHeadset
     var isConnectedToRoom = false
     var ip = ''
+    const defaultFloodProtect = 20
+    var floodProtect = defaultFloodProtect
 
-    socketToWebServer.on('TGC collector and React are connected', () => {
-        console.log('TGC collector and React are connected')
-    })
-
-    /**
-     * kill the proccess of TGC when the sensors disconnect
-     */
+    /** kill the proccess of TGC when the sensors disconnect */
     socketToWebServer.on('disconnect', () => {
         neuroskySocket.write(JSON.stringify(recordingCommands.stop_recording))
         neuroskySocket.end()
@@ -49,9 +45,7 @@ export const WebServerSocketController = () => {
         TGC.kill()
     })
 
-    /**
-     * disconnect TGC from web server when sensors powered off
-     */
+    /** disconnect TGC from web server when sensors powered off */
     neuroskySocket.setTimeout(timeout)
     neuroskySocket.on('timeout', () => {
         console.log("socket timeout")
@@ -62,7 +56,8 @@ export const WebServerSocketController = () => {
         TGC.kill()
     })
 
-    neuroskySocket.on('data', (data) => {
+    /** get data from sensors */
+    neuroskySocket.on('data', data => {
         console.log("neurosky data: " + data.toString())
         if (ip === ''){
             getComputerIp()
@@ -73,24 +68,45 @@ export const WebServerSocketController = () => {
             try {
                 const jsonData = JSON.parse(data.toString())
                 if (jsonData.poorSignalLevel < 200) {
+                    /** if room does not exist, create a new one */
                     if (!isConnectedToRoom) {
                         socketToWebServer.emit('new TGC connection', ip)
                         isConnectedToRoom = true
                     }
+                    /** if poor signal not equals to 0, means there is a problem with the sensors contacts */
+                    if (jsonData.poorSignalLevel !== 0) {
+                        floodProtect--
+                        if (floodProtect <= 0) {
+                            socketToWebServer.emit('poor signal', ip)
+                            floodProtect = defaultFloodProtect
+                        }
+                    }
+                    /** parse sensor data */
                     const currentMeasure = {
                         timeStamp: Date.now(),
                         attention: jsonData.eSense.attention,
                         meditation: jsonData.eSense.meditation
                     }
-                    console.log('my room that i want to send to webserver as a parameter', ip)
+                    console.log(ip)
+                    /** sends the data to web server */
                     socketToWebServer.emit('session data', { data: currentMeasure, ip: ip })
                 }
-            } catch {
+                /** if poor signal equals 200, means sensors is not connected */
+                else if (jsonData.poorSignalLevel === 200) {
+                    floodProtect--
+                    if (isConnectedToRoom && floodProtect <= 0) {
+                        floodProtect = defaultFloodProtect
+                        socketToWebServer.emit('sensor not connected', ip)
+                    }
+                }
+            } catch (e) {
+                console.log(e)
                 console.log("parsing json was failed")
             }
         }
     })
 
+    /** on error from sensors, disconnect */
     neuroskySocket.on('error', (err) => {
         socketToWebServer.emit('session ended from headset', ip)
         neuroskySocket.write(JSON.stringify(recordingCommands.stop_recording))
@@ -99,6 +115,7 @@ export const WebServerSocketController = () => {
         TGC.kill()
     })
 
+    /** on end of quiz, terminates process and send data to DB */
     socketToWebServer.on('session ended by quiz', () => {
         neuroskySocket.write(JSON.stringify(recordingCommands.stop_recording))
         neuroskySocket.end()
