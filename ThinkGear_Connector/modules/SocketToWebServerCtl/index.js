@@ -100,7 +100,8 @@ export const WebServerSocketController = () => {
                     }
                 }
             } catch (e) {
-                console.log("parsing json was failed", e)
+                console.log(e)
+                console.log("parsing json was failed")
             }
         }
     })
