@@ -50,7 +50,8 @@ module.exports = {
         })
     },
     getAllSessions: async (req, res) => {
-        Session.find({}).then(result => {
+        const userEmail = req.query.userEmail
+        Session.find({userEmail:userEmail}).then(result => {
             console.log({result})
             if(result)
                 res.send(JSON.stringify(result));
