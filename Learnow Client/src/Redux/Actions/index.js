@@ -8,7 +8,8 @@ import {
     IS_VERIFY,
     SET_IP,
     SET_NOTIFICATION_VISIBLE,
-    SESSION_ENDED
+    SESSION_ENDED,
+    RESET_STYLE_LIST
 } from '../ActionTypes'
 
 export const isVideoEnded = data => ({ type: IS_VIDEO_ENDED, data: data })
@@ -30,3 +31,5 @@ export const setIp = ip => ({type: SET_IP, data: ip})
 export const notificationVisible = isVisible => ({type: SET_NOTIFICATION_VISIBLE, data: isVisible})
 
 export const sessionEnded = isSessionEnded => ({type: SESSION_ENDED, data: isSessionEnded})
+
+export const resetStyleList = resetStyle => ({type: RESET_STYLE_LIST, data: resetStyle})

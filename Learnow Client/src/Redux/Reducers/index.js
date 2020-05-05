@@ -8,7 +8,8 @@ import {
   IS_VERIFY,
   SET_IP,
   SET_NOTIFICATION_VISIBLE,
-  SESSION_ENDED
+  SESSION_ENDED,
+  RESET_STYLE_LIST
 } from '../ActionTypes'
 
 const initialState = {
@@ -20,7 +21,8 @@ const initialState = {
   isVerify: null,
   ip: '',
   isNotificationVisible: false,
-  isSessionEnded: false
+  isSessionEnded: false,
+  resetStyle: false
 }
 
 export default (state = initialState, action) => {
@@ -75,6 +77,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         isSessionEnded: action.data
+      }
+    case RESET_STYLE_LIST:
+      return {
+        ...state,
+        resetStyle: action.data
       }
     default:
       return state
