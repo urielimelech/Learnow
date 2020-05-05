@@ -11,6 +11,7 @@ import { onCompareSessions } from './SocketsOnLogic/OnCompareSessions.js'
 import { onGetUserConfiguration } from './SocketsOnLogic/OnGetUserConfiguration.js'
 import { onSaveConfiguration } from './SocketsOnLogic/OnSaveConfiguration.js'
 import { onLogout } from './SocketsOnLogic/OnLogout.js'
+import { onGetAllUserSessions } from './SocketsOnLogic/OnGetAllUserSessions.js'
 
 export const socketWithReact = (serverIOService, soc, rooms, userConfigs) => {
 
@@ -60,8 +61,8 @@ export const socketWithReact = (serverIOService, soc, rooms, userConfigs) => {
     })
 
     /** send to client the comparison result between two sessions */
-    soc.on('compare sessions', ({sessionData, email}) => {
-        onCompareSessions(soc, userConfigs, email, sessionData)
+    soc.on('compare sessions', ({sessionData, email, secondSession}) => {
+        onCompareSessions(soc, userConfigs, email, sessionData, secondSession)
     })
 
     /** sends to client the configuration */
@@ -77,5 +78,10 @@ export const socketWithReact = (serverIOService, soc, rooms, userConfigs) => {
     /** when user logout from react */
     soc.on('logout', email => {
         onLogout(userConfigs, email)
+    })
+
+    /** get user sessions */
+    soc.on('get all user sessions', email =>{
+        onGetAllUserSessions(serverIOService, soc, rooms, userConfigs, email)
     })
 }
