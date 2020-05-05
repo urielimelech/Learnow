@@ -1,9 +1,5 @@
-import axios from 'axios'
-
-export const Comparator = async (lastSession, config) => {
-
-    const session = await getSession()
-    return compareSessions(session, lastSession, config)
+export const Comparator = async (lastSession, config, secondSession) => {
+    return compareSessions(secondSession, lastSession, config)
 }
 
 const compareSessions = (session1, session2, config) => {
@@ -56,19 +52,5 @@ const getMeditationValues = session => {
                 return element.meditation
             })),
         avarage: session.avarageMeditation
-    }
-}
-
-const getSession = async () => {
-    try {
-        const result = await axios (
-            `http://localhost:13860/getAllSessions`
-        )
-        const session = result.data[0]
-        return session
-    }
-    catch (e){
-        console.log('catch', e)
-        return e
     }
 }
