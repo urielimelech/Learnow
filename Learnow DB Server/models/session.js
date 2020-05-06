@@ -14,7 +14,8 @@ var mongoose    =               require('mongoose'),
         quizData:               {},
         answersQuiz:            [],
         correlation:            {},
-        feedback:               []
+        feedback:               [],
+        activity:               String
     });
 
 var Session = mongoose.model('Session', session);

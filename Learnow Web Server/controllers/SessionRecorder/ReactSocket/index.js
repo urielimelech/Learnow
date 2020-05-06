@@ -41,8 +41,8 @@ export const socketWithReact = (serverIOService, soc, rooms, userConfigs) => {
     })
 
     /** get notification from client if video started */
-    soc.on('ready for data stream', ({ip, email}) => {
-        onReadyForDataStream(rooms, ip, email)
+    soc.on('ready for data stream', ({ip, email, activity}) => {
+        onReadyForDataStream(rooms, ip, email, activity)
     })
 
     /** take the exact timestamp when the video played the answer */
