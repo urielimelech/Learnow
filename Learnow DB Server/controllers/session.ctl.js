@@ -3,7 +3,7 @@ const   Session      = require('../models/session.js')
 
 module.exports = {
     addSession: (req, res) => {
-        req.on('data', data=>{
+        req.on('data', data => {
             console.log('data db server',data.toString())
             const {
                 userEmail               = null,
@@ -20,7 +20,8 @@ module.exports = {
                 quizData                = {},
                 answersQuiz             = [],
                 correlation             = {},
-                feedback                = []
+                feedback                = [],
+                activity                = '' 
             } = JSON.parse(data.toString())
             const session = new Session({
                 userEmail,
@@ -37,7 +38,8 @@ module.exports = {
                 quizData,
                 answersQuiz,
                 correlation,
-                feedback
+                feedback,
+                activity
             });
             session.save().then( (result) => {
                 console.log(result);

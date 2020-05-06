@@ -19,6 +19,7 @@ export const VideoPlayer = ({sessionVideo, sessionQuiz}) =>{
   const ip = useSelector(state => state.MainReducer.ip)
   const loggedUser = useSelector(state => state.MainReducer.loggedUser)
   const isNotificationVisible = useSelector(state => state.MainReducer.isNotificationVisible)
+  const activity = useSelector(state => state.MainReducer.chooseActivity)
 
   const answerTimeInVideo = sessionQuiz.questions.map(elem => {
     return Number(elem.timeOfAnswerInVideoBySeconds)
@@ -57,7 +58,7 @@ export const VideoPlayer = ({sessionVideo, sessionQuiz}) =>{
 
   const onStartVideo = () => {
     const email = loggedUser.email
-    socketToWebServer.emit('ready for data stream', ({ip: ip, email: email}))
+    socketToWebServer.emit('ready for data stream', ({ip: ip, email: email, activity: activity}))
     socketToWebServer.on('data to client', data => {
       console.log(data)
     })

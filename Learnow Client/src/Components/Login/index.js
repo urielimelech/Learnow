@@ -44,7 +44,7 @@ export const Login = () => {
 
     useEffect(() => {
         if (Object.keys(loggedUser).length > 0)
-            navigate('/Session')
+            navigate('/Home')
     },[loggedUser])
 
     useEffect(() => {

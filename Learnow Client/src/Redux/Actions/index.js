@@ -9,7 +9,9 @@ import {
     SET_IP,
     SET_NOTIFICATION_VISIBLE,
     SESSION_ENDED,
-    RESET_STYLE_LIST
+    RESET_STYLE_LIST,
+    SET_ACTIVITY_CARD,
+    CHOOSE_ACTIVITY
 } from '../ActionTypes'
 
 export const isVideoEnded = data => ({ type: IS_VIDEO_ENDED, data: data })
@@ -33,3 +35,7 @@ export const notificationVisible = isVisible => ({type: SET_NOTIFICATION_VISIBLE
 export const sessionEnded = isSessionEnded => ({type: SESSION_ENDED, data: isSessionEnded})
 
 export const resetStyleList = resetStyle => ({type: RESET_STYLE_LIST, data: resetStyle})
+
+export const setActivitiesCards = activityCard => ({type: SET_ACTIVITY_CARD, data: activityCard})
+
+export const chooseActivity = activity => ({type: CHOOSE_ACTIVITY, data: activity})
