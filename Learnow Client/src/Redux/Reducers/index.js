@@ -9,7 +9,9 @@ import {
   SET_IP,
   SET_NOTIFICATION_VISIBLE,
   SESSION_ENDED,
-  RESET_STYLE_LIST
+  RESET_STYLE_LIST,
+  SET_ACTIVITY_CARD,
+  CHOOSE_ACTIVITY
 } from '../ActionTypes'
 
 const initialState = {
@@ -22,7 +24,9 @@ const initialState = {
   ip: '',
   isNotificationVisible: false,
   isSessionEnded: false,
-  resetStyle: false
+  resetStyle: false,
+  activitiesCards: null,
+  chooseActivity: null
 }
 
 export default (state = initialState, action) => {
@@ -82,6 +86,16 @@ export default (state = initialState, action) => {
       return {
         ...state,
         resetStyle: action.data
+      }
+    case SET_ACTIVITY_CARD:
+      return {
+        ...state,
+        activitiesCards: action.data
+      }
+    case CHOOSE_ACTIVITY:
+      return {
+        ...state,
+        chooseActivity: action.data
       }
     default:
       return state
