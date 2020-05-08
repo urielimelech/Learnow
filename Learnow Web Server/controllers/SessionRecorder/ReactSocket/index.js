@@ -84,4 +84,9 @@ export const socketWithReact = (serverIOService, soc, rooms, userConfigs) => {
     soc.on('get all user sessions', email =>{
         onGetAllUserSessions(serverIOService, soc, rooms, userConfigs, email)
     })
+
+    /** on client disconnect, clean all client listners */
+    soc.on('disconnect', () => {
+        soc.removeAllListeners()
+    })
 }
