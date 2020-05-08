@@ -32,9 +32,9 @@ export const SliderComponent = ({startValue, step, min, max, inputClasses, slide
     
     const handleBlur = () => {
         if (value < min) {
-          setValue(min)
+            setValue(min)
         } else if (value > max) {
-          setValue(max)
+            setValue(max)
         }
     }
 
