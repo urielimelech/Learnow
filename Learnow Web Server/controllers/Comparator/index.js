@@ -1,5 +1,25 @@
-export const Comparator = async (lastSession, config, secondSession) => {
-    return compareSessions(secondSession, lastSession, config)
+import axios from 'axios'
+import { dbURL } from '../../consts.js'
+
+export const Comparator = async (secondSession, config, firstSession) => {
+    const comparison = compareSessions(firstSession, secondSession, config)
+
+    const comparisonResult = {
+        comparisonData: comparison,
+        userEmail: secondSession.userEmail,
+        activity: secondSession.activity,
+        startTimeStamp: [firstSession.startTimeStamp, secondSession.startTimeStamp]
+    }
+
+    axios.post(`${dbURL}/addComparisonResult`, comparisonResult)
+    .then(res => {
+        console.log(res.data)
+    })
+    .catch(err => {
+        console.log(err)
+    })
+
+    return comparison
 }
 
 const compareSessions = (session1, session2, config) => {
@@ -17,13 +37,38 @@ const compareSessions = (session1, session2, config) => {
     const diffAvarageAttention = session2Attention.avarage - session1Attention.avarage
     const diffAvarageMeditation = session2Meditation.avarage - session1Meditation.avarage
 
+    /** check if there is an improvment */
+    const isLowestAttentionImproved = diffLowestAttention > config.comparator_diff_lowest_attention ? true : false
+    const isHighestAttentionImproved = diffHighestAttention > config.comparator_diff_highest_attention ? true : false
+    const isLowestMeditationImproved = diffLowestMeditation > config.comparator_diff_lowest_meditation ? true : false
+    const isHighestMeditationImproved = diffHighestMeditation > config.comparator_diff_highest_meditation ? true : false
+    const isAvarageAttentionImproved = diffAvarageAttention > config.comparator_diff_avarage_attention ? true : false
+    const isAvarageMeditationImproved = diffAvarageMeditation > config.comparator_diff_avarage_meditation ? true : false
+
+    const howHelpful = (diff, specConfig) => {
+        if (diff > specConfig + config.comparator_high_improve)
+            return 'high'
+        else if (diff > specConfig + config.comparator_medium_improve)
+            return 'medium'
+        else if (diff > specConfig + config.comparator_low_improve)
+            return 'low'
+    }
+ 
+     /** check the improvment level in sessions */
+    const howLowestAttentionImproved = isLowestAttentionImproved ? howHelpful(diffLowestAttention, config.comparator_diff_lowest_attention) : false
+    const howHighestAttentionImproved = isHighestAttentionImproved ? howHelpful(diffHighestAttention, config.comparator_diff_highest_attention) : false
+    const howLowestMeditationImproved = isLowestMeditationImproved ? howHelpful(diffLowestMeditation, config.comparator_diff_lowest_meditation) : false
+    const howHighestMeditationImproved = isHighestMeditationImproved ? howHelpful(diffHighestMeditation, config.comparator_diff_highest_meditation) : false
+    const howAvarageAttentionImproved = isAvarageAttentionImproved ? howHelpful(diffAvarageAttention, config.comparator_diff_avarage_attention) : false
+    const howAvarageMeditationImproved = isAvarageMeditationImproved ? howHelpful(diffAvarageMeditation, config.comparator_diff_avarage_meditation) : false
+
     return {
-        isLowestAttentionImproved: diffLowestAttention > config.comparator_diff_lowest_attention ? 'improved' : 'not improved',
-        isHighestAttentionImproved: diffHighestAttention > config.comparator_diff_highest_attention ? 'improved' : 'not improved',
-        isLowestMeditationImproved: diffLowestMeditation > config.comparator_diff_lowest_meditation ? 'improved' : 'not improved',
-        isHighestMeditationImproved: diffHighestMeditation > config.comparator_diff_highest_meditation ? 'improved' : 'not improved',
-        isAvarageAttentionImproved: diffAvarageAttention > config.comparator_diff_avarage_attention ? 'improved' : 'not improved',
-        isAvarageMeditationImproved: diffAvarageMeditation > config.comparator_diff_avarage_meditation ? 'improved' : 'not improved'
+        how_lowest_attention_improved: howLowestAttentionImproved, 
+        how_highest_attention_improved: howHighestAttentionImproved, 
+        how_lowest_meditation_improved: howLowestMeditationImproved, 
+        how_highest_meditation_improved: howHighestMeditationImproved,
+        how_avarage_attention_improved: howAvarageAttentionImproved, 
+        how_avarage_meditation_improved: howAvarageMeditationImproved
     }
 }
 

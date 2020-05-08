@@ -35,6 +35,17 @@ export const ConfigSlider = ({userEmail, configObject, configKeys, configValues}
                     params = {steps: 5, min: 5, max: 100}
                     break
                 }
+                case 'comparator_high_improve': {
+                    params = {steps: 1, min: 31, max: 45}
+                    break
+                }
+                case 'comparator_medium_improve': {
+                    params = {steps: 1, min: 16, max: 30}
+                    break
+                }
+                case 'comparator_low_improve': {
+                    params = {steps: 1, min: 0, max: 15}
+                }
             }
             return (
                 <div key={key}>
@@ -74,7 +85,7 @@ export const ConfigSlider = ({userEmail, configObject, configKeys, configValues}
     const saveConfiguration = () => {
         console.log({config: config, userEmail: userEmail})
         socketToWebServer.emit('save configuration', ({config: config, userEmail: userEmail}))
-        navigate('/Session')
+        navigate('/Home')
     }
 
     return (

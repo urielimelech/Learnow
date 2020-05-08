@@ -12,6 +12,11 @@ export const onLoginData = (soc, userConfigs, email, password) => {
     })
     .then(res => {
         soc.emit('logged data', {email: email, name: res.data.name, userType: res.data.userType, token: res.data.token, success: res.data.success, message: res.data.message})
+        for (let i = 0; i < userConfigs.length; i++) {
+            if (userConfigs[i].userEmail === email) {
+                return
+            }
+        }
         userConfigs.push(res.data.configResult)
     })
     .catch(err => {

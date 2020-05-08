@@ -7,6 +7,12 @@ export const sessionConfig = () => {
         comparator_diff_avarage_attention: 0,
         comparator_diff_avarage_meditation: 0,
 
+        /** Threshold variables that define how the activity helped to improve the metrics 
+         * attention and meditation between the compared sessions */
+        comparator_high_improve: 40,
+        comparator_medium_improve: 20,
+        comparator_low_improve: 0,
+
         correlator_range_of_seconds: 5,
 
         feedback_result_balance: 50,

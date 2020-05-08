@@ -1,13 +1,14 @@
-const   express      = require('express'),
-        app          = express(),
-        cors         = require('cors');
-        parser       = require('body-parser'),
-        port         = process.env.PORT || 13860,
-        sessionCtl   = require('./controllers/session.ctl'),
-        userCtl      = require('./controllers/user.ctl'),
-        userConfig   = require('./controllers/userConfig.ctl')
-        userHandler  = require('./authentication/authentication.ctl')
-        middleware   = require('./authentication/middleware')
+const   express          = require('express')
+        app              = express()
+        cors             = require('cors')
+        parser           = require('body-parser')
+        port             = process.env.PORT || 13860
+        sessionCtl       = require('./controllers/session.ctl')
+        userCtl          = require('./controllers/user.ctl')
+        comparisonCtl    = require('./controllers/comparisonResult.ctl')
+        userConfig       = require('./controllers/userConfig.ctl')
+        userHandler      = require('./authentication/authentication.ctl')
+        middleware       = require('./authentication/middleware')
 
 app.set('port', port);
 app.use(cors());
@@ -34,6 +35,10 @@ app.get('/checkUserToken', middleware.checkToken)
 
 /** User configuration routes */
 app.put('/updateUserConfig', userConfig.updateUserConfig)
+
+/** Comparison Routes */
+app.post('/addComparisonResult', comparisonCtl.addComparisonResult)
+app.get('/getAllComparisonResult', comparisonCtl.getAllComparisonResult)
 
 const server = app.listen(port, () => {
     console.log(`listening on port ${port}`);
