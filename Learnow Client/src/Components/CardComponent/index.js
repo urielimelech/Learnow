@@ -11,15 +11,17 @@ import Typography from '@material-ui/core/Typography'
 import Collapse from '@material-ui/core/Collapse'
 
 import { ExpandButton } from './ExpandButton'
+import { ExpandedContent } from './ExpandedContent'
 
-export const CardComponent = ({headerText, detailText, isAbleToExpand=false, expandedText=null, buttonText, onClickButton, img=null}) => {
+export const CardComponent = ({headerText, detailText=null, isAbleToExpand=false, expandedText=null, buttonText, onClickButton=null, img=null, style=null}) => {
 
     const useStyles = makeStyles({
         root: {
             maxWidth: 400
         },
         media: {
-            height: 140
+            // height: 140
+            height: 240
         }
     })
 
@@ -34,6 +36,10 @@ export const CardComponent = ({headerText, detailText, isAbleToExpand=false, exp
     const handleExpandClick = () => {
         setExpanded(!expanded)
     }
+
+    useEffect(() => {
+        setSelectStyle({})
+    }, [expanded])
 
     const onSelect = () => {
         onClickButton()
@@ -51,36 +57,44 @@ export const CardComponent = ({headerText, detailText, isAbleToExpand=false, exp
     },[isPressed])
 
     return (
-        <Card className={classes.root} style={selectStyle}>
-            <CardActionArea>
+        <Card className={classes.root} style={ style ? style.Card : selectStyle}>
+            <CardActionArea style = {style ? style.CardStyle : null}>
                 {img ? 
-                    <CardMedia
+                    <CardMedia style = {style ? style.CardImgStyle : null}
                         className={classes.media}
                         image={img}
+                        component = "img"
                         title="Contemplative Reptile"
                     />
                     : 
                     null
                 }
-                <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
-                        {headerText}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" component="div">
-                        {detailText}
-                    </Typography>
-                </CardContent>
+               {expanded ? 
+                    null 
+                :  
+                    <CardContent style={style ? style.CardContent : null}>
+                        <Typography style={style ? style.cardTitleStyle : null} gutterBottom variant="h5" component="h2">
+                            {headerText}
+                        </Typography>
+                        {
+                            detailText ? 
+                                <Typography variant="body2" color="textSecondary" component="div">
+                                    {detailText}
+                                </Typography> 
+                            :
+                                null
+                        }
+                    </CardContent>
+                }
             </CardActionArea>
             <CardActions>
-                <Button size="small" color="primary" onClick={onSelect}>
+                <Button style = {style ? style.buttonStyle : null} size="small" color="primary" onClick={onSelect}>
                     {buttonText}
                 </Button>
                 {isAbleToExpand ? <ExpandButton isOpen={expanded} onClick={handleExpandClick}/> : null}
             </CardActions>
-            <Collapse in={expanded} timeout="auto" unmountOnExit>
-                <CardContent>
-                    <Typography paragraph>{expandedText}</Typography>
-                </CardContent>
+            <Collapse in={expanded} timeout="auto" unmountOnExit style = {style ? style.CardStyle : null}>
+                <ExpandedContent  expandedText={expandedText}/>
             </Collapse>
         </Card>
     )
