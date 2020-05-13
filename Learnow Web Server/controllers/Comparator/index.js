@@ -7,7 +7,7 @@ export const Comparator = async (secondSession, config, firstSession) => {
     const comparisonResult = {
         comparisonData: comparison,
         userEmail: secondSession.userEmail,
-        activity: secondSession.activity,
+        activity: [firstSession.activity, secondSession.activity],
         startTimeStamp: [firstSession.startTimeStamp, secondSession.startTimeStamp]
     }
 
@@ -19,7 +19,7 @@ export const Comparator = async (secondSession, config, firstSession) => {
         console.log(err)
     })
 
-    return comparison
+    return comparisonResult
 }
 
 const compareSessions = (session1, session2, config) => {
