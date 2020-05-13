@@ -11,7 +11,8 @@ import {
     SESSION_ENDED,
     RESET_STYLE_LIST,
     SET_ACTIVITY_CARD,
-    CHOOSE_ACTIVITY
+    CHOOSE_ACTIVITY,
+    SESSION_ACTIVITY
 } from '../ActionTypes'
 
 export const isVideoEnded = data => ({ type: IS_VIDEO_ENDED, data: data })
@@ -39,3 +40,5 @@ export const resetStyleList = resetStyle => ({type: RESET_STYLE_LIST, data: rese
 export const setActivitiesCards = activityCard => ({type: SET_ACTIVITY_CARD, data: activityCard})
 
 export const chooseActivity = activity => ({type: CHOOSE_ACTIVITY, data: activity})
+
+export const session = session => ({type: SESSION_ACTIVITY, data: session})
