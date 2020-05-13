@@ -11,7 +11,8 @@ import {
   SESSION_ENDED,
   RESET_STYLE_LIST,
   SET_ACTIVITY_CARD,
-  CHOOSE_ACTIVITY
+  CHOOSE_ACTIVITY,
+  SESSION_ACTIVITY
 } from '../ActionTypes'
 
 const initialState = {
@@ -26,7 +27,8 @@ const initialState = {
   isSessionEnded: false,
   resetStyle: false,
   activitiesCards: null,
-  chooseActivity: null
+  chooseActivity: null,
+  session: null 
 }
 
 export default (state = initialState, action) => {
@@ -96,6 +98,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         chooseActivity: action.data
+      }
+      case SESSION_ACTIVITY:
+      return {
+        ...state,
+        session: action.data
       }
     default:
       return state

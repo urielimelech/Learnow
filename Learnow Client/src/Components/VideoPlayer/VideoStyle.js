@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import ReactPlayer from "react-player"
+import ReactPlayer from 'react-player'
 
 export const WrapperVideo = styled.div`
 display:flex;

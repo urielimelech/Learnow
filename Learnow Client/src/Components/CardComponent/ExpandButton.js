@@ -5,8 +5,8 @@ import IconButton from '@material-ui/core/IconButton'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 
 
-export const ExpandButton = ({isOpen}) => {
-
+export const ExpandButton = ({isOpen, onClick}) => {
+  
     const useStyles = makeStyles(theme => ({
       expand: {
           transform: 'rotate(0deg)',
@@ -27,6 +27,7 @@ export const ExpandButton = ({isOpen}) => {
           className={clsx(classes.expand, {
               [classes.expandOpen]: isOpen,
           })}
+          onClick={onClick}
           aria-expanded={isOpen}
           aria-label="show more"
           >

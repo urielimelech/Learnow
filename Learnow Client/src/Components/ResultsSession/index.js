@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Chart } from 'react-google-charts';
+import { Loading } from '../Loading';
 
 export const Results = () => {
 
@@ -77,17 +78,25 @@ export const Results = () => {
         },
       }
 
-    return ( 
-        <div style={{ width: '100%' }}>
-            Your Results in session <br/>
-            <Chart data={sessionData} width={'100%'} height={'400px'} chartType="LineChart" loader={<div>Loading Chart</div>} 
-            options={options} rootProps={{ 'data-testid': '2' }}/>
-            Your Video Results in session <br/>
-            <Chart data={videoSessionData} width={'100%'} height={'400px'} chartType="LineChart" loader={<div>Loading Chart</div>} 
-            options={options} rootProps={{ 'data-testid': '2' }}/>
-            Your Quiz Results in session <br/>
-            <Chart data={quizSessionData} width={'100%'} height={'400px'} chartType="LineChart" loader={<div>Loading Chart</div>} 
-            options={options} rootProps={{ 'data-testid': '2' }}/>
+    return (
+        <div>
+            {sessionData ? 
+                <div style={{ width: '100%' }}>
+                    Your Results in session <br/>
+                    <Chart data={sessionData} width={'100%'} height={'400px'} chartType="LineChart" loader={<Loading/>} 
+                    options={options} rootProps={{ 'data-testid': '2' }}/>
+                    Your Video Results in session <br/>
+                    <Chart data={videoSessionData} width={'100%'} height={'400px'} chartType="LineChart" loader={<Loading/>} 
+                    options={options} rootProps={{ 'data-testid': '2' }}/>
+                    Your Quiz Results in session <br/>
+                    <Chart data={quizSessionData} width={'100%'} height={'400px'} chartType="LineChart" loader={<Loading/>} 
+                    options={options} rootProps={{ 'data-testid': '2' }}/>
+                </div>
+            : 
+                <Loading/>
+            }
         </div>
+        
+        
     )
 }

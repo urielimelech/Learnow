@@ -13,6 +13,7 @@ import FormControl from '@material-ui/core/FormControl'
 import { ActivityList } from './ActivityList'
 import { Button } from 'react-bootstrap'
 import { navigate } from 'hookrouter'
+import { WrapperActivitySelection } from './ActivitySelectionStyle'
 
 export const ActivitySelection = () => {
 
@@ -56,13 +57,13 @@ export const ActivitySelection = () => {
     }
 
     return (
-        <div>
+        <WrapperActivitySelection>
             <FormControl className={classes.formControl}>
                 <InputLabel id="demo-simple-select-helper-label">Activity</InputLabel>
                 <ActivityList/>
                 <FormHelperText>Select an activity that you finished right now</FormHelperText>
             </FormControl>
-            <Button onClick={saveActivity}>Continue</Button>
+            {/* <Button onClick={saveActivity}>Continue</Button> */}
             {/* <Dialog disableBackdropClick disableEscapeKeyDown open={open} onClose={handleClose}>
                 <DialogTitle>Fill the form</DialogTitle>
                 <DialogContent>
@@ -80,6 +81,6 @@ export const ActivitySelection = () => {
                     </Button>
                 </DialogActions>
             </Dialog> */}
-        </div>
+        </WrapperActivitySelection>
     )
 }

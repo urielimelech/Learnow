@@ -1,29 +1,33 @@
-export const CardStyle = {
-    width: '18rem',
-    marginTop: '100px'
-}
-
-export const CardImgStyle = {
-    objectFit: 'contain', 
-    height: '200px'
-}
-
-export const CardTitleStyle = {
-    height: '72px'
-}
-
-export const CardTextStyle = {
-    height: '160px'
-}
-
-export const CardLinkStyle = {
-    display: 'flex', justifyContent:'center'
-}
-
-export const FeedbackComponent = {
-    textAlign:'center', marginTop:'20px'
-}
-
-export const CardsContainer = {
-    display: 'flex', justifyContent:'center'
+export const feedbackStyle = {
+    Card: {
+        marginRight: '15px'
+    },
+    CardStyle : {
+        width: '15rem'
+    },
+    CardImgStyle : {
+        objectFit: 'contain'
+    },
+    CardTitleStyle : {
+        height: '100px'
+    },
+    CardLinkStyle : {
+        display: 'flex', justifyContent:'center'
+    },
+    FeedbackComponent : {
+        textAlign:'center', marginTop:'20px'
+    },
+    CardsContainer : {
+        display: 'flex', justifyContent:'center'
+    },
+    buttonStyle : {
+        backgroundColor: '#39C0BA',
+        color: '#ffffff',
+        bottom: '10px',
+        margin: '0 auto',
+        marginTop: '20px'
+    },
+    CardContent : {
+        height: '100px'
+    }
 }

@@ -11,6 +11,7 @@ export const ActivityList = () => {
 
     const activitiesCards = useSelector(state => state.MainReducer.activitiesCards)
     const loggedUser = useSelector(state => state.MainReducer.loggedUser)
+    const chosenActivity = useSelector(state => state.MainReducer.chooseActivity)
 
     const [activityList, setActivityList] = useState(null)
     const [activity, setActivity] = useState('')
@@ -29,11 +30,15 @@ export const ActivityList = () => {
         socketToWebServer.on('suggestions cards', data => {
             _dispatch(setActivitiesCards(data))
         })
-        _dispatch(chooseActivity('None'))
+        // _dispatch(chooseActivity('None'))
         return () => {
             socketToWebServer.off('suggestions cards')
         }
     },[])
+
+    useEffect(() => {
+        setActivity(chosenActivity)
+    },[chosenActivity])
 
     useEffect(() => {
         if (activitiesCards) {
@@ -56,7 +61,7 @@ export const ActivityList = () => {
         <Select
             labelId="demo-simple-select-helper-label"
             id="demo-simple-select-helper"
-            value={activity}
+            value={activity ? activity : 'None'}
             onChange={handleChange}
         >
             {activityList}
