@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 
 import { socketToWebServer } from '../../SocketIoClient'
 import { ConfigSlider } from './ConfigSlider'
+import { Loading } from '../Loading'
 
 export const ConfigComponent = () => {
 
@@ -42,6 +43,6 @@ export const ConfigComponent = () => {
         configKeys.length !== 0 && configValues.length !== 0 ?
             <ConfigSlider userEmail={loggedUser.email} configObject={configuration} configKeys={configKeys} configValues={configValues}/>
         :
-            'loading'
+            <Loading/>
     )
 }
