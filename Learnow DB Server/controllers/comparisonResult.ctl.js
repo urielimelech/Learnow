@@ -2,7 +2,7 @@ const   ComparisonResult      = require('../models/comparisonResult.js')
         // ObjectId  = require('mongoose').Types.ObjectId;
 
 module.exports = {
-    addComparisonResult: (req, res) => {
+    addComparisonResult: async (req, res) => {
         const {userEmail = '', startTimeStamp = [], activity = '', comparisonData = {}} = req.body
         const comparisonResult = new ComparisonResult({
             userEmail,
@@ -10,13 +10,18 @@ module.exports = {
             activity,
             comparisonData
         })
-        comparisonResult.save().then( (result) => {
-            console.log(result);
-            res.status(200).send(`{"result": "Success", "params": ${JSON.stringify(result)}}`);
-            },
-            (err) =>{
-                console.log(err);
-                res.status(404).send(`{"result": "Failure", "params":${JSON.stringify(result)}, "error": ${JSON.stringify(err)}}`);
+        await ComparisonResult.findOne({startTimeStamp: startTimeStamp}).then(result => {
+            if (result) {
+                res.status(200).send(`{"result": "Success", "params": ${JSON.stringify(result)}}`)
+                return
+            }
+            comparisonResult.save().then(result => {
+                res.status(200).send(`{"result": "Success", "params": ${JSON.stringify(result)}}`);
+                },
+                (err) =>{
+                    console.log(err);
+                    res.status(404).send(`{"result": "Failure", "params":${JSON.stringify(result)}, "error": ${JSON.stringify(err)}}`);
+            })
         })
     },
     getAllComparisonResult: async (req, res) => {
