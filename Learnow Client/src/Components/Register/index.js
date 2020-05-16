@@ -43,6 +43,7 @@ export const Register = () => {
             socketToWebServer.emit('logout', loggedUser.email)
         }
         userSignUp()
+        return () => socketToWebServer.off('registration data')
     }, [])
 
     useEffect(() => {
@@ -74,21 +75,21 @@ export const Register = () => {
             <form name="form" onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label>Name</label>
-                    <input type="text" name="name" value={user.name} onChange={handleChange} className={'form-control' + (submitted && !user.name ? ' is-invalid' : '')} />
+                    <input autoComplete='name' type="text" name="name" value={user.name} onChange={handleChange} className={'form-control' + (submitted && !user.name ? ' is-invalid' : '')} />
                     {submitted && !name &&
                         <div className="invalid-feedback">Name is required</div>
                     }
                 </div>
                 <div className="form-group">
                     <label>Email</label>
-                    <input type="email" name="email" value={user.email} onChange={handleChange} className={'form-control' + (submitted && !user.email ? ' is-invalid' : '')} />
+                    <input autoComplete='username' type="email" name="email" value={user.email} onChange={handleChange} className={'form-control' + (submitted && !user.email ? ' is-invalid' : '')} />
                     {submitted && !email &&
                         <div className="invalid-feedback">Email is required</div>
                     }
                 </div>
                 <div className="form-group">
                     <label>Password</label>
-                    <input type="password" name="password" value={user.password} onChange={handleChange} className={'form-control' + (submitted && !user.password ? ' is-invalid' : '')} />
+                    <input autoComplete='current-password' type="password" name="password" value={user.password} onChange={handleChange} className={'form-control' + (submitted && !user.password ? ' is-invalid' : '')} />
                     {submitted && !password &&
                         <div className="invalid-feedback">Password is required</div>
                     }

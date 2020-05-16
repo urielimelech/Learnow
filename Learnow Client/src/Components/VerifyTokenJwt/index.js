@@ -24,7 +24,7 @@ export const VerifyTokenJwt = ({children}) => {
 
     useEffect(() => {
         checkTokenWithServer()
-        return
+        return () => socketToWebServer.off('get dbToken')
     },[])
 
     useEffect(() => {

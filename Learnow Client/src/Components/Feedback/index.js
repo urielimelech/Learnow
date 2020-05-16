@@ -14,7 +14,7 @@ export const Feedback = () => {
     const activitiesCards = useSelector(state => state.MainReducer.activitiesCards)
     const _dispatch = useDispatch()
 
-    const imgCard = (img) => {
+    const imgCard = img => {
         return require(`../../images/${img}.png`)
     }
 

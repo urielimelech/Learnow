@@ -48,7 +48,7 @@ user.path('password').validate(
 user.path('name').validate( 
     (val) => {
         const minSize = 2
-        const regex = /^[a-zA-Z]+$/
+        const regex = /^[a-zA-Z\s]+$/
 
         if (val.length < minSize || !val.match(regex))
             return false
