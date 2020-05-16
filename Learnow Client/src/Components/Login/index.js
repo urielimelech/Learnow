@@ -71,12 +71,12 @@ export const Login = () => {
             <form name="form" onSubmit={handleSubmit}>
                 <div className="form-group">
                     <label>Email</label>
-                    <input type="email" name="email" value={email} onChange={handleChange} className={'form-control' + (submitted && !email ? ' is-invalid' : '')} />
+                    <input autoComplete='username' type="email" name="email" value={email} onChange={handleChange} className={'form-control' + (submitted && !email ? ' is-invalid' : '')} />
                     {submitted && !email && <div className="invalid-feedback">Email is required</div>}
                 </div>
                 <div className="form-group">
                     <label>Password</label>
-                    <input type="password" name="password" value={password} onChange={handleChange} className={'form-control' + (submitted && !password ? ' is-invalid' : '')} />
+                    <input autoComplete='current-password' type="password" name="password" value={password} onChange={handleChange} className={'form-control' + (submitted && !password ? ' is-invalid' : '')} />
                     {submitted && !password && <div className="invalid-feedback">Password is required</div>}
                 </div>
                 <div className="form-group">
