@@ -27,8 +27,7 @@ module.exports = {
     getAllComparisonResult: async (req, res) => {
         const userEmail = req.query.userEmail
         await ComparisonResult.find({userEmail:userEmail}).then(result => {
-            console.log({result})
-            if(result)
+            if(result.length)
                 res.send(JSON.stringify(result));
             else res.status(404).send(`{"Failure": "No Documents Were Found"}`);
         }, err =>{
