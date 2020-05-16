@@ -19,6 +19,7 @@ export const Quiz = ({sessionQuiz}) => {
         _dispatch(isConnectedToRoom(false))
         _dispatch(isVideoEnded(false))
         socketToWebServer.off('data to client')
+        socketToWebServer.off('last ended session')
     }
 
     useEffect(() => {

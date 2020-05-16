@@ -43,6 +43,7 @@ export const Register = () => {
             socketToWebServer.emit('logout', loggedUser.email)
         }
         userSignUp()
+        return () => socketToWebServer.off('registration data')
     }, [])
 
     useEffect(() => {

@@ -40,6 +40,7 @@ export const Login = () => {
             socketToWebServer.emit('logout', loggedUser.email)
         }
         userSignIn()
+        return () => socketToWebServer.off('logged data')
     }, [])
 
     useEffect(() => {
