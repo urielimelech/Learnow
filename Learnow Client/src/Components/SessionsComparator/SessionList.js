@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { socketToWebServer } from '../../SocketIoClient'
 import { CardComponent } from '../CardComponent'
 import { resetStyleList } from '../../Redux/Actions'
+import { TextMessageToastify } from '../TextMessageToastify'
 
 export const SessionList = ({userSessions, email}) => {
 
@@ -99,6 +100,8 @@ export const SessionList = ({userSessions, email}) => {
     }
 
     const researcherSessionsList = () => {
+        if (userSessions.length % 2 === 1)
+            return null
         const tempResearcherSessions = userSessions.map((session, index) => {
                 if (session.activity === 'None') {
                     return [session, userSessions[index + 1]]
@@ -142,9 +145,21 @@ export const SessionList = ({userSessions, email}) => {
             setIsBtnDisable(true)
     },[compareSession])
 
+    const researcherMustDoAnotherSession = () => {
+        const researcherList = researcherSessionsList()
+        if (researcherList) {
+            return researcherList
+        }
+        else {
+            return (
+                <TextMessageToastify msg={'please run another session for comparation'}></TextMessageToastify>
+            )
+        }
+    }
+
     return (
         <div>
-            {loggedUser.userType === 'researcher' ? researcherSessionsList() : studentSessionsList()}
+            {loggedUser.userType === 'researcher' ? researcherMustDoAnotherSession() : studentSessionsList()}
             {/* <Button onClick={compareSessions} disabled={isBtnDisable}>Compare</Button> */}
             <button onClick={loggedUser.userType === 'researcher' ? multiCompareSessions : compareSessions} disabled={isBtnDisable} className="btn btn-primary">
                 Compare Now
