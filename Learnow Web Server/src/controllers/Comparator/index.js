@@ -1,7 +1,7 @@
 import axios from 'axios'
-import { dbURL } from '../../consts.js'
+import { dbURL } from '../../dbUrl.js'
 
-export const Comparator = async (secondSession, config, firstSession) => {
+export const Comparator = (secondSession, config, firstSession) => {
     const comparison = compareSessions(firstSession, secondSession, config)
 
     const comparisonResult = {

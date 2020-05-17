@@ -1,6 +1,5 @@
 import axios from 'axios'
-
-import { dbURL } from '../../../../consts.js'
+import { dbURL } from '../../../../dbUrl.js'
 
 export const onSaveConfiguration = (userConfigs, config, userEmail) => {
     userConfigs.forEach(userConfig => {
