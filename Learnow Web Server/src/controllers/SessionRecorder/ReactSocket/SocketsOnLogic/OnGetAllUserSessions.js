@@ -1,9 +1,9 @@
 import axios from 'axios'
-import { dbURL } from '../../../../consts.js'
+import { dbURL } from '../../../../dbUrl.js'
 
-export const onGetAllUserSessions = async (serverIOService, soc, rooms, userConfigs, email) => {
+export const onGetAllUserSessions = (serverIOService, soc, rooms, userConfigs, email) => {
     try {
-        const result = await axios (
+        const result = axios (
             `${dbURL}/getAllSessions?userEmail=${email}`
         )
         const userSessions = result.data

@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-import { dbURL } from '../../../../consts.js'
 import { sessionConfig } from '../../SessionConfig.js'
+import { dbURL } from '../../../../dbUrl.js'
 
 export const onRegisterData = (soc, userConfigs, name, email, password, userType) => {
     /** create new user in users collection */
