@@ -7,9 +7,10 @@ import { socketWithThinkgear } from './ThinkgearSocket/index.js'
 
 /** create http server to serve io requests */
 const serverPort = serverConnectionOptions.port
-const serverHost = serverConnectionOptions.host
+// const serverHost = serverConnectionOptions.host
 const serverApp = http.createServer()
-serverApp.listen(serverPort, serverHost)
+// serverApp.listen(serverPort, serverHost)
+serverApp.listen(serverPort)
 
 export const serverIOService = io(serverApp)
 

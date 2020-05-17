@@ -1,4 +1,4 @@
-import http from 'http'
+import axios from 'axios'
 
 import { 
     getAvarageAttention, 
@@ -10,21 +10,16 @@ import {
 } from '../SessionAnalyzer/index.js'
 import { ActivityAnalyzer } from '../ActivityAnalyzer/index.js'
 import { Correlator } from '../Correlator/index.js'
-import { dataBaseOptions } from './DataBaseOptions.js'
 import { ResultFeedback } from '../Feedback/ResultFeedback/index.js'
+import { dbURL } from '../../consts.js'
 
-const createSocketToDataBase = () => {
-    return http.request(dataBaseOptions, (res) => {
-        res.on('data', data => {
-            process.stdout.write(data)
-        })
-        res.on('end', () => {
-            res.destroy()
-            console.log('end session socket')
-        })
-        res.on('error', (error) => {
-            console.log('error: ', error)
-        })
+const sendSessionToDB = session => {
+    axios.post(`${dbURL}/addSession`, session)
+    .then(res => {
+        console.log(res.data)
+    })
+    .catch(e => {
+        console.log(e)
     })
 }
 
@@ -47,8 +42,6 @@ const dataSessionAnalysis = (sessionData, userConfig) => {
 
 export const writeSessionToDataBase = (sessionData, userConfig) => {
     sessionData = dataSessionAnalysis(sessionData, userConfig)
-    const socketToDataBase = createSocketToDataBase()
-    socketToDataBase.write(JSON.stringify(sessionData))
-    socketToDataBase.end()
+    sendSessionToDB(sessionData)
     return sessionData
 }
