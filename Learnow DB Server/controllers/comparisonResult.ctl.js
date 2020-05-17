@@ -10,18 +10,26 @@ module.exports = {
             activity,
             comparisonData
         })
-        await ComparisonResult.findOne({startTimeStamp: startTimeStamp}).then(result => {
-            if (result) {
-                res.status(200).send(`{"result": "Success", "params": ${JSON.stringify(result)}}`)
-                return
-            }
-            comparisonResult.save().then(result => {
-                res.status(200).send(`{"result": "Success", "params": ${JSON.stringify(result)}}`);
+        await ComparisonResult.find({startTimeStamp: startTimeStamp}).then(result => {
+            let alreadyExist = null
+            result.forEach((comparedSession, index) => {
+                const resComp = JSON.stringify(comparedSession.comparisonData)
+                const comp = JSON.stringify(comparisonData)
+                if (resComp === comp) {
+                    alreadyExist = index
+                }
+            })
+            if (alreadyExist !== null)
+                res.status(200).send(`{"result": "Success", "params": ${JSON.stringify(result[alreadyExist])}}`)
+            else {
+                comparisonResult.save().then(result => {
+                    res.status(200).send(`{"result": "Success", "params": ${JSON.stringify(result)}}`);
                 },
                 (err) =>{
                     console.log(err);
                     res.status(404).send(`{"result": "Failure", "params":${JSON.stringify(result)}, "error": ${JSON.stringify(err)}}`);
-            })
+                })
+            }
         })
     },
     getAllComparisonResult: async (req, res) => {

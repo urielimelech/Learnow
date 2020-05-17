@@ -11,9 +11,10 @@ import FormControl from '@material-ui/core/FormControl'
 // import DialogTitle from '@material-ui/core/DialogTitle';
 // import OutlinedInput from '@material-ui/core/OutlinedInput';
 import { ActivityList } from './ActivityList'
-import { Button } from 'react-bootstrap'
+// import { Button } from 'react-bootstrap'
 import { navigate } from 'hookrouter'
 import { WrapperActivitySelection } from './ActivitySelectionStyle'
+import { useSelector } from 'react-redux'
 
 export const ActivitySelection = () => {
 
@@ -35,7 +36,8 @@ export const ActivitySelection = () => {
         }
     }))
     
-    const classes = useStyles();
+    const classes = useStyles()
+    const loggedUser = useSelector(state => state.MainReducer.loggedUser)
     // const [open, setOpen] = useState(false)
 
     // const handleClickOpen = () => {
@@ -58,7 +60,7 @@ export const ActivitySelection = () => {
 
     return (
         <WrapperActivitySelection>
-            <FormControl className={classes.formControl}>
+            <FormControl className={classes.formControl} disabled={loggedUser.userType === 'researcher' ? true : false}>
                 <InputLabel id="demo-simple-select-helper-label">Activity</InputLabel>
                 <ActivityList/>
                 <FormHelperText>Select an activity that you finished right now</FormHelperText>

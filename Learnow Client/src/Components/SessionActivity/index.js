@@ -68,8 +68,7 @@ export const sessionActivity = [
                 "correctAnswer": "3",
                 "messageForCorrectAnswer": "Correct answer. Good job.",
                 "messageForIncorrectAnswer": "Incorrect answer.",
-                "explanation": `when we need to solve an exercise with long multiplication, we begin our multiplication with the most right digit of the second number and multiply by all digits of the first number from the most right to the most left digit.
-When done multiply all the digits of the first number by the most right digit, we continue with the next digit the same process.`,
+                "explanation": 'when we need to solve an exercise with long multiplication, we begin our multiplication with the most right digit of the second number and multiply by all digits of the first number from the most right to the most left digit. When done multiply all the digits of the first number by the most right digit, we continue with the next digit the same process.',
                 "point": "30",
                 "timeOfAnswerInVideoBySeconds": "104"
               },
