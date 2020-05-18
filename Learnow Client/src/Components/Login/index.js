@@ -5,6 +5,7 @@ import { navigate } from 'hookrouter'
 import { login, logout, notificationVisible } from '../../Redux/Actions'
 import { socketToWebServer } from '../../SocketIoClient'
 import { ToastNotification } from '../Toastify'
+import { LoginPage, BackgroundLoginPage, WrapperForm, Form, HeaderForm, Logo, WrapperButtons, LoginButton } from './LoginStyle'
 
 export const Login = () => {
 
@@ -66,29 +67,41 @@ export const Login = () => {
         }
     }
 
+    const windowWidth = window.innerWidth
+    const windowHeight = window.innerHeight
+
     return (
-        <div className="col-lg-8 offset-lg-2"> 
-            <h2>Login</h2>
-            <form name="form" onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label>Email</label>
-                    <input autoComplete='username' type="email" name="email" value={email} onChange={handleChange} className={'form-control' + (submitted && !email ? ' is-invalid' : '')} />
-                    {submitted && !email && <div className="invalid-feedback">Email is required</div>}
-                </div>
-                <div className="form-group">
-                    <label>Password</label>
-                    <input autoComplete='current-password' type="password" name="password" value={password} onChange={handleChange} className={'form-control' + (submitted && !password ? ' is-invalid' : '')} />
-                    {submitted && !password && <div className="invalid-feedback">Password is required</div>}
-                </div>
-                <div className="form-group">
-                    <button className="btn btn-primary">
-                        {submitted && <span className="spinner-border spinner-border-sm mr-1"></span>}
-                        Login
-                    </button>
-                    <button className="btn btn-primary" onClick={() => navigate('/Register')}>Register</button>
-                </div>
-            </form>
-            {errorLogin}
-        </div>
+        <LoginPage >
+            <BackgroundLoginPage>
+                {/* <img  style={{margin: '0 auto'}}src = {require('../../images/brain-waves.jpg')}></img> */}
+                {/* background:'linear-gradient(to right bottom, #0067CB, #020316)' */}
+                <WrapperForm className="col-lg-8 offset-lg-2" > 
+                    <Form name="form" onSubmit={handleSubmit} >
+                        <HeaderForm>
+                            <Logo src={require('../../images/learnowIcon.png')}></Logo>
+                            <h2>Login</h2>
+                        </HeaderForm>
+                        <div className="form-group">
+                            <label>Email</label>
+                            <input type="email" name="email" value={email} onChange={handleChange} className={'form-control' + (submitted && !email ? ' is-invalid' : '')} />
+                            {submitted && !email && <div className="invalid-feedback">Email is required</div>}
+                        </div>
+                        <div className="form-group">
+                            <label>Password</label>
+                            <input type="password" name="password" value={password} onChange={handleChange} className={'form-control' + (submitted && !password ? ' is-invalid' : '')} />
+                            {submitted && !password && <div className="invalid-feedback">Password is required</div>}
+                        </div>
+                        <WrapperButtons className="form-group">
+                            <LoginButton className="btn btn-primary">
+                                {submitted && <span className="spinner-border spinner-border-sm mr-1"></span>}
+                                Login
+                            </LoginButton>
+                            <button className="btn btn-primary" onClick={() => navigate('/Register')}>Register</button>
+                        </WrapperButtons>
+                    </Form>
+                    {errorLogin}
+                </WrapperForm>
+            </BackgroundLoginPage>
+        </LoginPage>
     )
 }
