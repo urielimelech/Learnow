@@ -6,6 +6,7 @@ import { register, logout, notificationVisible } from '../../Redux/Actions'
 import { socketToWebServer } from '../../SocketIoClient'
 import { ToastNotification } from '../Toastify'
 import { SelectUserType } from './SelectUserType'
+import { RegisterPage, Logo, BackgroundRegisterPage, WrapperForm, Form, HeaderForm, WrapperButtons } from './RegisterStyle'
 
 export const Register = () => {
 
@@ -70,42 +71,49 @@ export const Register = () => {
     }
 
     return (
-        <div className="col-lg-8 offset-lg-2">
-            <h2>Register</h2>
-            <form name="form" onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label>Name</label>
-                    <input autoComplete='name' type="text" name="name" value={user.name} onChange={handleChange} className={'form-control' + (submitted && !user.name ? ' is-invalid' : '')} />
-                    {submitted && !name &&
-                        <div className="invalid-feedback">Name is required</div>
-                    }
-                </div>
-                <div className="form-group">
-                    <label>Email</label>
-                    <input autoComplete='username' type="email" name="email" value={user.email} onChange={handleChange} className={'form-control' + (submitted && !user.email ? ' is-invalid' : '')} />
-                    {submitted && !email &&
-                        <div className="invalid-feedback">Email is required</div>
-                    }
-                </div>
-                <div className="form-group">
-                    <label>Password</label>
-                    <input autoComplete='current-password' type="password" name="password" value={user.password} onChange={handleChange} className={'form-control' + (submitted && !user.password ? ' is-invalid' : '')} />
-                    {submitted && !password &&
-                        <div className="invalid-feedback">Password is required</div>
-                    }
-                </div>
-                <div className="form-group">
-                    <label>User Type</label>
-                    <SelectUserType name='userType' onChange={handleChange} />
-                </div>
-                <div className="form-group">
-                    <button className="btn btn-primary">
-                        {submitted && <span className="spinner-border spinner-border-sm mr-1"></span>}
-                        Register
-                    </button>
-                </div>
-            </form>
-            {errorRegister}
-        </div>
+        <RegisterPage>
+            <BackgroundRegisterPage>
+                <WrapperForm className="col-lg-8 offset-lg-2">
+                    <Form name="form" onSubmit={handleSubmit}>
+                        <HeaderForm>
+                            <Logo src={require('../../images/learnowIcon.png')}></Logo>
+                            <h4>Register</h4>
+                        </HeaderForm>
+                        <div className="form-group">
+                            <label>Name</label>
+                            <input type="text" name="name" value={user.name} onChange={handleChange} className={'form-control' + (submitted && !user.name ? ' is-invalid' : '')} />
+                            {submitted && !name &&
+                                <div className="invalid-feedback">Name is required</div>
+                            }
+                        </div>
+                        <div className="form-group">
+                            <label>Email</label>
+                            <input type="email" name="email" value={user.email} onChange={handleChange} className={'form-control' + (submitted && !user.email ? ' is-invalid' : '')} />
+                            {submitted && !email &&
+                                <div className="invalid-feedback">Email is required</div>
+                            }
+                        </div>
+                        <div className="form-group">
+                            <label>Password</label>
+                            <input type="password" name="password" value={user.password} onChange={handleChange} className={'form-control' + (submitted && !user.password ? ' is-invalid' : '')} />
+                            {submitted && !password &&
+                                <div className="invalid-feedback">Password is required</div>
+                            }
+                        </div>
+                        <div className="form-group">
+                            <label>User Type</label>
+                            <SelectUserType name='userType' onChange={handleChange} />
+                        </div>
+                        <WrapperButtons className="form-group">
+                            <button className="btn btn-primary">
+                                {submitted && <span className="spinner-border spinner-border-sm mr-1"></span>}
+                                Register
+                            </button>
+                        </WrapperButtons>
+                    </Form>
+                    {errorRegister}
+                </WrapperForm>
+            </BackgroundRegisterPage>
+        </RegisterPage>
     )
 }
