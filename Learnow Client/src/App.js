@@ -4,19 +4,17 @@ import { useRoutes } from 'hookrouter'
 import { NavBar } from './Components/NavBar'
 import Routes from './routes'
 import { BurgerNav } from './Components/NavBar/BurgerNav'
-import { useSelector } from 'react-redux'
-import { Login } from './Components/Login'
+import { CookiesProvider } from 'react-cookie'
 
 const App = () => {
 
   const routeResult = useRoutes(Routes)
   return (
-    <div>
-       {/* <NavBar/> */}
-     
-          <BurgerNav page={routeResult}/>
-       {/* {routeResult} */}
-    </div>
+    <CookiesProvider>
+    {/*<NavBar/>*/}
+       {/*routeResult*/}
+       <BurgerNav page={routeResult}/>
+    </CookiesProvider>
   )
 }
 

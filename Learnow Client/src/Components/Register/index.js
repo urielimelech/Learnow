@@ -7,8 +7,11 @@ import { socketToWebServer } from '../../SocketIoClient'
 import { ToastNotification } from '../Toastify'
 import { SelectUserType } from './SelectUserType'
 import { RegisterPage, Logo, BackgroundRegisterPage, WrapperForm, Form, HeaderForm, WrapperButtons } from './RegisterStyle'
+import { useCookies } from 'react-cookie'
 
 export const Register = () => {
+
+    const [cookies, setCookie] = useCookies(['email', 'token', 'name', 'userType', 'route'])
 
     const [errorRegister, setErrorRegister] = useState(null)
     const [user, setUser] = useState({
@@ -48,8 +51,14 @@ export const Register = () => {
     }, [])
 
     useEffect(() => {
-        if (Object.keys(loggedUser).length > 0) 
+        if (Object.keys(loggedUser).length > 0){
+            setCookie('email', loggedUser.email)
+            setCookie('token', loggedUser.token)
+            setCookie('name', loggedUser.name)
+            setCookie('userType', loggedUser.userType)
+            setCookie('route', '/Home')
             navigate('/Home')
+        }
     },[loggedUser])
 
     useEffect(() => {

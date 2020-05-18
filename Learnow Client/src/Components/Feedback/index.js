@@ -44,7 +44,7 @@ export const Feedback = () => {
         <div style={feedbackStyle.FeedbackComponent}>
             Hi now you finish session and you need to take a break and do one of the activities
             <div style={feedbackStyle.CardsContainer}>
-                {activitiesCards.length !== 0 ? renderCards(activitiesCards) : <Loading/>}
+                {activitiesCards ? renderCards(activitiesCards) : <Loading/>}
             </div>
         </div>
     )

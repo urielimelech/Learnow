@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { dbURL } from '../../../../consts.js'
+import { dbURL } from '../../../../dbUrl.js'
 
 export const onValidateToken = (soc, token) => {
     axios.get(`${dbURL}/checkUserToken`, { headers: { 'x-jwt-token': token } })

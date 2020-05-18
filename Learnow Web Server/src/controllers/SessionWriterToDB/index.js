@@ -11,7 +11,7 @@ import {
 import { ActivityAnalyzer } from '../ActivityAnalyzer/index.js'
 import { Correlator } from '../Correlator/index.js'
 import { ResultFeedback } from '../Feedback/ResultFeedback/index.js'
-import { dbURL } from '../../consts.js'
+import { dbURL } from '../../dbUrl.js'
 
 const sendSessionToDB = session => {
     axios.post(`${dbURL}/addSession`, session)

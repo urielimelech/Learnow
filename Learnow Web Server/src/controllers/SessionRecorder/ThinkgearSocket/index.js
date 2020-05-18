@@ -1,5 +1,4 @@
 import { sessionObj } from '../SessionObject.js'
-import open from 'open'
 import { getAvarageAttention, getAvarageMeditation } from '../../SessionAnalyzer/index.js'
 
 export const socketWithThinkgear = (serverIOService, soc, rooms) => {
@@ -42,7 +41,6 @@ export const socketWithThinkgear = (serverIOService, soc, rooms) => {
             soc.join(ip)
         }
         serverIOService.sockets.in(ip).emit('TGC connected to room', ip)
-        // open('http://localhost:3000/Session'/*, {app: 'google chrome'}*/)
     })
 
      /** fetch data from neurosky TGC server and send it to react client */
