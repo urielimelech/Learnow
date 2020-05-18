@@ -38,9 +38,23 @@ export const BurgerNavStyles = {
     bmItem: {
       color:'#ffffff',
       textDecoration: 'none',
-      padding: '5px'
+      padding: '5px',
     },
     bmOverlay: {
       background: 'rgba(0, 0, 0, 0.3)'
+    },
+    logoNav: {
+        height: '100px',
+        width: '100px', 
+        marginBottom: '50px'
+    },
+    imgNav:{
+        height: '60px',
+         width: '60px', 
+         margin: '0 auto'
+    },
+    textNav:{
+        marginBottom: '30px',
+        color: '#0ce9ed'
     }
   }

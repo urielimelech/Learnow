@@ -11,7 +11,7 @@ export const NavBar = () => {
             <Navbar bg="dark" variant="dark">
                 <Navbar.Brand>
                     <Nav.Link onClick={() => navigate('/')}>
-                        <NavBarIcon alt="learnow-logo" src={require('../../images/learnow icon.png')}/>
+                        <NavBarIcon alt="learnow-logo" src={require('../../images/learnowIcon.png')}/>
                     </Nav.Link>
                 </Navbar.Brand>
                 {/* <NavBarIcon  alt="learnow-logo" src={require('../images/learnow icon.png')}/> */}
