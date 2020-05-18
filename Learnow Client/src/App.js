@@ -3,6 +3,7 @@ import { useRoutes } from 'hookrouter'
 
 import { NavBar } from './Components/NavBar'
 import Routes from './routes'
+import { BurgerNav } from './Components/NavBar/BurgerNav'
 import { CookiesProvider } from 'react-cookie'
 
 const App = () => {
@@ -10,8 +11,9 @@ const App = () => {
   const routeResult = useRoutes(Routes)
   return (
     <CookiesProvider>
-       <NavBar/>
-       {routeResult}
+    {/*<NavBar/>*/}
+       {/*routeResult*/}
+       <BurgerNav page={routeResult}/>
     </CookiesProvider>
   )
 }
