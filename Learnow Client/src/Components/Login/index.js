@@ -5,6 +5,7 @@ import { navigate } from 'hookrouter'
 import { login, logout, notificationVisible } from '../../Redux/Actions'
 import { socketToWebServer } from '../../SocketIoClient'
 import { ToastNotification } from '../Toastify'
+import { useCookies } from 'react-cookie'
 
 export const Login = () => {
 
@@ -12,6 +13,8 @@ export const Login = () => {
         email: '',
         password: ''
     })
+
+    const [cookies, setCookie] = useCookies(['email', 'token', 'name', 'userType', 'route'])
     
     const [submitted, setSubmitted] = useState(false)
     const [errorLogin, setErrorLogin] = useState(null)
@@ -34,18 +37,37 @@ export const Login = () => {
         })
     }
 
-    useEffect(() => { 
-        _dispatch(logout())
-        if (loggedUser.email) {
-            socketToWebServer.emit('logout', loggedUser.email)
+    const checkCookies = () => {
+        if (cookies['email'] && cookies['token'] && cookies['name'] && cookies['userType']){
+            const email = cookies['email']
+            const token = cookies['token']
+            const name = cookies['name']
+            const userType = cookies['userType']
+            _dispatch(login({email: email, name: name, userType: userType, token: token}))
         }
+        else
+            _dispatch(logout())
+    }
+
+    useEffect(() => {
+        checkCookies()
+        // _dispatch(logout())
+        // if (loggedUser.email) {
+        //     socketToWebServer.emit('logout', loggedUser.email)
+        // }
         userSignIn()
         return () => socketToWebServer.off('logged data')
     }, [])
 
     useEffect(() => {
-        if (Object.keys(loggedUser).length > 0)
+        if (Object.keys(loggedUser).length > 0) {
+            setCookie('email', loggedUser.email)
+            setCookie('token', loggedUser.token)
+            setCookie('name', loggedUser.name)
+            setCookie('userType', loggedUser.userType)
+            setCookie('route', '/Home')
             navigate('/Home')
+        }
     },[loggedUser])
 
     useEffect(() => {
