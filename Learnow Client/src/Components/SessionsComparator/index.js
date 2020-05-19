@@ -36,8 +36,7 @@ export const SessionsComparator = () => {
                 }
             }
             else 
-                // console.log(comparisonResult)
-                return
+                setComparisonComponent(<ComparisonComponent comparisonResult={comparisonResult}/>)
         }
     },[comparisonResult])
 

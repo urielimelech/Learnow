@@ -36,11 +36,9 @@ export const improvmentCharts = ({comparisonResult}) => {
                 options={{
                     title: `Improvement of Measurments between ${elem.activity[0]} activity and ${elem.activity[1]} activity`,
                     titleTextStyle: {
-                        textAlign: 'center',
                         fontSize: 20,
                         bold: true
                     },
-                    tooltip: {textStyle: {color: '#FF0000'}, showColorCode: true},
                     bar: { 
                         groupWidth: '30%',
                     },
