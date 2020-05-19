@@ -6,16 +6,17 @@ import { navigate } from 'hookrouter'
 
 import { SliderComponent } from './SliderComponent'
 import { socketToWebServer } from '../../SocketIoClient'
+import { ConfigSliderWrapper, TextConfig, WrapperConfig, ButtonConfig } from './ConfigSliderStyle'
 
 export const ConfigSlider = ({userEmail, configObject, configKeys, configValues}) => {
 
     const useStyles = makeStyles((theme) => ({
         root: {
-            width: 300,
+            width: 300
         },
         margin: {
-            height: theme.spacing(3),
-        },
+            height: theme.spacing(3)
+        }
     }))
 
     const classes = useStyles();
@@ -48,10 +49,10 @@ export const ConfigSlider = ({userEmail, configObject, configKeys, configValues}
                 }
             }
             return (
-                <div key={key}>
-                    <Typography gutterBottom>
-                        {key}
-                    </Typography>
+                <ConfigSliderWrapper key={key}>
+                    <TextConfig  gutterBottom>
+                        {key.split('_').join(' ')}
+                    </TextConfig>
                     <SliderComponent
                         startValue={configValues[index]}
                         step={params.steps}
@@ -61,7 +62,7 @@ export const ConfigSlider = ({userEmail, configObject, configKeys, configValues}
                         sliderKey={key}
                         changeCommitted={changeCommittedInSlider}
                     />
-                </div>
+                </ConfigSliderWrapper>
             )
         })
     }
@@ -89,9 +90,9 @@ export const ConfigSlider = ({userEmail, configObject, configKeys, configValues}
     }
 
     return (
-        <div className={classes.root}>
+        <WrapperConfig className={classes.root}>
             {renderSliders}
-            <Button onClick={saveConfiguration}>Save</Button>
-        </div>
+            <ButtonConfig onClick={saveConfiguration}>Save</ButtonConfig>
+        </WrapperConfig>
     )
 }

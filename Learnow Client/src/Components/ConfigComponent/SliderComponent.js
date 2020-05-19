@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Grid from '@material-ui/core/Grid'
-import Slider from '@material-ui/core/Slider'
-import Input from '@material-ui/core/Input'
+import { WrapperSliderComponent, SliderComp, InputGrid, InputComp } from './SliderComponentStyle'
 
 export const SliderComponent = ({startValue, step, min, max, inputClasses, sliderKey, changeCommitted}) => {
 
@@ -43,9 +42,9 @@ export const SliderComponent = ({startValue, step, min, max, inputClasses, slide
     }
 
     return (
-        <Grid container spacing={2}>
+        <WrapperSliderComponent container spacing={2}>
             <Grid item xs>
-                <Slider 
+                <SliderComp
                     value = {value}
                     onChange = {handleChange}
                     valueLabelDisplay = "auto"
@@ -56,8 +55,8 @@ export const SliderComponent = ({startValue, step, min, max, inputClasses, slide
                     onChangeCommitted={onCommit}
                 />
             </Grid>
-            <Grid item>
-                <Input
+            <InputGrid item>
+                <InputComp
                     className={inputClasses}
                     value={value}
                     margin="dense"
@@ -71,7 +70,7 @@ export const SliderComponent = ({startValue, step, min, max, inputClasses, slide
                     'aria-labelledby': 'input-slider',
                     }}
                 />
-            </Grid>
-        </Grid>
+            </InputGrid>
+        </WrapperSliderComponent>
     )
 }
