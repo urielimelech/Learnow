@@ -14,7 +14,7 @@ color: #373A47;
 `
 
 export const InputGrid = styled(Grid)`
-margin-eft: 30px;
+margin-left: 30px;
 margin-top: -14px;
 `
 
