@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
-import { Button } from 'react-bootstrap'
 import { navigate } from 'hookrouter'
 
 import { SliderComponent } from './SliderComponent'
@@ -11,9 +9,6 @@ import { ConfigSliderWrapper, TextConfig, WrapperConfig, ButtonConfig } from './
 export const ConfigSlider = ({userEmail, configObject, configKeys, configValues}) => {
 
     const useStyles = makeStyles((theme) => ({
-        root: {
-            width: 300
-        },
         margin: {
             height: theme.spacing(3)
         }
@@ -90,7 +85,7 @@ export const ConfigSlider = ({userEmail, configObject, configKeys, configValues}
     }
 
     return (
-        <WrapperConfig className={classes.root}>
+        <WrapperConfig>
             {renderSliders}
             <ButtonConfig onClick={saveConfiguration}>Save</ButtonConfig>
         </WrapperConfig>
