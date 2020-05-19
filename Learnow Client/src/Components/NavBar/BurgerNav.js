@@ -10,11 +10,29 @@ export const  BurgerNav = ({page}) => {
     const loggedUser = useSelector(state => state.MainReducer.loggedUser)
 
     const [showBurgerNav, setShowBurgerNav] = useState(false)
+    const [isOpen, setIsOpen] = useState(true)
+    const [isPressed, setIsPressed] = useState(false)
+    
     const onClick = (e, route) => {
         e.preventDefault()
+        setIsPressed(true)
         navigate(route)
     }
 
+    useEffect(() => {
+        if(isPressed){
+            setIsOpen(!isOpen)
+            setIsPressed(false)
+        }
+    },[isPressed])
+
+
+    useEffect(() => {
+        if(isOpen)
+            setIsOpen(false)
+    },[isOpen])
+
+    
     useEffect(() => {
         if(Object.keys(loggedUser).length === 0) 
             setShowBurgerNav(false)
@@ -25,7 +43,7 @@ export const  BurgerNav = ({page}) => {
     return (
         <div id={"outer-container"}>
             {showBurgerNav ? 
-                <Menu pageWrapId={ "page-wrap" } outerContainerId={ "outer-container" } styles = {BurgerNavStyles} >
+                <Menu isOpen={isOpen} pageWrapId={ "page-wrap" } outerContainerId={ "outer-container" } styles = {BurgerNavStyles} >
                     <a href ='/Home' onClick={(e) => onClick(e, '/Home')}><img style={BurgerNavStyles.logoNav} src={require('../../images/learnowIcon.png')}/></a>
                     {loggedUser.userType === 'student' ? 
                             <img style={BurgerNavStyles.imgNav} src={require('../../images/student.png')}></img> 
