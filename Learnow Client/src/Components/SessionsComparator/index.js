@@ -3,13 +3,15 @@ import { useSelector }from 'react-redux'
 
 import { socketToWebServer } from '../../SocketIoClient'
 import { SessionList } from './SessionList'
+import { ComparisonComponent } from './ComparisonComponent'
 
 export const SessionsComparator = () => {
 
     const loggedUser = useSelector(state => state.MainReducer.loggedUser)
 
-    const [comparisonResult, setComparisonResult] = useState(null)
+    const [comparisonResult, setComparisonResult] = useState([])
     const [sessionsList, setSessionsList] = useState([])
+    const [comparisonComponent, setComparisonComponent] = useState(null)
 
     useEffect(() => {
         socketToWebServer.emit('get all user sessions', loggedUser.email)
@@ -17,7 +19,7 @@ export const SessionsComparator = () => {
             setSessionsList(<SessionList userSessions={userSessions} email={loggedUser.email}/>)
         })
         socketToWebServer.on('compared sessions', result => {
-            setComparisonResult(result)
+            setComparisonResult(prev => [result, ...prev])
         })
         return () => {
             socketToWebServer.off('all user sessions')
@@ -26,10 +28,17 @@ export const SessionsComparator = () => {
     },[]) 
 
     useEffect(() => {
-        if (comparisonResult !== null){
-            console.log(comparisonResult)
+        if (comparisonResult.length > 0) {
+            if (loggedUser.userType === 'researcher') {
+                if (comparisonResult.length === 3) {
+                    setComparisonComponent(<ComparisonComponent comparisonResult={comparisonResult}/>)
+                    console.log(comparisonResult)
+                }
+            }
+            else 
+                setComparisonComponent(<ComparisonComponent comparisonResult={comparisonResult}/>)
         }
     },[comparisonResult])
 
-    return sessionsList
+    return comparisonComponent ? comparisonComponent : sessionsList
 }
