@@ -1,18 +1,26 @@
 import React, { useState, useEffect } from 'react'
 import { elastic as Menu } from 'react-burger-menu'
 import {BurgerNavStyles} from './BurgerNavStyle'
-import { navigate, useRoutes } from 'hookrouter'
-import routes from '../../routes'
+import { navigate } from 'hookrouter'
 import { useSelector } from 'react-redux'
-
+import { useCookies } from 'react-cookie'
 
 export const  BurgerNav = ({page}) => {
+
     const loggedUser = useSelector(state => state.MainReducer.loggedUser)
+
+    const [cookies, setCookie, removeCookie] = useCookies(['email', 'token', 'name', 'userType', 'route'])
 
     const [showBurgerNav, setShowBurgerNav] = useState(false)
     const onClick = (e, route) => {
         e.preventDefault()
         navigate(route)
+    }
+
+    const logoutUser = () => {
+        Object.keys(cookies).forEach(cookie => {
+            removeCookie(cookie)
+        })
     }
 
     useEffect(() => {
@@ -36,6 +44,7 @@ export const  BurgerNav = ({page}) => {
                     <a href='/Recommendations' onClick={(e) => onClick(e, '/Recommendations')}>Recommendations</a>
                     <a href='/SessionsComparator' onClick={(e) => onClick(e, '/SessionsComparator')}>Session Comparator</a>
                     <a href='/Configuration' onClick={(e) => onClick(e, '/Configuration')}>Configuration</a>
+                    <a href='/' onClick={() => logoutUser()}>Logout</a>
                 </Menu> 
             :
                 null
@@ -45,5 +54,4 @@ export const  BurgerNav = ({page}) => {
             </main>
         </div>
       )
-
 }
