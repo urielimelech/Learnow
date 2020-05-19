@@ -37,7 +37,7 @@ it is responsible for calming and restoring balance after the stress and pressur
         CardNumber: '4'
     },
     {
-        Title: 'Playing ',
+        Title: 'Playing',
         TitleCard: 'Playing Computer Game',
         ImgCard: 'computerGame',
         DescriptionCard: 'Computer games improve attention, speed of information processing, past flexibility between different tasks and mental rotation of objects.',
