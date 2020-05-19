@@ -12,7 +12,7 @@ export const VerifyTokenJwt = ({children}) => {
     const _dispatch = useDispatch()
     const check15Min = 1000 * 60 * 15
 
-    const [cookies, setCookie] = useCookies(['email', 'token', 'name', 'userType', 'route'])
+    const [cookies, setCookie, removeCookie] = useCookies(['email', 'token', 'name', 'userType', 'route'])
 
     const checkCookies = () => {
         if (cookies['email'] && cookies['token'] && cookies['name'] && cookies['userType']){
@@ -46,8 +46,10 @@ export const VerifyTokenJwt = ({children}) => {
     useEffect(() => {
         if (verified === false){
             navigate('/')
-            /** add a message to user that the token is not valid anymore and need to reconnect */
-            return 
+            /** the token of the user is not valid anymore and need to reconnect */
+            Object.keys(cookies).forEach(cookie => {
+                removeCookie(cookie)
+            })
         }
         else if (verified === true) {
             navigate(cookies['route'])
