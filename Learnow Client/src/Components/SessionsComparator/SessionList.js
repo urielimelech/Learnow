@@ -109,6 +109,7 @@ export const SessionList = ({userSessions, email}) => {
         })
         const researcherSessions = tempResearcherSessions.filter(elem => elem !== undefined)
         return researcherSessions.map((session, index) => {
+            console.log(session)
             const date0 = new Date(session[0].startTimeStamp)
             const date1 = new Date(session[1].startTimeStamp)
             const dateOfSession = date0.toDateString()
@@ -160,7 +161,6 @@ export const SessionList = ({userSessions, email}) => {
     return (
         <div>
             {loggedUser.userType === 'researcher' ? researcherMustDoAnotherSession() : studentSessionsList()}
-            {/* <Button onClick={compareSessions} disabled={isBtnDisable}>Compare</Button> */}
             <button onClick={loggedUser.userType === 'researcher' ? multiCompareSessions : compareSessions} disabled={isBtnDisable} className="btn btn-primary">
                 Compare Now
             </button>
