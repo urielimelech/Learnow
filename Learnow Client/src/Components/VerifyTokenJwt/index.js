@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { navigate } from 'hookrouter'
 
 import { socketToWebServer } from '../../SocketIoClient'
-import { isVerify, login } from '../../Redux/Actions'
+import { isVerify, login, logout } from '../../Redux/Actions'
 import { useCookies } from 'react-cookie'
 
 export const VerifyTokenJwt = ({children}) => {
@@ -45,13 +45,14 @@ export const VerifyTokenJwt = ({children}) => {
 
     useEffect(() => {
         if (verified === false){
-            navigate('/')
-            /** the token of the user is not valid anymore and need to reconnect */
+            _dispatch(logout())
             Object.keys(cookies).forEach(cookie => {
                 removeCookie(cookie)
             })
+            navigate('/')
+            /** the token of the user is not valid anymore and need to reconnect */
         }
-        else if (verified === true) {
+        else if (verified) {
             navigate(cookies['route'])
             /** check token with server every 5 minutes */
             setInterval(() => {
