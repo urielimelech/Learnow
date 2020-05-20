@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react'
-import Grid from '@material-ui/core/Grid'
-import { WrapperSliderComponent, SliderComp, InputGrid, InputComp } from './SliderComponentStyle'
+import {Grid, Slider, Input} from '@material-ui/core'
+import { WrapperSliderComponent, sliderComponentStyle } from './SliderComponentStyle'
 
-export const SliderComponent = ({startValue, step, min, max, inputClasses, sliderKey, changeCommitted}) => {
+
+export const SliderComponent = ({startValue, step, min, max, sliderKey, changeCommitted}) => {
 
     const marks = [
         {
             value: min,
-            label: min,
+            label: min
         },
         {
             value: max,
-            label: max,
+            label: max
         },
     ]
 
@@ -44,7 +45,7 @@ export const SliderComponent = ({startValue, step, min, max, inputClasses, slide
     return (
         <WrapperSliderComponent container spacing={2}>
             <Grid item xs>
-                <SliderComp
+                <Slider style={sliderComponentStyle.SliderComp}
                     value = {value}
                     onChange = {handleChange}
                     valueLabelDisplay = "auto"
@@ -55,9 +56,8 @@ export const SliderComponent = ({startValue, step, min, max, inputClasses, slide
                     onChangeCommitted={onCommit}
                 />
             </Grid>
-            <InputGrid item>
-                <InputComp
-                    className={inputClasses}
+            <Grid item style={sliderComponentStyle.GridInput}>
+                <Input
                     value={value}
                     margin="dense"
                     onChange={handleInputChange}
@@ -66,11 +66,12 @@ export const SliderComponent = ({startValue, step, min, max, inputClasses, slide
                     step: 10,
                     min: min,
                     max: max,
+                    style: sliderComponentStyle.Input,
                     type: 'number',
                     'aria-labelledby': 'input-slider',
                     }}
                 />
-            </InputGrid>
+            </Grid>
         </WrapperSliderComponent>
     )
 }

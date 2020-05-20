@@ -8,14 +8,6 @@ import { ConfigSliderWrapper, TextConfig, WrapperConfig, ButtonConfig } from './
 
 export const ConfigSlider = ({userEmail, configObject, configKeys, configValues}) => {
 
-    const useStyles = makeStyles((theme) => ({
-        margin: {
-            height: theme.spacing(3)
-        }
-    }))
-
-    const classes = useStyles();
-
     const [renderSliders, setRenderSliders] = useState(null)
     const [config, setConfig] = useState(null)
 
@@ -53,7 +45,6 @@ export const ConfigSlider = ({userEmail, configObject, configKeys, configValues}
                         step={params.steps}
                         min={params.min}
                         max={params.max}
-                        inputClasses={classes.input}
                         sliderKey={key}
                         changeCommitted={changeCommittedInSlider}
                     />
