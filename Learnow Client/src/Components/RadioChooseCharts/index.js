@@ -1,14 +1,18 @@
 import React from 'react'
 import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from '@material-ui/core'
 
-export const RadioChooseCharts = ({chart, onRadioChange}) => {
+export const RadioChooseCharts = ({chart, onRadioChange, label}) => {
 
     const chartsChooseButtons = chart.map((elem, index) => {
         return <FormControlLabel 
             key={index}
             value={elem.key}
             control={<Radio color='primary'/>}
-            label={`${elem.props.improve[0]} activity and ${elem.props.improve[1]} activity comparison`}
+            label={label === 'comparison' ? 
+                `${elem.props.improve[0]} activity and ${elem.props.improve[1]} activity comparison`
+            :
+                `${elem.props.title} Session Result`    
+            }
             labelPlacement='bottom'
         />
     })

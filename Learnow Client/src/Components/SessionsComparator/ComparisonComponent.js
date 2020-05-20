@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { improvmentCharts } from './ImprovmentCharts'
-import { RadioChooseCharts } from './RadioChooseCharts'
+import { RadioChooseCharts } from '../RadioChooseCharts'
 import { StyledComparisonComponent } from './ComparisonComponentStyle'
 import { useSelector } from 'react-redux'
 
@@ -22,7 +22,7 @@ export const ComparisonComponent = ({comparisonResult}) => {
 
     useEffect(() => {
         if (chart) {
-            setChartChoose(RadioChooseCharts({chart, onRadioChange}))
+            setChartChoose(RadioChooseCharts({chart, onRadioChange, label: 'comparison'}))
         }
     },[chart])
 
