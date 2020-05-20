@@ -21,7 +21,7 @@ export const ResultLineChart = ({data, title}) => {
         <Chart 
             data={data} 
             width={WINDOW_WIDTH} 
-            height={WINDOW_HEIGHT*0.4}
+            height={WINDOW_HEIGHT*0.6}
             chartType="LineChart" 
             loader={<Loading/>} 
             options={options} 
