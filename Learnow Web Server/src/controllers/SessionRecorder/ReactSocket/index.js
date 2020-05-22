@@ -12,6 +12,7 @@ import { onGetUserConfiguration } from './SocketsOnLogic/OnGetUserConfiguration.
 import { onSaveConfiguration } from './SocketsOnLogic/OnSaveConfiguration.js'
 import { onLogout } from './SocketsOnLogic/OnLogout.js'
 import { onGetAllUserSessions } from './SocketsOnLogic/OnGetAllUserSessions.js'
+import { onBreakSession } from './SocketsOnLogic/OnBreakSession.js'
 
 export const socketWithReact = (serverIOService, soc, rooms, userConfigs) => {
 
@@ -88,5 +89,10 @@ export const socketWithReact = (serverIOService, soc, rooms, userConfigs) => {
     /** on client disconnect, clean all client listners */
     soc.on('disconnect', () => {
         soc.removeAllListeners()
+    })
+
+    /** end session when user break the session and move to feedback page */
+    soc.on('break session', ({ip}) => {
+        onBreakSession(serverIOService, rooms, ip)
     })
 }
