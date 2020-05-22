@@ -19,7 +19,6 @@ export const onEndQuiz = (serverIOService, soc, rooms, data, ip) => {
                     serverIOService.sockets.sockets[s].leave(ip)
                 })
             })
-
         }
     })
     console.log(`session ended in room ${ip}`)

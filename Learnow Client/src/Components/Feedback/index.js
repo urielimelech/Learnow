@@ -6,7 +6,6 @@ import { feedbackStyle } from './FeedbackStyle'
 import { CardComponent } from '../CardComponent'
 import { navigate } from 'hookrouter'
 import { chooseActivity } from '../../Redux/Actions'
-import { ExpandButton } from '../CardComponent/ExpandButton'
 import { Loading } from '../Loading'
 
 export const Feedback = () => {
