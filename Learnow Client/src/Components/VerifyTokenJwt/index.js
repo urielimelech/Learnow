@@ -40,16 +40,25 @@ export const VerifyTokenJwt = ({children}) => {
     useEffect(() => {
         checkCookies()
         checkTokenWithServer()
-        return () => socketToWebServer.off('get dbToken')
+        /** disconnect user when web server is closed */
+        socketToWebServer.on('disconnect', () => disconnect())
+        return () => {
+            socketToWebServer.off('get dbToken')
+            socketToWebServer.off('disconnect')
+        }
     },[])
+
+    const disconnect = () => {
+        _dispatch(logout())
+        Object.keys(cookies).forEach(cookie => {
+            removeCookie(cookie)
+        })
+        navigate('/')
+    }
 
     useEffect(() => {
         if (verified === false){
-            _dispatch(logout())
-            Object.keys(cookies).forEach(cookie => {
-                removeCookie(cookie)
-            })
-            navigate('/')
+            disconnect()
             /** the token of the user is not valid anymore and need to reconnect */
         }
         else if (verified) {

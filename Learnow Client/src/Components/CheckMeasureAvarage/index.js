@@ -1,25 +1,20 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-
+import { useSelector } from 'react-redux'
 import { socketToWebServer } from '../../SocketIoClient'
-import { notificationVisible } from '../../Redux/Actions'
-import { ToastNotification } from '../Toastify'
+import { MeasureDialog } from './MeasureDialog'
 
 export const CheckMeasureAvarage = () => {
 
-    const _dispatch = useDispatch()
-
     const isNotificationVisible = useSelector(state => state.MainReducer.isNotificationVisible)
-
     const [lowLevelWarning, setLowLevelWarning] = useState(null)
+    const [showMeasureDialog, setShowMeasureDialog] = useState(false)
 
     useEffect(() => {
       socketToWebServer.on('avarage in worked session', ({attention, meditation}) => {
         console.log({attention}, {meditation})
         const lowLevel = 30
         if (attention < lowLevel || meditation < lowLevel){
-          _dispatch(notificationVisible(true))
-          setLowLevelWarning(<ToastNotification renderComponent={'please pay attention to your meditation and attention'}/>)
+          setShowMeasureDialog(true)
         }
       })
       return () => socketToWebServer.off('avarage in worked session')
@@ -27,8 +22,13 @@ export const CheckMeasureAvarage = () => {
       
     useEffect(() => {
         if (!isNotificationVisible)
-            setLowLevelWarning(null)
+            setShowMeasureDialog(false)
     },[isNotificationVisible])
 
-    return lowLevelWarning
+    return (
+      <div>
+         {lowLevelWarning} 
+         {showMeasureDialog ? <MeasureDialog/> : null} 
+      </div>
+    )
 }
