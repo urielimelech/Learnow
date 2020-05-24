@@ -7,6 +7,7 @@ import { socketToWebServer } from '../../SocketIoClient'
 import { CardComponent } from '../CardComponent'
 import { resetStyleList } from '../../Redux/Actions'
 import { TextMessageToastify } from '../TextMessageToastify'
+import { StyledSessionListContainer, StyledCardComponent, StyledButtonContainer } from './SessionListStyle'
 
 export const SessionList = ({userSessions, email}) => {
 
@@ -74,6 +75,7 @@ export const SessionList = ({userSessions, email}) => {
 
     /** list of session cards components */
     const studentSessionsList = () => {
+        userSessions.sort((aTimeStamp, bTimeStamp) => Number(bTimeStamp.startTimeStamp) - Number(aTimeStamp.startTimeStamp))
         return userSessions.map((session, index) => {
             const date = new Date(session.startTimeStamp)
             const dateOfSession = date.toDateString()
@@ -95,23 +97,23 @@ export const SessionList = ({userSessions, email}) => {
             const OnClickButton = () => {
                 checkIfSessionIsChoosed([...compareSession, session])
             }
-            return <CardComponent key={index} headerText={headerText} detailText={detailText} buttonText={ButtonText} onClickButton={OnClickButton}/>
+            return <CardComponent key={index} headerText={headerText} detailText={detailText} buttonText={ButtonText} onClickButton={OnClickButton} style={StyledCardComponent}/>
         })
     }
 
     const researcherSessionsList = () => {
-        if (userSessions.length % 2 === 1)
-            return null
+        userSessions.sort((aTimeStamp, bTimeStamp) => Number(bTimeStamp.startTimeStamp) - Number(aTimeStamp.startTimeStamp))
         const tempResearcherSessions = userSessions.map((session, index) => {
-                if (session.activity === 'None') {
-                    return [session, userSessions[index + 1]]
-                }
+            if (session.activity != 'None' && userSessions[index + 1].activity === 'None') {
+                return [session, userSessions[index + 1]]
+            }
+            else if (session.activity === 'None')
+                return
         })
         const researcherSessions = tempResearcherSessions.filter(elem => elem !== undefined)
         return researcherSessions.map((session, index) => {
-            console.log(session)
-            const date0 = new Date(session[0].startTimeStamp)
-            const date1 = new Date(session[1].startTimeStamp)
+            const date0 = new Date(session[1].startTimeStamp)
+            const date1 = new Date(session[0].startTimeStamp)
             const dateOfSession = date0.toDateString()
             const timeOfSession0 = getExactTime(date0)
             const timeOfSession1 = getExactTime(date1)
@@ -128,14 +130,14 @@ export const SessionList = ({userSessions, email}) => {
                         Time Of Second Session: {timeOfSession1}
                     </Typography>
                     <Typography variant="body2" color="textSecondary" component="p">
-                        Activity: {session[1].activity}
+                        Activity: {session[0].activity}
                     </Typography>
                 </div>
             const ButtonText = 'Select Session'
             const OnClickButton = () => {
                 checkIfSessionIsChoosed([...compareSession, session])
             }
-            return <CardComponent key={index} headerText={headerText} detailText={detailText} buttonText={ButtonText} onClickButton={OnClickButton}/>
+            return <CardComponent key={index} headerText={headerText} detailText={detailText} buttonText={ButtonText} onClickButton={OnClickButton} style/>
         })
     }
 
@@ -159,11 +161,13 @@ export const SessionList = ({userSessions, email}) => {
     }
 
     return (
-        <div>
+        <StyledSessionListContainer>
             {loggedUser.userType === 'researcher' ? researcherMustDoAnotherSession() : studentSessionsList()}
-            <button onClick={loggedUser.userType === 'researcher' ? multiCompareSessions : compareSessions} disabled={isBtnDisable} className="btn btn-primary">
-                Compare Now
-            </button>
-        </div>
+            <StyledButtonContainer>
+                <button style={{width: '300px'}} onClick={loggedUser.userType === 'researcher' ? multiCompareSessions : compareSessions} disabled={isBtnDisable} className="btn btn-primary">
+                    Compare Now
+                </button>
+            </StyledButtonContainer>
+        </StyledSessionListContainer>
     )
 }
