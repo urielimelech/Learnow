@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { makeStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import CardActionArea from '@material-ui/core/CardActionArea'
 import CardActions from '@material-ui/core/CardActions'
@@ -14,18 +13,6 @@ import { ExpandButton } from './ExpandButton'
 import { ExpandedContent } from './ExpandedContent'
 
 export const CardComponent = ({headerText, detailText=null, isAbleToExpand=false, expandedText=null, buttonText, onClickButton=null, img=null, style=null}) => {
-
-    const useStyles = makeStyles({
-        root: {
-            maxWidth: 400
-        },
-        media: {
-            // height: 140
-            height: 240
-        }
-    })
-
-    const classes = useStyles()
     
     const [expanded, setExpanded] = useState(false)
     const [selectStyle, setSelectStyle] = useState(null)
@@ -57,11 +44,10 @@ export const CardComponent = ({headerText, detailText=null, isAbleToExpand=false
     },[isPressed])
 
     return (
-        <Card className={classes.root} style={ style ? style.Card : selectStyle}>
+        <Card style={ style ? style.Card : selectStyle}>
             <CardActionArea style = {style ? style.CardStyle : null}>
                 {img ? 
                     <CardMedia style = {style ? style.CardImgStyle : null}
-                        className={classes.media}
                         image={img}
                         component = "img"
                         title="Contemplative Reptile"
