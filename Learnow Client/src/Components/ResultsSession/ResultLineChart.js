@@ -10,18 +10,26 @@ export const ResultLineChart = ({data, title}) => {
         },
         vAxis: {
             title: 'Metrics',
+            maxValue: 100,
+            minValue: 0
         },
         series: {
             1: { curveType: 'function' }
         },
         title: `${title} Session Results`,
-        colors: ['#0ce9ed', '#28fa07']
+        colors: ['#0ce9ed', '#28fa07'],
+        tooltip: {
+            textStyle: {
+                fontSize: 20,
+                bold: true
+            }
+        }
     }
     return (
         <Chart 
             data={data} 
             width={WINDOW_WIDTH} 
-            height={WINDOW_HEIGHT*0.6}
+            height={WINDOW_HEIGHT*0.4}
             chartType="LineChart" 
             loader={<Loading/>} 
             options={options} 
