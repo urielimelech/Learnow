@@ -30,16 +30,50 @@ export const ResultCharts = ({getFullArr}) => {
         }).filter(item => {
             return item !== undefined
         })
-        videoData.unshift(['x', 'attention', 'meditation'])
+        videoData.unshift(['x', 'attention', {role: 'tooltip'}, 'meditation', {role: 'tooltip'}])
         return videoData
     }
 
+    const findMinMax = lastSessionData => {
+        let minAtt = lastSessionData.lowestAttentionLevel[0].attention, maxAtt = lastSessionData.highestAttentionLevel[0].attention
+        let minMed = lastSessionData.lowestMeditationLevel[0].meditation, maxMed = lastSessionData.highestMeditationLevel[0].meditation
+        let i = 1
+        while (i < lastSessionData.lowestAttentionLevel.length) {
+            let tempLowAtt = lastSessionData.lowestAttentionLevel[i].attention
+            minAtt = (tempLowAtt < minAtt) ? tempLowAtt : minAtt
+            i++
+        }
+        i = 1
+        while (i < lastSessionData.highestAttentionLevel.length) {
+            let tempHighAtt = lastSessionData.highestAttentionLevel[i].attention
+            maxAtt = (tempHighAtt > maxAtt) ? tempHighAtt : maxAtt
+            i++
+        }
+        i = 1
+        while (i < lastSessionData.lowestMeditationLevel.length) {
+            let tempLowMed = lastSessionData.lowestMeditationLevel[i].meditation
+            minMed = (tempLowMed < minMed) ? tempLowMed : minMed
+            i++
+        }
+        i = 1
+        while (i < lastSessionData.highestMeditationLevel.length) {
+            let tempHighMed = lastSessionData.highestMeditationLevel[i].meditation
+            maxMed = (tempHighMed > maxMed) ? tempHighMed : maxMed
+            i++
+        }
+        return [minAtt, maxAtt, minMed, maxMed]
+      }
+
     const getSessionSerie = lastSessionData => {
+        const minMaxArr = findMinMax(lastSessionData)
         const sessionData = lastSessionData.monitorData.map(e => {
             const timeStamp = differenceInSec(e.timeStamp, lastSessionData.startTimeStamp)
-            return [timeStamp, e.attention, e.meditation]
+            return [timeStamp, 
+                e.attention, (e.attention === minMaxArr[0] ? `${e.attention} is Minimum Value` : (e.attention === minMaxArr[1] ? `${e.attention} is Maximum Value` : null)),
+                e.meditation, (e.meditation === minMaxArr[2] ? `${e.meditation} is Minimum Value` : (e.meditation === minMaxArr[3] ? `${e.meditation} is Maximum Value` : null)),
+            ]
         })
-        sessionData.unshift(['x', 'attention', 'meditation'])
+        sessionData.unshift(['x', 'attention', {role: 'tooltip'}, 'meditation', {role: 'tooltip'}])
         return sessionData
     }
 
