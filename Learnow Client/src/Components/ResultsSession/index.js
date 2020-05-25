@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { ResultCharts } from './ResultCharts'
 import { RadioChooseCharts } from '../RadioChooseCharts';
 import { StyledResultComponent } from './ResultSessionStyle';
+import { Correlation } from './Correlation';
 
 export const Results = () => {
 
@@ -28,8 +29,9 @@ export const Results = () => {
 
     return (
         <StyledResultComponent>
-            {optionChart ? optionChart : null}
+            {charts.length > 0 ? optionChart ? optionChart : null : null}
             {charts.length > 0 ? charts[displayChart] : <ResultCharts getFullArr={getSessionCharts}/>}
+            <Correlation/>
         </StyledResultComponent>
     )
 }
