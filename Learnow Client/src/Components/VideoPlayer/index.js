@@ -18,7 +18,7 @@ export const VideoPlayer = ({sessionVideo, sessionQuiz}) =>{
 
   const ip = useSelector(state => state.MainReducer.ip)
   const loggedUser = useSelector(state => state.MainReducer.loggedUser)
-  const isNotificationVisible = useSelector(state => state.MainReducer.isNotificationVisible)
+  // const isNotificationVisible = useSelector(state => state.MainReducer.isNotificationVisible)
   const activity = useSelector(state => state.MainReducer.chooseActivity)
 
   const answerTimeInVideo = sessionQuiz.questions.map(elem => {
@@ -37,10 +37,10 @@ export const VideoPlayer = ({sessionVideo, sessionQuiz}) =>{
       emitWhenAnswerOccuredInVideo()
   },[videoState])
 
-  useEffect(() => {
-    if (!isNotificationVisible)
-      setWatchVideoWarning(null)
-  },[isNotificationVisible])
+  // useEffect(() => {
+  //   if (!isNotificationVisible)
+  //     setWatchVideoWarning(null)
+  // },[isNotificationVisible])
 
   const emitWhenAnswerOccuredInVideo = () => {
     if (Math.floor(videoState.playedSeconds) === answerTimeInVideo[index]) {
