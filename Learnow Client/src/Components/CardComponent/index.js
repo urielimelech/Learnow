@@ -11,11 +11,11 @@ import Collapse from '@material-ui/core/Collapse'
 
 import { ExpandButton } from './ExpandButton'
 import { ExpandedContent } from './ExpandedContent'
+import { StyledCard } from './StyledCard'
 
 export const CardComponent = ({headerText, detailText=null, isAbleToExpand=false, expandedText=null, buttonText, onClickButton=null, img=null, style=null}) => {
     
     const [expanded, setExpanded] = useState(false)
-    const [selectStyle, setSelectStyle] = useState(null)
     const [isPressed, setIsPressed] = useState(false)
     
     const resetStyle = useSelector(state => state.MainReducer.resetStyle)
@@ -23,10 +23,6 @@ export const CardComponent = ({headerText, detailText=null, isAbleToExpand=false
     const handleExpandClick = () => {
         setExpanded(!expanded)
     }
-
-    useEffect(() => {
-        setSelectStyle({})
-    }, [expanded])
 
     const onSelect = () => {
         onClickButton()
@@ -38,13 +34,14 @@ export const CardComponent = ({headerText, detailText=null, isAbleToExpand=false
         setIsPressed(false)
     },[resetStyle])
 
-    /** if card pressed, change style */
-    useEffect(() => {
-        isPressed ? setSelectStyle({border: '2px solid #ADD8E6', backgroundColor:'#FFFFF0'}) : setSelectStyle(null)
-    },[isPressed])
-
     return (
-        <Card style={ style ? style.Card : selectStyle}>
+        <StyledCard 
+            marginr={style ? style.Card ? style.Card.marginRight : null : null}
+            margint={style ? style.Card ? style.Card.marginTop : null : null}
+            width={style ? style.Card ? style.Card.width : null : null}
+            border={isPressed ? '2px solid #ADD8E6' : null}
+            backgroundcolor={isPressed ? "#FFFFF0" : null}
+        >
             <CardActionArea style = {style ? style.CardStyle : null}>
                 {img ? 
                     <CardMedia style = {style ? style.CardImgStyle : null}
@@ -82,6 +79,6 @@ export const CardComponent = ({headerText, detailText=null, isAbleToExpand=false
             <Collapse in={expanded} timeout="auto" unmountOnExit style = {style ? style.CardStyle : null}>
                 <ExpandedContent  expandedText={expandedText}/>
             </Collapse>
-        </Card>
+        </StyledCard>
     )
 }
