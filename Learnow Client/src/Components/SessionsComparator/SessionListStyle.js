@@ -5,7 +5,6 @@ display: flex;
 width: 70%;
 justify-content: center;
 margin: 0 auto;
-margin-top: 100px;
 flex-flow: row wrap;
 `
 

@@ -13,6 +13,7 @@ import { onSaveConfiguration } from './SocketsOnLogic/OnSaveConfiguration.js'
 import { onLogout } from './SocketsOnLogic/OnLogout.js'
 import { onGetAllUserSessions } from './SocketsOnLogic/OnGetAllUserSessions.js'
 import { onBreakSession } from './SocketsOnLogic/OnBreakSession.js'
+import { onGetAllComparison } from './SocketsOnLogic/OnGetAllComparison.js'
 
 export const socketWithReact = (serverIOService, soc, rooms, userConfigs) => {
 
@@ -94,5 +95,10 @@ export const socketWithReact = (serverIOService, soc, rooms, userConfigs) => {
     /** end session when user break the session and move to feedback page */
     soc.on('break session', ({ip}) => {
         onBreakSession(serverIOService, rooms, ip)
+    })
+
+    /** get all comparison data between sessions for recommendation */
+    soc.on('get all comparison', email => {
+        onGetAllComparison(soc, email)
     })
 }
