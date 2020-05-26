@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import { socketToWebServer } from '../../SocketIoClient'
 import { ConfigSlider } from './ConfigSlider'
 import { Loading } from '../Loading'
+import { navigate } from 'hookrouter'
 
 export const ConfigComponent = () => {
 
@@ -39,10 +40,18 @@ export const ConfigComponent = () => {
         }
     },[configuration])
 
+    const navToHome = () => {
+        navigate('/Home')
+        return null
+    }
+
     return (
+        loggedUser.userType === 'researcher' ? 
         configKeys.length !== 0 && configValues.length !== 0 ?
             <ConfigSlider userEmail={loggedUser.email} configObject={configuration} configKeys={configKeys} configValues={configValues}/>
         :
             <Loading/>
+        :    
+        navToHome()
     )
 }

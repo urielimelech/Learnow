@@ -52,10 +52,6 @@ export const Login = () => {
 
     useEffect(() => {
         checkCookies()
-        // _dispatch(logout())
-        // if (loggedUser.email) {
-        //     socketToWebServer.emit('logout', loggedUser.email)
-        // }
         userSignIn()
         return () => socketToWebServer.off('logged data')
     }, [])
@@ -89,14 +85,9 @@ export const Login = () => {
         }
     }
 
-    const windowWidth = window.innerWidth
-    const windowHeight = window.innerHeight
-
     return (
         <LoginPage >
             <BackgroundLoginPage>
-                {/* <img  style={{margin: '0 auto'}}src = {require('../../images/brain-waves.jpg')}></img> */}
-                {/* background:'linear-gradient(to right bottom, #0067CB, #020316)' */}
                 <WrapperForm className="col-lg-8 offset-lg-2" > 
                     <Form name="form" onSubmit={handleSubmit} >
                         <HeaderForm>

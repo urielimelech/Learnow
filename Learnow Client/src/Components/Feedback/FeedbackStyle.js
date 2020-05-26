@@ -1,3 +1,5 @@
+import { WINDOW_HEIGHT } from "../../consts"
+
 export const feedbackStyle = {
     Card: {
         marginRight: '15px'
@@ -12,13 +14,16 @@ export const feedbackStyle = {
         height: '100px'
     },
     CardLinkStyle : {
-        display: 'flex', justifyContent:'center'
+        display: 'flex', 
+        justifyContent:'center'
     },
     FeedbackComponent : {
-        textAlign:'center', marginTop:'20px'
+        textAlign:'center', 
+        height: WINDOW_HEIGHT
     },
     CardsContainer : {
-        display: 'flex', justifyContent:'center'
+        display: 'flex', 
+        justifyContent:'center'
     },
     buttonStyle : {
         backgroundColor: '#39C0BA',
