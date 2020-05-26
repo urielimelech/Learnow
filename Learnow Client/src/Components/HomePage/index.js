@@ -6,6 +6,7 @@ import { sessionActivity } from '../SessionActivity'
 import { navigate } from 'hookrouter'
 import { session, chooseActivity } from '../../Redux/Actions/'
 import { HomePageCards, WrapperCards } from './HomePageStyle'
+import { WINDOW_HEIGHT } from '../../consts'
 
 export const HomePage = () => {
     
@@ -30,7 +31,7 @@ export const HomePage = () => {
     }
 
     return (
-        <div>
+        <div style={{height: WINDOW_HEIGHT}}>
             <ActivitySelection/>
             <WrapperCards>{sessionActivity ? renderSession(sessionActivity) : null}</WrapperCards>
         </div>

@@ -4,6 +4,7 @@ import {BurgerNavStyles} from './BurgerNavStyle'
 import { navigate } from 'hookrouter'
 import { useSelector } from 'react-redux'
 import { useCookies } from 'react-cookie'
+import { WINDOW_HEIGHT} from '../../consts'
 
 export const  BurgerNav = ({page}) => {
 
@@ -61,13 +62,19 @@ export const  BurgerNav = ({page}) => {
                     <a href='/Results' onClick={(e) => onClick(e, '/Results')}>Your Results</a>
                     <a href='/Recommendations' onClick={(e) => onClick(e, '/Recommendations')}>Recommendations</a>
                     <a href='/SessionsComparator' onClick={(e) => onClick(e, '/SessionsComparator')}>Session Comparator</a>
-                    <a href='/Configuration' onClick={(e) => onClick(e, '/Configuration')}>Configuration</a>
+                    {loggedUser.userType === 'researcher' ? 
+                        <a href='/Configuration' onClick={(e) => onClick(e, '/Configuration')}>Configuration</a>
+                    :
+                        null
+                    }
                     <a href='/' onClick={() => logoutUser()}>Logout</a>
                 </Menu> 
             :
                 null
             }
-            <main id={"page-wrap"}>
+            <main 
+            style={{ background: `linear-gradient(to bottom right, #ffffff,#D6E2E0, #35C2C0)`}} 
+            id={"page-wrap"}>
                 {page}
             </main>
         </div>
