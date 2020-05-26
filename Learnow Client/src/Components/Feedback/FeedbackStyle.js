@@ -1,4 +1,4 @@
-import { WINDOW_HEIGHT } from "../../consts"
+import { WINDOW_HEIGHT, WINDOW_WIDTH } from "../../consts"
 
 export const feedbackStyle = {
     Card: {
@@ -19,7 +19,9 @@ export const feedbackStyle = {
     },
     FeedbackComponent : {
         textAlign:'center', 
-        height: WINDOW_HEIGHT
+        height: WINDOW_HEIGHT,
+        width: WINDOW_WIDTH*0.8,
+        margin: '0 auto'
     },
     CardsContainer : {
         display: 'flex', 
