@@ -5,6 +5,8 @@ import { ConnectionToRoom } from '../ConnectionToRoom'
 import { StudentSession } from '../StudentSession'
 import { ResearcherSession } from '../ResearcherSession'
 import { SensorErrors } from '../SensorErrors'
+import { Loading } from '../Loading'
+import { WINDOW_HEIGHT } from '../../consts'
 
 export const StartSessionComponent = () => {
 
@@ -12,13 +14,13 @@ export const StartSessionComponent = () => {
   const loggedUser = useSelector(state => state.MainReducer.loggedUser)
 
   return (
-    <div>
+    <div style={{height: WINDOW_HEIGHT}}>
       <ConnectionToRoom/>
       <SensorErrors/>
       {connectedToRoom ? 
         loggedUser.userType === 'student' ? <StudentSession/> : <ResearcherSession/>
       :
-        null
+        <Loading/>
       }
     </div>
   )
