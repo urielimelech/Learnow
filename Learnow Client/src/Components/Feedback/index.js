@@ -19,10 +19,13 @@ export const Feedback = () => {
     const [howHelpfull, setHowHelpfull] = useState([])
     const [sumImprovment, setSumImprovment] = useState([])
     const [cards, setCards] = useState(null)
+    const [displayRecommendation, setDisplayRecommendation] = useState([])
+    const [displayIndex, setDisplayIndex] = useState(3)
 
     const _dispatch = useDispatch()
 
     const definePriorityActivity = () => {
+        console.log({sumImprovment})
         const priorityActivity = sumImprovment.map(elem => {
             return {activity: elem.activity, sum: elem.low * weights[0] + elem.medium * weights[1] + elem.high * weights[2]}
         })
@@ -42,7 +45,23 @@ export const Feedback = () => {
         setCards(cards)
     }
 
+    useEffect(()=>{
+        console.log(displayRecommendation)
+    },[displayRecommendation])
+
     useEffect(() => {
+        console.log({cards})
+        if(cards){
+            setDisplayRecommendation([])
+            for(let i = displayIndex - 3 ; i < displayIndex ; i++){
+                setDisplayRecommendation(prev => [...prev, cards[i]])
+            }
+            // on click more button, do this set => setDisplayIndex(displayIndex+3)
+        }
+    },[cards])
+
+    useEffect(() => {
+        console.log(sumImprovment)
         if (sumImprovment.length > 0) {
             definePriorityActivity() 
         }
@@ -51,6 +70,9 @@ export const Feedback = () => {
     useEffect(() =>{
         if(howHelpfull.length > 0){
             sumImprovementForEachActivity()
+        }
+        else if (activitiesCards){
+            setCards(renderCards(activitiesCards))
         }
     },[howHelpfull])
 
@@ -62,6 +84,7 @@ export const Feedback = () => {
 
     useEffect(() => {
         socketToWebServer.on('all comparison', (data) => {
+            console.log({data})
             if (data === null) {
                 setCards(renderCards(activitiesCards))
             }
@@ -111,12 +134,14 @@ export const Feedback = () => {
                     }
                 })
                 setHowHelpfull(prev => [...prev, how_helpfull])
+                console.log(how_helpfull)
             }
         })
     }
 
     /** sum improvement of each type of activity */
     const sumImprovementForEachActivity = () => {
+        console.log(howHelpfull)
         var tempArray = []
         howHelpfull.forEach(element => {
             if (tempArray.length > 0){
@@ -185,7 +210,7 @@ export const Feedback = () => {
         <div style={feedbackStyle.FeedbackComponent}>
             Hi now you finish session and you need to take a break and do one of the activities
             <div style={feedbackStyle.CardsContainer}>
-                {cards ? cards : <Loading/>}
+                {displayRecommendation ? displayRecommendation : <Loading/>}
             </div>
         </div>
     )
