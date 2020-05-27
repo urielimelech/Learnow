@@ -39,6 +39,7 @@ export const CardComponent = ({headerText, detailText=null, isAbleToExpand=false
             marginr={style ? style.Card ? style.Card.marginRight : null : null}
             margint={style ? style.Card ? style.Card.marginTop : null : null}
             width={style ? style.Card ? style.Card.width : null : null}
+            height={style ? style.Card ? style.Card.height : null : null}
             border={isPressed ? '2px solid #ADD8E6' : null}
             backgroundcolor={isPressed ? "#FFFFF0" : null}
         >
