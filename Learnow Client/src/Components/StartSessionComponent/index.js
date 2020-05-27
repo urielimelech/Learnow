@@ -14,7 +14,7 @@ export const StartSessionComponent = () => {
   const loggedUser = useSelector(state => state.MainReducer.loggedUser)
 
   return (
-    <div style={{height: WINDOW_HEIGHT}}>
+    <div>
       <ConnectionToRoom/>
       <SensorErrors/>
       {connectedToRoom ? 

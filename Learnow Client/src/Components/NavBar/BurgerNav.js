@@ -73,7 +73,7 @@ export const  BurgerNav = ({page}) => {
                 null
             }
             <main 
-            style={{ background: `linear-gradient(to bottom right, #ffffff,#D6E2E0, #35C2C0)`}} 
+            style={{ background: `linear-gradient(to bottom right, #ffffff,#D6E2E0, #35C2C0)`, minHeight: WINDOW_HEIGHT}} 
             id={"page-wrap"}>
                 {page}
             </main>

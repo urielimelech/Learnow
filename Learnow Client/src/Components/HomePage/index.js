@@ -31,7 +31,7 @@ export const HomePage = () => {
     }
 
     return (
-        <div style={{height: WINDOW_HEIGHT}}>
+        <div>
             <ActivitySelection/>
             <WrapperCards>{sessionActivity ? renderSession(sessionActivity) : null}</WrapperCards>
         </div>
