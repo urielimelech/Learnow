@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { dbURL } from '../../../../dbUrl'
+import { dbURL } from '../../../../dbUrl.js'
 
 export const onGetAllComparison = (soc, email) => {
     axios.get(`${dbURL}/getAllComparisonResult?userEmail=${email}`)
@@ -7,6 +7,7 @@ export const onGetAllComparison = (soc, email) => {
         soc.emit('all comparison', res.data)
     })
     .catch(err => {
+        soc.emit('all comparison', null)
         console.log(err)
     })
 }

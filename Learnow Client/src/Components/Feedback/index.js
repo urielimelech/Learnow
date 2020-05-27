@@ -62,7 +62,12 @@ export const Feedback = () => {
 
     useEffect(() => {
         socketToWebServer.on('all comparison', (data) => {
-            setAllComparisonData(data)
+            if (data === null) {
+                setCards(renderCards(activitiesCards))
+            }
+            else {
+                setAllComparisonData(data)
+            }
         })
         displayCards()
         return () => socketToWebServer.off('all comparison')

@@ -19,7 +19,6 @@ export const feedbackStyle = {
     },
     FeedbackComponent : {
         textAlign:'center', 
-        height: WINDOW_HEIGHT,
         width: WINDOW_WIDTH*0.8,
         margin: '0 auto'
     },

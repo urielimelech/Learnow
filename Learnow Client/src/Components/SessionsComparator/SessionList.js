@@ -28,6 +28,13 @@ export const SessionList = ({userSessions, email}) => {
     /** check if session is already selected
      *  additional press, unselect the session */
     const checkIfSessionIsChoosed = chosenSessions => {
+        if (loggedUser.userType === 'researcher'){
+            chosenSessions.forEach(element => {
+                element.sort((a, b) => {
+                    return a.startTimeStamp - b.startTimeStamp
+                })
+            })
+        }
         for (let j = chosenSessions.length - 1; j >= 0; j--) {
             for (let i = 0; i < j; i++) {
                 if (chosenSessions[i].startTimeStamp === undefined) {
@@ -137,7 +144,7 @@ export const SessionList = ({userSessions, email}) => {
             const OnClickButton = () => {
                 checkIfSessionIsChoosed([...compareSession, session])
             }
-            return <CardComponent key={index} headerText={headerText} detailText={detailText} buttonText={ButtonText} onClickButton={OnClickButton} style/>
+            return <CardComponent key={index} headerText={headerText} detailText={detailText} buttonText={ButtonText} onClickButton={OnClickButton} style={StyledCardComponent}/>
         })
     }
 
