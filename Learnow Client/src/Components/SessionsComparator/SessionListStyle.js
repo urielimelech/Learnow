@@ -12,7 +12,8 @@ export const StyledCardComponent = {
     Card: {
         width: 300,
         marginRight: 30,
-        marginTop: 30
+        marginTop: 30,
+        height: 200
     },
     CardContent: {
         textAlign: 'center'

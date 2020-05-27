@@ -6,6 +6,7 @@ export const StyledCard = styled(Card)`
     margin-right: ${props => props.marginr ? props.marginr : null}px;
     margin-top: ${props => props.margint ? props.margint : null}px;
     width: ${props => props.width ? props.width : 400}px;
+    height: ${props => props.height ? props.height : 400}px;
     border: ${props => props.border ? props.border : null};
     background-color: ${props => props.backgroundcolor ? props.backgroundcolor : null};
 }

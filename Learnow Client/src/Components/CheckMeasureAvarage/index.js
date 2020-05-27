@@ -6,6 +6,7 @@ import { MeasureDialog } from './MeasureDialog'
 export const CheckMeasureAvarage = () => {
 
     const isNotificationVisible = useSelector(state => state.MainReducer.isNotificationVisible)
+    const loggedUser = useSelector(state => state.MainReducer.loggedUser)
     const [lowLevelWarning, setLowLevelWarning] = useState(null)
     const [showMeasureDialog, setShowMeasureDialog] = useState(false)
 
@@ -13,8 +14,9 @@ export const CheckMeasureAvarage = () => {
       socketToWebServer.on('avarage in worked session', ({attention, meditation}) => {
         console.log({attention}, {meditation})
         const lowLevel = 30
-        if (attention < lowLevel || meditation < lowLevel){
-          setShowMeasureDialog(true)
+        if (attention < lowLevel || meditation < lowLevel) {
+          if (loggedUser.userType === 'student')
+            setShowMeasureDialog(true)
         }
       })
       return () => socketToWebServer.off('avarage in worked session')
