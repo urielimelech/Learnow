@@ -1,0 +1,1 @@
+export const learnowUrl = 'http://localhost:3000'
