@@ -14,6 +14,7 @@ import { onLogout } from './SocketsOnLogic/OnLogout.js'
 import { onGetAllUserSessions } from './SocketsOnLogic/OnGetAllUserSessions.js'
 import { onBreakSession } from './SocketsOnLogic/OnBreakSession.js'
 import { onGetAllComparison } from './SocketsOnLogic/OnGetAllComparison.js'
+import { onKillTGC } from './SocketsOnLogic/OnKillTGC.js'
 
 export const socketWithReact = (serverIOService, soc, rooms, userConfigs) => {
 
@@ -100,5 +101,10 @@ export const socketWithReact = (serverIOService, soc, rooms, userConfigs) => {
     /** get all comparison data between sessions for recommendation */
     soc.on('get all comparison', email => {
         onGetAllComparison(soc, email)
+    })
+
+    /** send to thinkgear a command to stop the TGC process if active */
+    soc.on('kill TGC', () => {
+        onKillTGC(serverIOService, soc)
     })
 }

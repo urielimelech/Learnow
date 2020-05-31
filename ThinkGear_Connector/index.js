@@ -1,3 +1,3 @@
-import { WebServerSocketController } from './modules/SocketToWebserverCtl/index.js'
+import { startLearnow } from './modules/ProxyServer/index.js'
 
-WebServerSocketController()
+startLearnow()

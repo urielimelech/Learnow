@@ -10,24 +10,21 @@ export const ConnectionToRoom = () => {
     const ip = useSelector(state => state.MainReducer.ip)
     const loggedUser = useSelector(state => state.MainReducer.loggedUser)
     const connectedToRoom = useSelector(state => state.MainReducer.isConnectedToRoom)
-  
+
     const _dispatch = useDispatch()
   
-    /** try to connect to a room */
-    const onNewTGC = () => socketToWebServer.on('new TGC', () => {
-        socketToWebServer.emit('ip', ({ip: ip, email: loggedUser.email}))
-    })
-
     useEffect(() => {
         getComputerIp()
-        // _dispatch(setIp('176.231.3.171'))
-        return () => socketToWebServer.off('new TGC')
+        // _dispatch(setIp('46.120.20.73'))
+        return () => {
+            socketToWebServer.off('new TGC')
+            socketToWebServer.emit('kill TGC', )
+        }
     },[])
 
     useEffect(() => {
-        if (!connectedToRoom && ip.length !== 0){
+        if (!connectedToRoom && ip.length !== 0) {
             socketToWebServer.emit('ip', ({ip: ip, email: loggedUser.email}))
-            onNewTGC()
         }
     },[connectedToRoom, ip])
     
