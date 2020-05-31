@@ -2,24 +2,37 @@ import { writeSessionToDataBase } from '../../../SessionWriterToDB/index.js'
 
 export const onEndQuiz = (serverIOService, soc, rooms, data, ip) => {
     rooms.forEach(e => {
+        /** clear the session data from web server when session ended */
         if (e.roomName === ip && e.sessionData.monitorData.length > 0) {
             e.sessionData.quizData = data
             e.sessionData = writeSessionToDataBase(e.sessionData, e.config)
             e.isReadyForVideo = false
             soc.emit('last ended session', e.sessionData)
-
-            /** clear the session data from web server when session ended */
-            rooms.splice(e.roomNumber - 1, 1)
-            serverIOService.sockets.in(ip).emit('session ended by quiz', )
-
-            /** clear all clients from room whe session ended */
-            serverIOService.of('/').in(ip).clients((error, sockets) => {
-                if (error) throw error
-                sockets.forEach(s => {
-                    serverIOService.sockets.sockets[s].leave(ip)
-                })
-            })
+            e.counter = 0
+            e.stopIndex = 0
+            e.sessionData = {
+                userEmail:                  '',
+                startTimeStamp:             0,
+                endTimeStamp:               0,
+                monitorData:                [],
+                startQuizStamp:             0,
+                avarageAttention:           0,
+                avarageMeditation:          0,
+                lowestAttentionLevel:       [],
+                highestAttentionLevel:      [],
+                lowestMeditationLevel:      [],
+                highestMeditationLevel:     [],
+                quizData:                   {},
+                answersQuiz:                [],
+                timeAnswersInVideo:         [],
+                correlation:                {},
+                feedback:                   []
+            }
         }
+        serverIOService.sockets.in(ip).emit('session ended by quiz', )
+
+        /** clear client from room when session ended */
+        soc.leave(ip)
     })
     console.log(`session ended in room ${ip}`)
 }
