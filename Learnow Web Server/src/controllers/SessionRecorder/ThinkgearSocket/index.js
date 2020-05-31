@@ -27,7 +27,6 @@ export const socketWithThinkgear = (serverIOService, soc, rooms) => {
     soc.on('new TGC connection', ip => {
         console.log('new TGC connection', ip)
         const roomData = serverIOService.sockets.adapter.rooms[ip]
-        soc.broadcast.emit('new TGC', )
         /** check if room does not exist */
         if (!roomData){
             /** if room does not exist, update parameters in session object */
@@ -72,5 +71,15 @@ export const socketWithThinkgear = (serverIOService, soc, rooms) => {
     /** on sensor not connected, notify all clients in room to connect the sensor */
     soc.on('sensor not connected', ip => {
         serverIOService.sockets.in(ip).emit('check sensor', 2)
+    })
+
+    /** on connected sensor, notify react that session can be started */
+    soc.on('connected sensor', ip => {
+        serverIOService.sockets.in(ip).emit('sensor ready', )
+    })
+
+    /**  */
+    soc.on('disconnected sensor', ip => {
+        serverIOService.sockets.in(ip).emit('sensor disconnected', )
     })
 }

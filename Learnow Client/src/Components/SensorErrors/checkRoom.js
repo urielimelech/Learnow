@@ -1,8 +1,9 @@
+import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+
 import { socketToWebServer } from "../../SocketIoClient"
 import { isConnectedToRoom, isVideoEnded } from "../../Redux/Actions"
-import { useDispatch, useSelector } from "react-redux"
 import { TextMessageToastify } from "../TextMessageToastify"
-import React, { useState, useEffect } from "react"
 
 export const CheckRoom = () => {
 
@@ -14,24 +15,34 @@ export const CheckRoom = () => {
     const isNotificationVisible = useSelector(state => state.MainReducer.isNotificationVisible)
     const connectedToRoom = useSelector(state => state.MainReducer.isConnectedToRoom)
 
-    const enteredRoom = () => socketToWebServer.on('enter room', status => {
+    const closeRoom = msg => {
+        console.log('Closed Room')
+        _dispatch(isConnectedToRoom(false))
+        _dispatch(isVideoEnded(false))
+        setMsg(msg)
+    }
+
+    const enteredRoom = () => socketToWebServer.on('sensor ready', () => {
         console.log('Entered Room')
-        _dispatch(isConnectedToRoom(status))
+        _dispatch(isConnectedToRoom(true))
     })
 
     const closedRoom = () => socketToWebServer.on('room closed', status => {
-        console.log('Closed Room')
-        _dispatch(isConnectedToRoom(status))
-        _dispatch(isVideoEnded(false))
-        setMsg('wait for neurosky headset to connect or check if the headset is turned on')
+        closeRoom('wait for neurosky headset to connect or check if the headset is turned on')
+    })
+
+    const sensorDisconnected = () => socketToWebServer.on('sensor disconnected', () => {
+        closeRoom('neurosky headset has disconnected')
     })
 
     useEffect(() => {
         closedRoom()
         enteredRoom()
+        sensorDisconnected()
         return () => {
-            socketToWebServer.off('enter room')
+            socketToWebServer.off('sensor ready')
             socketToWebServer.off('room closed')
+            socketToWebServer.off('sensor disconnected')
         }
     },[])
 
