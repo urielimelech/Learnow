@@ -8,6 +8,7 @@ import { Register } from './Components/Register'
 import { VerifyTokenJwt } from "./Components/VerifyTokenJwt"
 import { ConfigComponent } from './Components/ConfigComponent'
 import { HomePage } from "./Components/HomePage"
+import { ChooseResultUserSessions } from "./Components/ChooseResultUserSessions"
 
 
 const routes = {
@@ -17,6 +18,7 @@ const routes = {
   "/Results": () => <VerifyTokenJwt children={<Results/>} />,
   "/Recommendations" : () => <VerifyTokenJwt children={<Feedback/>} />,
   "/SessionsComparator" : () => <VerifyTokenJwt children={<SessionsComparator/>} />,
+  "/History" : () => <VerifyTokenJwt children={<ChooseResultUserSessions/>} />,
   "/Configuration": () => <VerifyTokenJwt children={<ConfigComponent/>} />,
   "/Register" : () => <Register/>
 }

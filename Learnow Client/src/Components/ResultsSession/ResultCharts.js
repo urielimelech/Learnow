@@ -121,6 +121,6 @@ export const ResultCharts = ({getFullArr}) => {
     },[resultCharts])
 
     return (
-        resultCharts.length > 0 ? resultCharts : <Loading/>
+        <Loading/>
     )
 }
