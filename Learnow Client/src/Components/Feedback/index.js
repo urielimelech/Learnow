@@ -1,57 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector } from 'react-redux'
 
-import { feedbackStyle } from './FeedbackStyle'
-import { CardComponent } from '../CardComponent'
-import { navigate } from 'hookrouter'
-import { chooseActivity } from '../../Redux/Actions'
 import { Loading } from '../Loading'
 import { socketToWebServer } from '../../SocketIoClient'
+import { FlipCards } from './FlipCards'
 
 export const Feedback = () => {
-    const weights = [1, 2, 3]
 
-    const activitiesCards = useSelector(state => state.MainReducer.activitiesCards)
     const loggedUser = useSelector(state => state.MainReducer.loggedUser)
 
     const [allComparisonData, setAllComparisonData] = useState(null)
     const [howHelpfull, setHowHelpfull] = useState([])
     const [sumImprovment, setSumImprovment] = useState([])
-    const [cards, setCards] = useState(null)
-
-    const _dispatch = useDispatch()
-
-    const definePriorityActivity = () => {
-        const priorityActivity = sumImprovment.map(elem => {
-            return {activity: elem.activity, sum: elem.low * weights[0] + elem.medium * weights[1] + elem.high * weights[2]}
-        })
-        priorityActivity.sort((a, b) => {
-            return b.sum - a.sum
-        })
-
-        const cards = renderCards(activitiesCards)
-        cards.sort((a, b)=> {
-            for (let i = 0; i < priorityActivity.length; i++) {
-                if (priorityActivity[i].activity === a.key)
-                    return -1
-                else if (priorityActivity[i].activity === b.key)
-                    return 1
-            }
-        })
-        setCards(cards)
-    }
-
-    useEffect(() => {
-        if (sumImprovment.length > 0) {
-            definePriorityActivity() 
-        }
-    },[sumImprovment])
-
+ 
     useEffect(() =>{
-        if(howHelpfull.length > 0){
+        if(howHelpfull.length > 0)
             sumImprovementForEachActivity()
-        }
     },[howHelpfull])
 
     useEffect(() => {
@@ -62,10 +27,7 @@ export const Feedback = () => {
 
     useEffect(() => {
         socketToWebServer.on('all comparison', (data) => {
-            if (data === null) {
-                setCards(renderCards(activitiesCards))
-            }
-            else {
+            if(data) {
                 setAllComparisonData(data)
             }
         })
@@ -150,43 +112,16 @@ export const Feedback = () => {
         })
         setSumImprovment(tempArray)
     }
-
-    const imgCard = img => {
-        return require(`../../images/${img}.png`)
-    }
-
+  
     const displayCards = () => {
         socketToWebServer.emit('get all comparison', loggedUser.email)
     }
 
-    const renderCards = groupCards => {
-        return groupCards.map(e => {
-            const img = imgCard(e.ImgCard)
-            const selectActivity = () => {
-                _dispatch(chooseActivity(e.Title))
-                navigate('/Home')
-            }
-            return (
-                <CardComponent 
-                    key={e.Title}
-                    style ={feedbackStyle} 
-                    headerText={e.TitleCard} 
-                    buttonText={'Select'} 
-                    onClickButton={selectActivity} 
-                    img={img}
-                    isAbleToExpand={true}
-                    expandedText={[e.DescriptionCard, e.Link]}
-                />
-            )
-        })
-    }
-
-    return (
-        <div style={feedbackStyle.FeedbackComponent}>
-            Hi now you finish session and you need to take a break and do one of the activities
-            <div style={feedbackStyle.CardsContainer}>
-                {cards ? cards : <Loading/>}
-            </div>
-        </div>
-    )
+    return sumImprovment.length > 0 ? 
+        <FlipCards sumImprovment={sumImprovment}/> 
+        : 
+        howHelpfull.length === 0 ? 
+            <FlipCards/> 
+            : 
+            <Loading/>
 }
