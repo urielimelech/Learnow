@@ -6,12 +6,13 @@ import { sessionActivity } from '../SessionActivity'
 import { navigate } from 'hookrouter'
 import { session, chooseActivity } from '../../Redux/Actions/'
 import { HomePageCards, WrapperCards } from './HomePageStyle'
-import { WINDOW_HEIGHT } from '../../consts'
+import { ResearchUser } from '../ResearchUser'
 
 export const HomePage = () => {
     
     const _dispatch = useDispatch()
     const chosenActivity = useSelector(state=> state.MainReducer.chooseActivity)
+    const loggedUser = useSelector(state=> state.MainReducer.loggedUser)
 
     const renderSession =  (sessionActivity) => {
         return sessionActivity.map((element, index) => {
@@ -30,10 +31,11 @@ export const HomePage = () => {
         })
     }
 
-    return (
+    return loggedUser.userType === 'student' ? 
         <div>
             <ActivitySelection/>
             <WrapperCards>{sessionActivity ? renderSession(sessionActivity) : null}</WrapperCards>
         </div>
-    )
+        :
+        <ResearchUser/>
 }

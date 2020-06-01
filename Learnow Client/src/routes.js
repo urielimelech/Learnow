@@ -9,7 +9,6 @@ import { VerifyTokenJwt } from "./Components/VerifyTokenJwt"
 import { ConfigComponent } from './Components/ConfigComponent'
 import { HomePage } from "./Components/HomePage"
 
-
 const routes = {
   "/": () =>  <Login/>,
   "/Home": () => <VerifyTokenJwt children={<HomePage/>} />,
