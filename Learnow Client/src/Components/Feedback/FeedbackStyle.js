@@ -1,12 +1,12 @@
 import { WINDOW_HEIGHT, WINDOW_WIDTH } from "../../consts"
 
 export const feedbackStyle = {
-    Card: {
-        marginRight: '15px'
-    },
-    CardStyle : {
-        width: '15rem'
-    },
+    // Card: {
+    //     marginRight: '15px'
+    // },
+    // CardStyle : {
+    //     width: '15rem'
+    // },
     CardImgStyle : {
         objectFit: 'contain'
     },
@@ -29,9 +29,7 @@ export const feedbackStyle = {
     buttonStyle : {
         backgroundColor: '#39C0BA',
         color: '#ffffff',
-        bottom: '10px',
-        margin: '0 auto',
-        marginTop: '20px'
+        margin: '0 auto'
     },
     CardContent : {
         height: '100px'
