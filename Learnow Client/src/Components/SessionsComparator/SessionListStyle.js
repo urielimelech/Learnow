@@ -12,7 +12,7 @@ export const StyledCardComponent = {
     Card: {
         width: 300,
         marginRight: 30,
-        marginTop: 30,
+        marginBottom: 30,
         height: 200
     },
     CardContent: {

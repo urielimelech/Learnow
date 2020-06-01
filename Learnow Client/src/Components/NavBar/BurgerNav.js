@@ -65,7 +65,7 @@ export const  BurgerNav = ({page}) => {
                     {loggedUser.userType === 'researcher' ? 
                         <a href='/Configuration' onClick={(e) => onClick(e, '/Configuration')}>Configuration</a>
                     :
-                        null
+                        <a href='/History' onClick={(e) => onClick(e, '/History')}>Sessions History</a>
                     }
                     <a href='/' onClick={() => logoutUser()}>Logout</a>
                 </Menu> 
