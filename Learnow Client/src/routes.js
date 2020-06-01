@@ -10,7 +10,6 @@ import { ConfigComponent } from './Components/ConfigComponent'
 import { HomePage } from "./Components/HomePage"
 import { ChooseResultUserSessions } from "./Components/ChooseResultUserSessions"
 
-
 const routes = {
   "/": () =>  <Login/>,
   "/Home": () => <VerifyTokenJwt children={<HomePage/>} />,

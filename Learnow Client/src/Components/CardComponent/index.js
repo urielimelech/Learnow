@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import Card from '@material-ui/core/Card'
 import CardActionArea from '@material-ui/core/CardActionArea'
 import CardActions from '@material-ui/core/CardActions'
 import CardContent from '@material-ui/core/CardContent'
@@ -13,7 +12,7 @@ import { ExpandButton } from './ExpandButton'
 import { ExpandedContent } from './ExpandedContent'
 import { StyledCard } from './StyledCard'
 
-export const CardComponent = ({headerText, detailText=null, isAbleToExpand=false, expandedText=null, buttonText, onClickButton=null, img=null, style=null}) => {
+export const CardComponent = ({headerText, detailText=null, isAbleToExpand=false, expandedText=null, buttonText=null, onClickButton=null, img=null, style=null, onClickCard=null}) => {
     
     const [expanded, setExpanded] = useState(false)
     const [isPressed, setIsPressed] = useState(false)
@@ -35,7 +34,7 @@ export const CardComponent = ({headerText, detailText=null, isAbleToExpand=false
     },[resetStyle])
 
     return (
-        <StyledCard 
+        <StyledCard onClick={onClickCard}
             marginr={style ? style.Card ? style.Card.marginRight : null : null}
             margint={style ? style.Card ? style.Card.marginTop : null : null}
             width={style ? style.Card ? style.Card.width : null : null}
@@ -72,9 +71,9 @@ export const CardComponent = ({headerText, detailText=null, isAbleToExpand=false
                 }
             </CardActionArea>
             <CardActions>
-                <Button style = {style ? style.buttonStyle : null} size="small" color="primary" onClick={onSelect}>
+                {buttonText ? <Button style = {style ? style.buttonStyle : null} size="small" color="primary" onClick={onSelect}>
                     {buttonText}
-                </Button>
+                </Button> : null}
                 {isAbleToExpand ? <ExpandButton isOpen={expanded} onClick={handleExpandClick}/> : null}
             </CardActions>
             <Collapse in={expanded} timeout="auto" unmountOnExit style = {style ? style.CardStyle : null}>

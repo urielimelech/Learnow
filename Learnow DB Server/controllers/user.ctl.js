@@ -35,5 +35,15 @@ module.exports = {
         }, err =>{
             res.status(404).send(`{"success": false, "message": "No Documents Were Found"}`)
         })
+    },
+
+    getStudentData: async (req, res, next) => {
+        const studentData = {
+            name: req.loginResult.name,
+            email: req.loginResult.email,
+            userType: req.loginResult.userType,
+            configResult: req.configResult
+        }
+        res.status(200).json(studentData)
     }
 }
