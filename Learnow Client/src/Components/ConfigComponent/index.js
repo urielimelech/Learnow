@@ -9,13 +9,14 @@ import { navigate } from 'hookrouter'
 export const ConfigComponent = () => {
 
     const loggedUser = useSelector(state => state.MainReducer.loggedUser)
+    const studentForResearch = useSelector(state => state.MainReducer.studentForResearch)
 
     const [configuration, setConfiguration] = useState(null)
     const [configKeys, setConfigKeys] = useState([])
     const [configValues, setConfigValues] = useState([])
 
     useEffect(() => {
-        socketToWebServer.emit('get user configuration', loggedUser.email)
+        socketToWebServer.emit('get user configuration', studentForResearch.email)
         socketToWebServer.on('configuration', config => {
             setConfiguration(config)
         })
@@ -48,7 +49,7 @@ export const ConfigComponent = () => {
     return (
         loggedUser.userType === 'researcher' ? 
         configKeys.length !== 0 && configValues.length !== 0 ?
-            <ConfigSlider userEmail={loggedUser.email} configObject={configuration} configKeys={configKeys} configValues={configValues}/>
+            <ConfigSlider userEmail={studentForResearch.email} configObject={configuration} configKeys={configKeys} configValues={configValues}/>
         :
             <Loading/>
         :    
