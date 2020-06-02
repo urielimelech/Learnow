@@ -17,7 +17,7 @@ export const ResultLineChart = ({data, title}) => {
             1: { curveType: 'function' }
         },
         title: `${title} Session Results`,
-        colors: ['#0ce9ed', '#28fa07'],
+        colors: ['#000080', '#28ca27'],
         tooltip: {
             textStyle: {
                 fontSize: 20,

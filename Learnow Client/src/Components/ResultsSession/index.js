@@ -3,6 +3,8 @@ import { ResultCharts } from './ResultCharts'
 import { RadioChooseCharts } from '../RadioChooseCharts';
 import { StyledResultComponent } from './ResultSessionStyle';
 import { Correlation } from './Correlation';
+import { Button } from '@material-ui/core';
+import { navigate } from 'hookrouter';
 
 export const Results = () => {
 
@@ -32,6 +34,12 @@ export const Results = () => {
             {charts.length > 0 ? optionChart ? optionChart : null : null}
             {charts.length > 0 ? charts[displayChart] : <ResultCharts getFullArr={getSessionCharts}/>}
             <Correlation/>
+            <Button onClick={() => navigate('/Home')}>
+                Go Back Home
+            </Button>
+            <Button onClick={() => navigate('/Recommendations')}>
+                Continue To Recommendations For Activity
+            </Button>
         </StyledResultComponent>
     )
 }

@@ -42,7 +42,8 @@ export const CorrelationChart = ({correlation}) => {
                     maxValue: 100,
                     minValue: 0,
                 },
-                colors: [blue.A200, '#0ce9ed', '#28fa07']
+                // colors: [blue.A200, '#0ce9ed', '#28fa07']
+                colors: [blue.A200, '#000080', '#28ca27']
             }}
         />
     )
