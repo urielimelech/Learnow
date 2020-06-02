@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import { Button } from '@material-ui/core'
@@ -7,6 +7,8 @@ import { dbURL } from '../../consts'
 import axios from 'axios'
 import { TextMessageToastify } from '../TextMessageToastify'
 import { HomePageResearch } from './HomePageResearch'
+import { useDispatch, useSelector } from 'react-redux'
+import { updateStudentForResearch } from '../../Redux/Actions'
 
 export const ResearchUser = () => {
 
@@ -20,7 +22,10 @@ export const ResearchUser = () => {
         }
     }))
 
-    const classes = useStyles();
+    const classes = useStyles()
+    const _dispatch = useDispatch()
+    const studentData = useSelector(state => state.MainReducer.studentForResearch)
+
     const [email, setEmail] = useState('Controlled')
     const [error, setError] = useState(false)
     const [isUserExistsErr, setIsUserExistsErr] = useState(false)
@@ -37,7 +42,8 @@ export const ResearchUser = () => {
 
     const getStudentData = () => {
         axios.get(`${dbURL}/getStudentData?email=${email}`)
-        .then(res => { 
+        .then(res => {
+            _dispatch(updateStudentForResearch(res.data))
             setStudentForResearch(<HomePageResearch data={res.data}/>)
         })
         .catch(err => {
@@ -61,6 +67,17 @@ export const ResearchUser = () => {
             setError(true)
         }
     }
+
+    useEffect(() => {
+        if (studentData)
+            setEmail(studentData.email)
+    },[studentData])
+
+    useEffect(() => {
+        if (studentData) {
+            setStudentForResearch(<HomePageResearch data={studentData}/>)
+        }
+    },[])
   
     return (
         <div style={{textAlign: 'center'}}>
@@ -71,6 +88,7 @@ export const ResearchUser = () => {
                     placeholder="Please enter student email"
                     variant="outlined"
                     onChange = {handleChange}
+                    value={email}
                 />
                 {error ?
                     <FormHelperText 

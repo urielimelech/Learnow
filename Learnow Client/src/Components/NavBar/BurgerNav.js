@@ -9,6 +9,7 @@ import { WINDOW_HEIGHT} from '../../consts'
 export const  BurgerNav = ({page}) => {
 
     const loggedUser = useSelector(state => state.MainReducer.loggedUser)
+    const studentForResearch = useSelector(state => state.MainReducer.studentForResearch)
 
     const [cookies, setCookie, removeCookie] = useCookies(['email', 'token', 'name', 'userType', 'route'])
 
@@ -43,11 +44,13 @@ export const  BurgerNav = ({page}) => {
 
     
     useEffect(() => {
-        if(Object.keys(loggedUser).length === 0) 
+        if(Object.keys(loggedUser).length === 0)
             setShowBurgerNav(false)
-        else
+        else if (loggedUser.userType === 'researcher' && !studentForResearch)
+            setShowBurgerNav(false)
+        else 
             setShowBurgerNav(true)
-    },[loggedUser])
+    },[loggedUser, studentForResearch])
 
     return (
         <div id={"outer-container"}>
@@ -61,7 +64,7 @@ export const  BurgerNav = ({page}) => {
                     <div style={BurgerNavStyles.textNav}> Welcome {loggedUser.name}</div>
                     <a href='/Results' onClick={(e) => onClick(e, '/Results')}>Your Results</a>
                     <a href='/Recommendations' onClick={(e) => onClick(e, '/Recommendations')}>Recommendations</a>
-                    <a href='/SessionsComparator' onClick={(e) => onClick(e, '/SessionsComparator')}>Session Comparator</a>
+                    <a href='/SessionsComparator' onClick={(e) => onClick(e, '/SessionsComparator')}>Effective Recommendation</a>
                     {loggedUser.userType === 'researcher' ? 
                         <a href='/Configuration' onClick={(e) => onClick(e, '/Configuration')}>Configuration</a>
                     :

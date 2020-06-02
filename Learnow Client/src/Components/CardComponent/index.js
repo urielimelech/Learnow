@@ -35,10 +35,12 @@ export const CardComponent = ({headerText, detailText=null, isAbleToExpand=false
 
     return (
         <StyledCard onClick={onClickCard}
-            marginr={style ? style.Card ? style.Card.marginRight : null : null}
-            margint={style ? style.Card ? style.Card.marginTop : null : null}
-            width={style ? style.Card ? style.Card.width : null : null}
-            height={style ? style.Card ? style.Card.height : null : null}
+            marginr={style ? style.Card ? style.Card.marginRight ? style.Card.marginRight : 0 : null : null}
+            margint={style ? style.Card ? style.Card.marginTop ? style.Card.marginTop : 0 : null : null}
+            marginb={style ? style.Card ? style.Card.marginBottom ? style.Card.marginBottom : 0 : null : null}
+            marginl={style ? style.Card ? style.Card.marginLeft ? style.Card.marginLeft : 0 : null : null}
+            width={style ? style.Card ? style.Card.width ? style.Card.width : '100%' : null : null}
+            height={style ? style.Card ? style.Card.height ? style.Card.height : '100%' : null : null}
             border={isPressed ? '2px solid #ADD8E6' : null}
             backgroundcolor={isPressed ? "#FFFFF0" : null}
         >

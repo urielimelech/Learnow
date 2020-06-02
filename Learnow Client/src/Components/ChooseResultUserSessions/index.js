@@ -11,11 +11,14 @@ export const ChooseResultUserSessions = () => {
     const _dispatch = useDispatch()
 
     const loggedUser = useSelector(state => state.MainReducer.loggedUser)
+    const studentForResearch = useSelector(state => state.MainReducer.studentForResearch)
 
     const [userSessions, setUserSessions] = useState(null)
 
     useEffect(() => {
-        socketToWebServer.emit('get all user sessions', loggedUser.email)
+        if (loggedUser.userType === 'student')
+            socketToWebServer.emit('get all user sessions', loggedUser.email)
+        else socketToWebServer.emit('get all user sessions', studentForResearch.email)
         socketToWebServer.on('all user sessions', sessions => {
             setUserSessions(sessions)
         })
