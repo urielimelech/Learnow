@@ -26,7 +26,7 @@ export const ResearchUser = () => {
     const _dispatch = useDispatch()
     const studentData = useSelector(state => state.MainReducer.studentForResearch)
 
-    const [email, setEmail] = useState('Controlled')
+    const [email, setEmail] = useState('')
     const [error, setError] = useState(false)
     const [isUserExistsErr, setIsUserExistsErr] = useState(false)
     const [studentForResearch, setStudentForResearch] = useState(null)
