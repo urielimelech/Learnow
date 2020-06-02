@@ -12,7 +12,8 @@ import {
   RESET_STYLE_LIST,
   SET_ACTIVITY_CARD,
   CHOOSE_ACTIVITY,
-  SESSION_ACTIVITY
+  SESSION_ACTIVITY,
+  STUDENT_FOR_RESEARCH
 } from '../ActionTypes'
 
 const initialState = {
@@ -28,7 +29,8 @@ const initialState = {
   resetStyle: false,
   activitiesCards: null,
   chooseActivity: null,
-  session: null 
+  session: null,
+  studentForResearch: null
 }
 
 export default (state = initialState, action) => {
@@ -103,6 +105,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         session: action.data
+      }
+    case STUDENT_FOR_RESEARCH:
+      return {
+        ...state,
+        studentForResearch: action.data
       }
     default:
       return state
