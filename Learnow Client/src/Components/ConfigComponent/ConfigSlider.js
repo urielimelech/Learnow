@@ -6,7 +6,7 @@ import { SliderComponent } from './SliderComponent'
 import { socketToWebServer } from '../../SocketIoClient'
 import { ConfigSliderWrapper, TextConfig, WrapperConfig, ButtonConfig } from './ConfigSliderStyle'
 
-export const ConfigSlider = ({userEmail, configObject, configKeys, configValues}) => {
+export const ConfigSlider = ({studentData, configObject, configKeys, configValues}) => {
 
     const [renderSliders, setRenderSliders] = useState(null)
     const [config, setConfig] = useState(null)
@@ -70,8 +70,7 @@ export const ConfigSlider = ({userEmail, configObject, configKeys, configValues}
     }
 
     const saveConfiguration = () => {
-        console.log({config: config, userEmail: userEmail})
-        socketToWebServer.emit('save configuration', ({config: config, userEmail: userEmail}))
+        socketToWebServer.emit('save configuration', ({userData: studentData.configResult}))
         navigate('/Home')
     }
 

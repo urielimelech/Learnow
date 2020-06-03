@@ -1,15 +1,10 @@
 import axios from 'axios'
 import { dbURL } from '../../../../dbUrl.js'
 
-export const onSaveConfiguration = (userConfigs, config, userEmail) => {
-    userConfigs.forEach(userConfig => {
-        if (userConfig.userEmail === userEmail) {
-            userConfig.config = config
-            axios.put(`${dbURL}/updateUserConfig`, userConfig)
-            .then(res => console.log('user', userEmail, 'save configuration successfully', res.data))
-            .catch(err => {
-                console.log(err)
-            })
-        }
+export const onSaveConfiguration = (userData) => {
+    axios.put(`${dbURL}/updateUserConfig`, userData)
+    .then(res => console.log('user', userData.userEmail, 'save configuration successfully', res.data))
+    .catch(err => {
+        console.log(err)
     })
 }

@@ -6,16 +6,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import { socketToWebServer } from '../../SocketIoClient'
 import { CardComponent } from '../CardComponent'
 import { resetStyleList } from '../../Redux/Actions'
-import { TextMessageToastify } from '../TextMessageToastify'
 import { StyledSessionListContainer, StyledCardComponent, StyledButtonContainer } from './SessionListStyle'
 
-export const SessionList = ({userSessions, email}) => {
+export const SessionList = ({userSessions, email, studentConfig}) => {
 
     const [compareSession, setCompareSession] = useState([])
     const [isBtnDisable, setIsBtnDisable] = useState(true)
+    const [displayDuo, setDisplayDuo] = useState(true)
 
     const resetStyle = useSelector(state => state.MainReducer.resetStyle)
-    const loggedUser = useSelector(state => state.MainReducer.loggedUser)
     const _dispatch = useDispatch()
 
     const needToSpliceMultipleSessions = (firstSession, secondSession) => {
@@ -28,13 +27,6 @@ export const SessionList = ({userSessions, email}) => {
     /** check if session is already selected
      *  additional press, unselect the session */
     const checkIfSessionIsChoosed = chosenSessions => {
-        if (loggedUser.userType === 'researcher'){
-            chosenSessions.forEach(element => {
-                element.sort((a, b) => {
-                    return a.startTimeStamp - b.startTimeStamp
-                })
-            })
-        }
         for (let j = chosenSessions.length - 1; j >= 0; j--) {
             for (let i = 0; i < j; i++) {
                 if (chosenSessions[i].startTimeStamp === undefined) {
@@ -59,16 +51,16 @@ export const SessionList = ({userSessions, email}) => {
     }
 
     /** send to web server the sessions needed to compare */
-    const compareSessions = () => {
-        socketToWebServer.emit('compare sessions', {sessionData: compareSession[1], email: email, secondSession: compareSession[0]})
+    const duoCompareSessions = () => {
+        socketToWebServer.emit('compare sessions', {sessionData: compareSession[1], secondSession: compareSession[0], studentConfig: studentConfig})
         setCompareSession([])
         _dispatch(resetStyleList(!resetStyle))
     }
 
-    const multiCompareSessions = () => {
-        socketToWebServer.emit('compare sessions', {sessionData: compareSession[0][1], email: email, secondSession: compareSession[0][0]})
-        socketToWebServer.emit('compare sessions', {sessionData: compareSession[1][1], email: email, secondSession: compareSession[1][0]})
-        socketToWebServer.emit('compare sessions', {sessionData: compareSession[1][1], email: email, secondSession: compareSession[0][1]})
+    const quadCompareSessions = () => {
+        socketToWebServer.emit('compare sessions', {sessionData: compareSession[0][0], secondSession: compareSession[0][1], studentConfig: studentConfig})
+        socketToWebServer.emit('compare sessions', {sessionData: compareSession[1][0], secondSession: compareSession[1][1], studentConfig: studentConfig})
+        socketToWebServer.emit('compare sessions', {sessionData: compareSession[1][0], secondSession: compareSession[0][0], studentConfig: studentConfig})
         setCompareSession([])
         _dispatch(resetStyleList(!resetStyle))
     }
@@ -81,7 +73,7 @@ export const SessionList = ({userSessions, email}) => {
     }
 
     /** list of session cards components */
-    const studentSessionsList = () => {
+    const duoComparation = () => {
         userSessions.sort((aTimeStamp, bTimeStamp) => Number(bTimeStamp.startTimeStamp) - Number(aTimeStamp.startTimeStamp))
         return userSessions.map((session, index) => {
             const date = new Date(session.startTimeStamp)
@@ -104,15 +96,23 @@ export const SessionList = ({userSessions, email}) => {
             const OnClickButton = () => {
                 checkIfSessionIsChoosed([...compareSession, session])
             }
-            return <CardComponent key={index} headerText={headerText} detailText={detailText} buttonText={ButtonText} onClickButton={OnClickButton} style={StyledCardComponent}/>
+            return <CardComponent 
+                key={index} 
+                headerText={headerText} 
+                detailText={detailText} 
+                buttonText={ButtonText} 
+                onClickButton={OnClickButton} 
+                style={StyledCardComponent}
+            />
         })
     }
 
-    const researcherSessionsList = () => {
-        userSessions.sort((aTimeStamp, bTimeStamp) => Number(bTimeStamp.startTimeStamp) - Number(aTimeStamp.startTimeStamp))
+    const quadComparation = () => {
+        userSessions.sort((aTimeStamp, bTimeStamp) => Number(aTimeStamp.startTimeStamp) - Number(bTimeStamp.startTimeStamp) ? 1 : -1)
         const tempResearcherSessions = userSessions.map((session, index) => {
-            if (session.activity != 'None' && userSessions[index + 1].activity === 'None') {
-                return [session, userSessions[index + 1]]
+            const nextSession = userSessions[index + 1]
+            if (session.activity != 'None' && nextSession && nextSession.activity === 'None') {
+                return [session, nextSession]
             }
             else if (session.activity === 'None')
                 return
@@ -144,7 +144,14 @@ export const SessionList = ({userSessions, email}) => {
             const OnClickButton = () => {
                 checkIfSessionIsChoosed([...compareSession, session])
             }
-            return <CardComponent key={index} headerText={headerText} detailText={detailText} buttonText={ButtonText} onClickButton={OnClickButton} style={StyledCardComponent}/>
+            return <CardComponent 
+                key={index} 
+                headerText={headerText} 
+                detailText={detailText} 
+                buttonText={ButtonText} 
+                onClickButton={OnClickButton} 
+                style={StyledCardComponent}
+            />
         })
     }
 
@@ -155,23 +162,17 @@ export const SessionList = ({userSessions, email}) => {
             setIsBtnDisable(true)
     },[compareSession])
 
-    const researcherMustDoAnotherSession = () => {
-        const researcherList = researcherSessionsList()
-        if (researcherList) {
-            return researcherList
-        }
-        else {
-            return (
-                <TextMessageToastify msg={'please run another session for comparation'}></TextMessageToastify>
-            )
-        }
-    }
-
     return (
         <StyledSessionListContainer>
-            {loggedUser.userType === 'researcher' ? researcherMustDoAnotherSession() : studentSessionsList()}
+            <Button onClick={() => setDisplayDuo(true)}>
+                Compare between two single sessions
+            </Button>
+            <Button onClick={() => setDisplayDuo(false)}>
+                Compare between four single sessions
+            </Button>
+            {displayDuo ? duoComparation() : quadComparation()}
             <StyledButtonContainer>
-                <button style={{width: '300px'}} onClick={loggedUser.userType === 'researcher' ? multiCompareSessions : compareSessions} disabled={isBtnDisable} className="btn btn-primary">
+                <button style={{width: '300px'}} onClick={() => displayDuo ? duoCompareSessions() : quadCompareSessions()} disabled={isBtnDisable} className="btn btn-primary">
                     Compare Now
                 </button>
             </StyledButtonContainer>

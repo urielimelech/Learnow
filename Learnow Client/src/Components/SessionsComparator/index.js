@@ -7,16 +7,16 @@ import { ComparisonComponent } from './ComparisonComponent'
 
 export const SessionsComparator = () => {
 
-    const loggedUser = useSelector(state => state.MainReducer.loggedUser)
+    const studentForResearch = useSelector(state => state.MainReducer.studentForResearch)
 
     const [comparisonResult, setComparisonResult] = useState([])
     const [sessionsList, setSessionsList] = useState([])
-    const [comparisonComponent, setComparisonComponent] = useState(null)
 
     useEffect(() => {
-        socketToWebServer.emit('get all user sessions', loggedUser.email)
+        if (studentForResearch)
+            socketToWebServer.emit('get all user sessions', studentForResearch.email)
         socketToWebServer.on('all user sessions', userSessions => {
-            setSessionsList(<SessionList userSessions={userSessions} email={loggedUser.email}/>)
+            setSessionsList(<SessionList userSessions={userSessions} email={studentForResearch.email} studentConfig={studentForResearch.configResult.config}/>)
         })
         socketToWebServer.on('compared sessions', result => {
             setComparisonResult(prev => [result, ...prev])
@@ -27,18 +27,14 @@ export const SessionsComparator = () => {
         }
     },[]) 
 
-    useEffect(() => {
-        if (comparisonResult.length > 0) {
-            if (loggedUser.userType === 'researcher') {
-                if (comparisonResult.length === 3) {
-                    setComparisonComponent(<ComparisonComponent comparisonResult={comparisonResult}/>)
-                    console.log(comparisonResult)
-                }
-            }
-            else 
-                setComparisonComponent(<ComparisonComponent comparisonResult={comparisonResult}/>)
-        }
-    },[comparisonResult])
-
-    return comparisonComponent ? comparisonComponent : sessionsList
+    return comparisonResult.length > 0 ? 
+            comparisonResult.length === 1 ? 
+                <ComparisonComponent comparisonResult={comparisonResult}/> 
+                : 
+                comparisonResult.length === 3 ? 
+                    <ComparisonComponent comparisonResult={comparisonResult}/>
+                    :
+                    sessionsList
+            :
+            sessionsList
 }

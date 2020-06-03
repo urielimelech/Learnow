@@ -18,7 +18,8 @@ export const ChooseResultUserSessions = () => {
     useEffect(() => {
         if (loggedUser.userType === 'student')
             socketToWebServer.emit('get all user sessions', loggedUser.email)
-        else socketToWebServer.emit('get all user sessions', studentForResearch.email)
+        else if (studentForResearch) 
+            socketToWebServer.emit('get all user sessions', studentForResearch.email)
         socketToWebServer.on('all user sessions', sessions => {
             setUserSessions(sessions)
         })
