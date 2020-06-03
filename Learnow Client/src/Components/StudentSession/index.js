@@ -16,7 +16,7 @@ export const StudentSession = () => {
                 IsVideoEnded ? 
                     <Quiz sessionQuiz={session.quizSummary}/>
                 :
-                    <VideoPlayer sessionVideo={session.videoUrl} sessionQuiz={session.quizSummary}/>
+                    <VideoPlayer sessionVideo={session.quizSummary.videoUrl} sessionQuiz={session.quizSummary}/>
             :
                 <Loading/>}
         </div>

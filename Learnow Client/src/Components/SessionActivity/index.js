@@ -1,8 +1,8 @@
 export const sessionActivity = [
     {
-        videoUrl: 'https://www.youtube.com/watch?v=DIJYAWB3MhI',
         img: require('../../images/division.jpg'),
         quizSummary: {
+            "videoUrl": 'https://www.youtube.com/watch?v=DIJYAWB3MhI',
             "quizTitle": "Division Lesson Quiz",
             "quizSynopsis": "Please answer the Questions about the video. Good Luck",
             "questions": [
@@ -52,9 +52,9 @@ export const sessionActivity = [
         }
     },
     {
-        videoUrl: 'https://www.youtube.com/watch?v=0Vy2Je0hLLc',
         img: require('../../images/multiply.jpg'),
         quizSummary: {
+            "videoUrl": 'https://www.youtube.com/watch?v=0Vy2Je0hLLc',
             "quizTitle": "Multiplication Lesson Quiz",
             "quizSynopsis": "Please answer the Questions about the video. Good Luck",
             "questions": [

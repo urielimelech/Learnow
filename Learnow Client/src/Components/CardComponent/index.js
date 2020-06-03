@@ -40,7 +40,7 @@ export const CardComponent = ({headerText, detailText=null, isAbleToExpand=false
             marginb={style ? style.Card ? style.Card.marginBottom ? style.Card.marginBottom : 0 : null : null}
             marginl={style ? style.Card ? style.Card.marginLeft ? style.Card.marginLeft : 0 : null : null}
             width={style ? style.Card ? style.Card.width ? style.Card.width : '100%' : null : null}
-            height={style ? style.Card ? style.Card.height ? style.Card.height : '100%' : null : null}
+            height={style ? style.Card ? style.Card.height ? expanded ? style.expand.height : style.Card.height : '100%' : null : null}
             border={isPressed ? '2px solid #ADD8E6' : null}
             backgroundcolor={isPressed ? "#FFFFF0" : null}
         >
@@ -78,8 +78,8 @@ export const CardComponent = ({headerText, detailText=null, isAbleToExpand=false
                 </Button> : null}
                 {isAbleToExpand ? <ExpandButton isOpen={expanded} onClick={handleExpandClick}/> : null}
             </CardActions>
-            <Collapse in={expanded} timeout="auto" unmountOnExit style = {style ? style.CardStyle : null}>
-                <ExpandedContent  expandedText={expandedText}/>
+            <Collapse in={expanded} timeout="auto" unmountOnExit>
+                <ExpandedContent expandedText={expandedText}/>
             </Collapse>
         </StyledCard>
     )
