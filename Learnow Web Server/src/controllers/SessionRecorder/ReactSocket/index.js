@@ -64,8 +64,8 @@ export const socketWithReact = (serverIOService, soc, rooms, userConfigs) => {
     })
 
     /** send to client the comparison result between two sessions */
-    soc.on('compare sessions', ({sessionData, email, secondSession}) => {
-        onCompareSessions(soc, userConfigs, email, sessionData, secondSession)
+    soc.on('compare sessions', ({sessionData, secondSession, studentConfig}) => {
+        onCompareSessions(soc, studentConfig, sessionData, secondSession)
     })
 
     /** sends to client the configuration */
@@ -74,8 +74,8 @@ export const socketWithReact = (serverIOService, soc, rooms, userConfigs) => {
     })
 
     /** save user configuration to the DB */
-    soc.on('save configuration', ({config, userEmail}) => {
-        onSaveConfiguration(userConfigs, config, userEmail)
+    soc.on('save configuration', ({userData}) => {
+        onSaveConfiguration(userData)
     })
 
     /** when user logout from react */
