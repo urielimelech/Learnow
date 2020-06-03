@@ -39,6 +39,7 @@ export const Quiz = ({sessionQuiz}) => {
     }
 
     const onCompleteAction = obj => {
+        obj.videoUrl = sessionQuiz.videoUrl
         socketToWebServer.emit('end quiz', {data: obj, ip: ip})
         return <button onClick={turnOffIsVideoEnded}> go and see your Results </button> 
     }

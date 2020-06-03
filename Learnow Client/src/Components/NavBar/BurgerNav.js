@@ -55,23 +55,31 @@ export const  BurgerNav = ({page}) => {
     return (
         <div id={"outer-container"}>
             {showBurgerNav ? 
-                <Menu isOpen={isOpen} pageWrapId={ "page-wrap" } outerContainerId={ "outer-container" } styles = {BurgerNavStyles} >
-                    <a href ='/Home' onClick={(e) => onClick(e, '/Home')}><img style={BurgerNavStyles.logoNav} src={require('../../images/learnowIcon.png')}/></a>
-                    {loggedUser.userType === 'student' ? 
-                            <img style={BurgerNavStyles.imgNav} src={require('../../images/student.png')}></img> 
-                        : 
-                            <img style={BurgerNavStyles.imgNav} src={require('../../images/research.png')}></img>}
-                    <div style={BurgerNavStyles.textNav}> Welcome {loggedUser.name}</div>
-                    <a href='/Results' onClick={(e) => onClick(e, '/Results')}>Your Results</a>
-                    <a href='/Recommendations' onClick={(e) => onClick(e, '/Recommendations')}>Recommendations</a>
-                    <a href='/SessionsComparator' onClick={(e) => onClick(e, '/SessionsComparator')}>Effective Recommendation</a>
-                    {loggedUser.userType === 'researcher' ? 
+                loggedUser.userType === 'student' ? 
+                    <Menu isOpen={isOpen} pageWrapId={ "page-wrap" } outerContainerId={ "outer-container" } styles = {BurgerNavStyles} >
+                        <a href ='/Home' onClick={(e) => onClick(e, '/Home')}><img style={BurgerNavStyles.logoNav} src={require('../../images/learnowIcon.png')}/></a>
+                        <img style={BurgerNavStyles.imgNav} src={require('../../images/student.png')}></img> 
+                        <div style={BurgerNavStyles.textNav}> Welcome {loggedUser.name}</div>
+                    
+                        <a href='/Results' onClick={(e) => onClick(e, '/Results')}>Your Results</a>
+                        <a href='/Recommendations' onClick={(e) => onClick(e, '/Recommendations')}>Effective Recommendations</a>
+                        <a href='/History' onClick={(e) => onClick(e, '/History')}>Sessions History</a>                       
+                        <a href='/' onClick={() => logoutUser()}>Logout</a>
+                    </Menu> : 
+
+                    <Menu isOpen={isOpen} pageWrapId={ "page-wrap" } outerContainerId={ "outer-container" } styles = {BurgerNavStyles} >
+                        <a href ='/Home' onClick={(e) => onClick(e, '/Home')}><img style={BurgerNavStyles.logoNav} src={require('../../images/learnowIcon.png')}/></a>
+                        <img style={BurgerNavStyles.imgNav} src={require('../../images/research.png')}></img>
+                        <div style={BurgerNavStyles.textNav}> Welcome {loggedUser.name}</div>
+
+                        <a href='/Results' onClick={(e) => onClick(e, '/Results')}>Your Results</a>
+                        <a href='/Recommendations' onClick={(e) => onClick(e, '/Recommendations')}>Recommendations</a>
+                        <a href='/EffetiveRecommendations' onClick={(e) => onClick(e, '/EffetiveRecommendations')}>Effective Recommendations</a>
+                        <a href ='/EducationalActivity' onClick={(e) => onClick(e, '/EducationalActivity')}>Educational Activity</a> 
+                        <a href='/History' onClick={(e) => onClick(e, '/History')}>Sessions History</a>                       
                         <a href='/Configuration' onClick={(e) => onClick(e, '/Configuration')}>Configuration</a>
-                    :
-                        <a href='/History' onClick={(e) => onClick(e, '/History')}>Sessions History</a>
-                    }
-                    <a href='/' onClick={() => logoutUser()}>Logout</a>
-                </Menu> 
+                        <a href='/' onClick={() => logoutUser()}>Logout</a>
+                    </Menu>
             :
                 null
             }

@@ -9,6 +9,7 @@ import { VerifyTokenJwt } from "./Components/VerifyTokenJwt"
 import { ConfigComponent } from './Components/ConfigComponent'
 import { HomePage } from "./Components/HomePage"
 import { ChooseResultUserSessions } from "./Components/ChooseResultUserSessions"
+import { EducationalActivity } from "./Components/EducationalActivity"
 
 const routes = {
   "/": () =>  <Login/>,
@@ -16,10 +17,11 @@ const routes = {
   "/Session": () => <VerifyTokenJwt children={<StartSessionComponent/>} />,
   "/Results": () => <VerifyTokenJwt children={<Results/>} />,
   "/Recommendations" : () => <VerifyTokenJwt children={<Feedback/>} />,
-  "/SessionsComparator" : () => <VerifyTokenJwt children={<SessionsComparator/>} />,
+  "/EffetiveRecommendations" : () => <VerifyTokenJwt children={<SessionsComparator/>} />,
   "/History" : () => <VerifyTokenJwt children={<ChooseResultUserSessions/>} />,
   "/Configuration": () => <VerifyTokenJwt children={<ConfigComponent/>} />,
-  "/Register" : () => <Register/>
+  "/Register" : () => <Register/>,
+  "/EducationalActivity" : () => <VerifyTokenJwt children={<EducationalActivity/>} />
 }
 
 export default routes
