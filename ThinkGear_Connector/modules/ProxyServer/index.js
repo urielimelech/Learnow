@@ -3,6 +3,7 @@ import { spawn } from 'child_process'
 
 import { learnowUrl } from "./options.js"
 import { socketToWebServer } from "../ConnectionToWebServer/index.js"
+import { WebServerSocketController } from '../SocketToWebServerCtl/index.js'
 
 const getComputerIp = async () => {
     try{
@@ -31,10 +32,7 @@ export const startLearnow = async () => {
     }
     socketToWebServer.on('open TGC', () => {
         console.log('call to new tgc')
-        import('../SocketToWebServerCtl/index.js')
-        .then(({ WebServerSocketController }) => {
             if (isConnectedToRoom)
                 WebServerSocketController(ip)
         })
-    })
 }
