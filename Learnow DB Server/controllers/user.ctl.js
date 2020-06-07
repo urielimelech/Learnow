@@ -1,5 +1,4 @@
 const   User      = require('../models/user.js')
-        // ObjectId  = require('mongoose').Types.ObjectId
 
 module.exports = {
     addUser: async (req, res, next) => {
@@ -45,5 +44,25 @@ module.exports = {
             configResult: req.configResult
         }
         res.status(200).json(studentData)
+    },
+
+    getAllStudents: async (req, res) => {
+        const userType = 'student'
+
+        await User.find({userType: userType}).then(result => {
+            if(result.length){
+                const allStudents = result.map(elem => {
+                    return {
+                        name: elem.name,
+                        email: elem.email,
+                        userType: elem.userType,
+                    }
+                })
+                res.send(JSON.stringify(allStudents))
+            }
+            else res.status(404).send(`{"Failure": "No Documents Were Found"}`)
+        }, err =>{
+            res.status(404).send(`{"Failure": "No Documents Were Found"}`)
+        });
     }
 }
