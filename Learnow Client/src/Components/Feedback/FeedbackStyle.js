@@ -1,37 +1,37 @@
-import { WINDOW_HEIGHT, WINDOW_WIDTH } from "../../consts"
+import styled from 'styled-components'
 
 export const feedbackStyle = {
-    // Card: {
-    //     marginRight: '15px'
-    // },
-    // CardStyle : {
-    //     width: '15rem'
-    // },
-    CardImgStyle : {
-        objectFit: 'contain'
-    },
-    CardTitleStyle : {
-        height: '100px'
-    },
-    CardLinkStyle : {
-        display: 'flex', 
-        justifyContent:'center'
-    },
-    FeedbackComponent : {
-        textAlign:'center', 
-        width: WINDOW_WIDTH*0.8,
-        margin: '0 auto'
-    },
-    CardsContainer : {
-        display: 'flex', 
-        justifyContent:'center'
-    },
     buttonStyle : {
+        width: '50px',
+        marginBottom:'10px',
         backgroundColor: '#39C0BA',
         color: '#ffffff',
-        margin: '0 auto'
-    },
-    CardContent : {
-        height: '100px'
     }
 }
+
+export const StyledCardFeedback = styled.div`
+background-color: #8DD4D2;
+border-radius: 10px;
+border: 2px solid #4CC6C4;
+height: 300px;
+width: 320px;
+margin: 20px;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+align-items: center;
+`
+
+export const StyledImg = styled.img`
+object-fit: contain;
+height: 150px;
+width: 150px;
+align-self: center;
+`
+
+export const StyledFlipImg = styled.img`
+object-fit: contain;
+height: 100px;
+width: 100px;
+align-self: center;
+`
