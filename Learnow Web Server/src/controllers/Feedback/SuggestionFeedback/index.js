@@ -20,7 +20,7 @@ it is responsible for calming and restoring balance after the stress and pressur
     },
     {
         Title: 'Music',
-        TitleCard: 'Listening Music',
+        TitleCard: 'Listening To Music',
         ImgCard: 'music',
         DescriptionCard: 'Listening Music affects learning and hearing skills.',
         Link: 'https://www.spotify.com/il-en/',
@@ -38,11 +38,47 @@ it is responsible for calming and restoring balance after the stress and pressur
     },
     {
         Title: 'Playing',
-        TitleCard: 'Playing Computer Game',
+        TitleCard: 'Playing a Computer Game',
         ImgCard: 'computerGame',
         DescriptionCard: 'Computer games improve attention, speed of information processing, past flexibility between different tasks and mental rotation of objects.',
         Link: 'https://www.miniclip.com/games/en/',
         LinkDescription: 'Playing Computer Game',
         CardNumber: '5'
-    }
+    },
+    {
+        Title: 'Dancing',
+        TitleCard: 'Dancing',
+        ImgCard: 'dancing',
+        DescriptionCard: 'Dancing allows for coping with delayed gratification as well as remembering sequences, while thrilling, which increases concentration and attention.',
+        Link: '',
+        LinkDescription: 'dancing',
+        CardNumber: '6'
+    },
+    {
+        Title: 'Proper nutrition',
+        TitleCard: 'Proper nutrition',
+        ImgCard: 'nutrition',
+        DescriptionCard: 'Proper nutrition that includes eating vegetables and fruits, fish containing omega 3 and whole grains, with dietary fiber and vitamins helps optimize brain functioning and helps the learning.',
+        Link: '',
+        LinkDescription: 'Proper nutrition',
+        CardNumber: '7'
+    },
+    {
+        Title: 'Swimming',
+        TitleCard: 'Swimming',
+        ImgCard: 'swimming',
+        DescriptionCard: 'Swimming improves attention level.',
+        Link: '',
+        LinkDescription: 'swimming',
+        CardNumber: '8'
+    },
+    {
+        Title: 'Mindfulness',
+        TitleCard: 'Mindfulness',
+        ImgCard: 'mindfulness',
+        DescriptionCard: 'Mindfulness training contributes to the development of basic skills required for the good functioning of all cognitive abilities and among other things to improve the level of attention.',
+        Link: '',
+        LinkDescription: 'mindfulness',
+        CardNumber: '9'
+    },
 ]
