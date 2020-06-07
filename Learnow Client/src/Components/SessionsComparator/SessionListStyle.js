@@ -18,9 +18,6 @@ export const StyledCardComponent = {
     },
     CardContent: {
         textAlign: 'center'
-    },
-    expand: {
-        height: '100%'
     }
 }
 

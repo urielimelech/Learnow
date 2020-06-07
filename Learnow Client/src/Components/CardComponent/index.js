@@ -58,7 +58,7 @@ export const CardComponent = ({headerText, detailText=null, isAbleToExpand=false
                     null 
                 :  
                     <CardContent style={style ? style.CardContent : null}>
-                        <Typography style={style ? style.cardTitleStyle : null} gutterBottom variant="h5" component="h2">
+                        <Typography gutterBottom variant="h5" component="h2">
                             {headerText}
                         </Typography>
                         {

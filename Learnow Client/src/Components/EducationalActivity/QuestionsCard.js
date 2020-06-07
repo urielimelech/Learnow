@@ -2,7 +2,7 @@ import React from 'react'
 import { Loading } from '../Loading'
 import { useSelector } from 'react-redux'
 import { CardComponent } from '../CardComponent'
-import { StyledCardComponent } from '../SessionsComparator/SessionListStyle'
+import { StyledCardComponent } from './EducationalActivityStyle'
 
 export const QuestionsCard = () => {
 
