@@ -1,48 +1,62 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { CardComponent } from '../CardComponent'
-import { Typography } from '@material-ui/core'
-import { researcherComponents } from './ResearcherComponentsDetails'
-import { navigate } from 'hookrouter'
 import { socketToWebServer } from '../../SocketIoClient'
-import { useDispatch } from 'react-redux'
-import { setActivitiesCards } from '../../Redux/Actions'
+import { useDispatch, useSelector } from 'react-redux'
+import { setActivitiesCards, updateStudentForResearch } from '../../Redux/Actions'
+import axios from 'axios'
+import { dbURL } from '../../consts'
+import { StyledCardComponent } from './ResearchUserStyle'
 
 export const HomePageResearch = ({data}) => {
 
     const _dispatch = useDispatch()
+    const [studentsData, setStudentsData] = useState([])
 
-    const detailText =<div>
-        <Typography variant="body2" color="textSecondary" component="p">
-            user type: {data.userType}
-        </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
-            user email: {data.email}
-        </Typography>
-    </div>
-
-    useEffect(() => {
-        socketToWebServer.emit('get suggestions cards', data.email)
-        socketToWebServer.on('suggestions cards', data => {
-            _dispatch(setActivitiesCards(data))
+    const getAllStudents = () => {
+       axios.get(`${dbURL}/getAllStudents`)
+       .then(res => {
+            setStudentsData(res.data)
         })
-        return () => {
-            socketToWebServer.off('suggestions cards')
-        }
+        .catch(err => {
+            console.log({err})
+        })
+    }
+
+    useEffect(()=> {
+        getAllStudents()
     },[])
 
+    const getStudentData = (email) => {
+        axios.get(`${dbURL}/getStudentData?email=${email}`)
+        .then(res => {
+            _dispatch(updateStudentForResearch(res.data))
+
+            socketToWebServer.emit('get suggestions cards', email)
+            socketToWebServer.on('suggestions cards', data => {
+                _dispatch(setActivitiesCards(data))
+            })
+            // setStudentForResearch(<HomePageResearch data={res.data}/>)
+        })
+        .catch(err => {
+            console.log({err})
+            // setIsUserExistsErr(<TextMessageToastify msg={'user is not exists'}/>)
+        })
+    }
+
+
     const renderResearcherComponentsCards = () => {
-        return researcherComponents.map((elem, index) => {
-            const onCardClick = () => navigate(elem.route)
-            return <CardComponent key={index} headerText={elem.title} detailText={elem.details} onClickCard={onCardClick}/>
+        return studentsData.map((elem, index) => {
+
+            const onCardClick = () => {
+                getStudentData(elem.email)
+                // _dispatch(updateStudentForResearch(elem))
+            }
+            return <CardComponent key={index} headerText={elem.name} detailText={elem.email} style={StyledCardComponent} img={require('../../images/user.png')} onClickCard={onCardClick} />
         }
     )}
 
     return (
         <div>
-            <CardComponent 
-                headerText={data.name}
-                detailText={detailText}
-            />
             {renderResearcherComponentsCards()}
         </div>
     )
