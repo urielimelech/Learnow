@@ -33,6 +33,7 @@ app.get('/login', [userCtl.getUser, userConfig.getUserConfigByEmail, userHandler
 app.post('/register', [userCtl.addUser, userConfig.addUserConfig, userHandler.register]);
 app.get('/checkUserToken', middleware.checkToken)
 app.get('/getStudentData', [userCtl.getUser, userConfig.getUserConfigByEmail, userCtl.getStudentData])
+app.get('/getAllStudents', userCtl.getAllStudents)
 
 /** User configuration routes */
 app.put('/updateUserConfig', userConfig.updateUserConfig)

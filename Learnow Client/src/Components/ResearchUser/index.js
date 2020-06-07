@@ -8,7 +8,8 @@ import axios from 'axios'
 import { TextMessageToastify } from '../TextMessageToastify'
 import { HomePageResearch } from './HomePageResearch'
 import { useDispatch, useSelector } from 'react-redux'
-import { updateStudentForResearch } from '../../Redux/Actions'
+import { updateStudentForResearch, setActivitiesCards } from '../../Redux/Actions'
+import { socketToWebServer } from '../../SocketIoClient'
 
 export const ResearchUser = () => {
 
@@ -29,7 +30,6 @@ export const ResearchUser = () => {
     const [email, setEmail] = useState('')
     const [error, setError] = useState(false)
     const [isUserExistsErr, setIsUserExistsErr] = useState(false)
-    const [studentForResearch, setStudentForResearch] = useState(null)
 
     const handleChange = (event) => {
         setEmail(event.target.value)
@@ -44,7 +44,11 @@ export const ResearchUser = () => {
         axios.get(`${dbURL}/getStudentData?email=${email}`)
         .then(res => {
             _dispatch(updateStudentForResearch(res.data))
-            setStudentForResearch(<HomePageResearch data={res.data}/>)
+
+            socketToWebServer.emit('get suggestions cards', email)
+            socketToWebServer.on('suggestions cards', data => {
+                _dispatch(setActivitiesCards(data))
+            })
         })
         .catch(err => {
             console.log({err})
@@ -72,12 +76,6 @@ export const ResearchUser = () => {
         if (studentData)
             setEmail(studentData.email)
     },[studentData])
-
-    useEffect(() => {
-        if (studentData) {
-            setStudentForResearch(<HomePageResearch data={studentData}/>)
-        }
-    },[])
   
     return (
         <div style={{textAlign: 'center'}}>
@@ -108,7 +106,7 @@ export const ResearchUser = () => {
                         search
                 </Button>
             </form>
-            {studentForResearch}
+            <HomePageResearch/>
         </div>
     )
 }
