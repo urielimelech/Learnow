@@ -1,7 +1,6 @@
 import React from 'react'
 import { Chart } from 'react-google-charts'
 import { green, blue, yellow, red } from '@material-ui/core/colors'
-import { WINDOW_HEIGHT, WINDOW_WIDTH } from '../../consts'
 
 export const improvmentCharts = ({comparisonResult}) => {
 
@@ -28,8 +27,8 @@ export const improvmentCharts = ({comparisonResult}) => {
             <Chart
                 key={index}
                 improve={[elem.activity[0], elem.activity[1]]}
-                width={WINDOW_WIDTH}
-                height={WINDOW_HEIGHT*0.7}
+                width={'90%'}
+                height={'18rem'}
                 chartType="ColumnChart"
                 loader={<div>Loading Chart</div>}
                 data={data}

@@ -20,8 +20,8 @@ export const CorrelationChart = ({correlation}) => {
     const data = [['Question Number', 'Answer', {role: 'annotation'}, {role: 'annotationText'}, 'Video Attention Avarage', 'Quiz Attention Avarage'], ...chartsTabs]
     return (
         <Chart
-            width={WINDOW_WIDTH}
-            height={WINDOW_HEIGHT*0.4}
+            width={'90%'}
+            height={'18rem'}
             chartType="ColumnChart"
             loader={<Loading/>}
             data={data}
