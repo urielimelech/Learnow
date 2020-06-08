@@ -5,8 +5,11 @@ import { navigate } from 'hookrouter'
 import { login, logout, notificationVisible } from '../../Redux/Actions'
 import { socketToWebServer } from '../../SocketIoClient'
 import { ToastNotification } from '../Toastify'
-import { LoginPage, BackgroundLoginPage, WrapperForm, Form, HeaderForm, Logo, WrapperButtons, LoginButton } from './LoginStyle'
+import { HeaderForm, Logo, WrapperButtons } from './LoginStyle'
 import { useCookies } from 'react-cookie'
+import { ButtonType } from '../ButtonType/ButtonType'
+import EmailIcon from '@material-ui/icons/Email'
+import LockIcon from '@material-ui/icons/Lock'
 
 export const Login = () => {
 
@@ -16,9 +19,9 @@ export const Login = () => {
     })
 
     const [cookies, setCookie] = useCookies(['email', 'token', 'name', 'userType', 'route'])
-    
     const [submitted, setSubmitted] = useState(false)
     const [errorLogin, setErrorLogin] = useState(null)
+
     const { email, password } = inputs
     const _dispatch = useDispatch()
 
@@ -86,35 +89,29 @@ export const Login = () => {
     }
 
     return (
-        <LoginPage >
-            <BackgroundLoginPage>
-                <WrapperForm className="col-lg-8 offset-lg-2" > 
-                    <Form name="form" onSubmit={handleSubmit} >
-                        <HeaderForm>
-                            <Logo src={require('../../images/learnowIcon.png')}></Logo>
-                            <h2>Login</h2>
-                        </HeaderForm>
-                        <div className="form-group">
-                            <label>Email</label>
-                            <input type="email" name="email" value={email} onChange={handleChange} className={'form-control' + (submitted && !email ? ' is-invalid' : '')} />
-                            {submitted && !email && <div className="invalid-feedback">Email is required</div>}
-                        </div>
-                        <div className="form-group">
-                            <label>Password</label>
-                            <input type="password" name="password" value={password} onChange={handleChange} className={'form-control' + (submitted && !password ? ' is-invalid' : '')} />
-                            {submitted && !password && <div className="invalid-feedback">Password is required</div>}
-                        </div>
-                        <WrapperButtons className="form-group">
-                            <LoginButton className="btn btn-primary">
-                                {submitted && <span className="spinner-border spinner-border-sm mr-1"></span>}
-                                Login
-                            </LoginButton>
-                            <button className="btn btn-primary" onClick={() => navigate('/Register')}>Register</button>
-                        </WrapperButtons>
-                    </Form>
-                    {errorLogin}
-                </WrapperForm>
-            </BackgroundLoginPage>
-        </LoginPage>
+        <div className="col-lg-8 offset-lg-2" > 
+            <form name="form" onSubmit={handleSubmit}>
+                <HeaderForm>
+                    <Logo src={require('../../images/learnowIcon.png')}></Logo>
+                </HeaderForm>
+                <div className="form-group"  >
+                    <EmailIcon/>
+                    <input type="email" name="email" placeholder="email" value={email} onChange={handleChange} className={'form-control' + (submitted && !email ? ' is-invalid' : '')} />
+                    {submitted && !email && <div className="invalid-feedback">Email is required</div>}
+                </div>
+                <div className="form-group">
+                    <LockIcon/>
+                    <input type="password" name="password" placeholder="password" value={password} onChange={handleChange} className={'form-control' + (submitted && !password ? ' is-invalid' : '')} />
+                    {submitted && !password && <div className="invalid-feedback">Password is required</div>}
+                </div>
+                <WrapperButtons className="form-group">
+                    <ButtonType className="btn btn-primary">
+                        {submitted && <span className="spinner-border spinner-border-sm mr-1"></span>}
+                        SIGN IN
+                    </ButtonType>
+                </WrapperButtons>
+            </form>
+            {errorLogin}
+        </div>
     )
 }
