@@ -116,9 +116,9 @@ export const Nav = ({page}) => {
                         }
                         {isUserExistsErr}
                     </form>
-                    <Button href='/' onClick={() => logoutUser()}>LOGOUT</Button>
                     :
                     null}
+                    <Button href='/' onClick={() => logoutUser()}>LOGOUT</Button>
                 </ul>
                 {page}
             </nav>
