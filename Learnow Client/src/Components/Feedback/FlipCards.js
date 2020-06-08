@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Button } from '@material-ui/core'
 import { navigate } from 'hookrouter'
-import { chooseActivity } from '../../Redux/Actions'
+import { chooseActivity, updateFitContent } from '../../Redux/Actions'
 import { WINDOW_WIDTH } from '../../consts'
 import { FlipCard } from './FlipCard'
 import { feedbackStyle } from './FeedbackStyle'
@@ -31,6 +31,7 @@ export const FlipCards = ({sumImprovment = null}) => {
         if(cards && displayIndex >= 3){
             for(let i = displayIndex - 3 ; i < displayIndex ; i++){
                 setDisplayRecommendation(prev => [...prev, cards[i]])
+                _dispatch(updateFitContent(true))
             }
         }
         if(cards && displayIndex > cards.length)

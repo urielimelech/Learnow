@@ -62,7 +62,7 @@ export const ActivitySelection = () => {
         <WrapperActivitySelection>
             <FormControl className={classes.formControl} disabled={loggedUser.userType === 'researcher' ? true : false}>
                 <InputLabel id="demo-simple-select-helper-label">Activity</InputLabel>
-                <ActivityList/>
+                    <ActivityList/>
                 <FormHelperText>Select an activity that you finished right now</FormHelperText>
             </FormControl>
             {/* <Button onClick={saveActivity}>Continue</Button> */}
