@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { navigate } from 'hookrouter'
-
-import { login, logout, notificationVisible } from '../../Redux/Actions'
+import { login, notificationVisible } from '../../Redux/Actions'
 import { socketToWebServer } from '../../SocketIoClient'
 import { ToastNotification } from '../Toastify'
 import { HeaderForm, Logo, WrapperButtons } from './LoginStyle'
-import { useCookies } from 'react-cookie'
 import { ButtonType } from '../ButtonType/ButtonType'
 import EmailIcon from '@material-ui/icons/Email'
 import LockIcon from '@material-ui/icons/Lock'
@@ -17,15 +14,11 @@ export const Login = () => {
         email: '',
         password: ''
     })
-
-    const [cookies, setCookie] = useCookies(['email', 'token', 'name', 'userType', 'route'])
     const [submitted, setSubmitted] = useState(false)
     const [errorLogin, setErrorLogin] = useState(null)
 
     const { email, password } = inputs
     const _dispatch = useDispatch()
-
-    const loggedUser = useSelector(state => state.MainReducer.loggedUser)
     const isNotificationVisible = useSelector(state => state.MainReducer.isNotificationVisible)
 
     const userSignIn = () =>{
@@ -41,34 +34,10 @@ export const Login = () => {
         })
     }
 
-    const checkCookies = () => {
-        if (cookies['email'] && cookies['token'] && cookies['name'] && cookies['userType']){
-            const email = cookies['email']
-            const token = cookies['token']
-            const name = cookies['name']
-            const userType = cookies['userType']
-            _dispatch(login({email: email, name: name, userType: userType, token: token}))
-        }
-        else
-            _dispatch(logout())
-    }
-
     useEffect(() => {
-        checkCookies()
         userSignIn()
         return () => socketToWebServer.off('logged data')
     }, [])
-
-    useEffect(() => {
-        if (Object.keys(loggedUser).length > 0) {
-            setCookie('email', loggedUser.email)
-            setCookie('token', loggedUser.token)
-            setCookie('name', loggedUser.name)
-            setCookie('userType', loggedUser.userType)
-            setCookie('route', '/Home')
-            navigate('/Home')
-        }
-    },[loggedUser])
 
     useEffect(() => {
         if (!isNotificationVisible)

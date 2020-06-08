@@ -12,7 +12,7 @@ export const DialogLogin = ({closeDialog}) => {
 
     const [isLogin, setIsLogin] = useState(null)
     const theme = useTheme();
-    const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+    const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
     const handleClose = () => {
         closeDialog()

@@ -5,7 +5,7 @@ import { register, logout, notificationVisible } from '../../Redux/Actions'
 import { socketToWebServer } from '../../SocketIoClient'
 import { ToastNotification } from '../Toastify'
 import { SelectUserType } from './SelectUserType'
-import { Logo, Form, HeaderForm, WrapperButtons } from './RegisterStyle'
+import { Logo, HeaderForm, WrapperButtons } from './RegisterStyle'
 import { useCookies } from 'react-cookie'
 import { ButtonType } from '../ButtonType/ButtonType'
 import EmailIcon from '@material-ui/icons/Email'
@@ -85,7 +85,7 @@ export const Register = () => {
 
     return (
         <div className="col-lg-8 offset-lg-2">
-            <Form name="form" onSubmit={handleSubmit}>
+            <form name="form" onSubmit={handleSubmit}>
                 <HeaderForm>
                     <Logo src={require('../../images/learnowIcon.png')}></Logo>
                 </HeaderForm>
@@ -120,7 +120,7 @@ export const Register = () => {
                         SIGN UP
                     </ButtonType>
                 </WrapperButtons>
-            </Form>
+            </form>
             {errorRegister}
         </div>
     )
