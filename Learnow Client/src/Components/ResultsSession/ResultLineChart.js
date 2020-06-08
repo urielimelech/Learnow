@@ -28,8 +28,8 @@ export const ResultLineChart = ({data, title}) => {
     return (
         <Chart 
             data={data} 
-            width={WINDOW_WIDTH} 
-            height={WINDOW_HEIGHT*0.4}
+            width={'90%'} 
+            height={'18rem'}
             chartType="LineChart" 
             loader={<Loading/>} 
             options={options} 

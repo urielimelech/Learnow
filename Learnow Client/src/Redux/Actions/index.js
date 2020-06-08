@@ -13,7 +13,10 @@ import {
     SET_ACTIVITY_CARD,
     CHOOSE_ACTIVITY,
     SESSION_ACTIVITY,
-    STUDENT_FOR_RESEARCH
+    STUDENT_FOR_RESEARCH,
+    WINDOW_WIDTH,
+    WINDOW_HEIGHT,
+    FIT_CONTENT
 } from '../ActionTypes'
 
 export const isVideoEnded = data => ({ type: IS_VIDEO_ENDED, data: data })
@@ -45,3 +48,9 @@ export const chooseActivity = activity => ({type: CHOOSE_ACTIVITY, data: activit
 export const session = session => ({type: SESSION_ACTIVITY, data: session})
 
 export const updateStudentForResearch = studentMail => ({type: STUDENT_FOR_RESEARCH, data: studentMail})
+
+export const updateWindowWidth = windowWidth => ({type: WINDOW_WIDTH, data: windowWidth})
+
+export const updateWindowHeight = windowHeight => ({type: WINDOW_HEIGHT, data: windowHeight})
+
+export const updateFitContent = fitContent => ({type: FIT_CONTENT, data: fitContent})

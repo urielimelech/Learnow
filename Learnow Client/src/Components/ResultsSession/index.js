@@ -5,7 +5,8 @@ import { StyledResultComponent } from './ResultSessionStyle'
 import { Correlation } from './Correlation'
 import { Button } from '@material-ui/core'
 import { navigate } from 'hookrouter'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { updateFitContent } from '../../Redux/Actions';
 
 export const Results = () => {
 
@@ -14,6 +15,8 @@ export const Results = () => {
     const [displayChart, setDisplayChart] = useState(0)
 
     const loggedUser = useSelector(state => state.MainReducer.loggedUser)
+
+    const _dispatch = useDispatch()
 
     const onRadioChange = e => {
         setDisplayChart(e)
@@ -28,8 +31,10 @@ export const Results = () => {
     },[])
 
     useEffect(() => {
-        if (charts.length > 0)
+        if (charts.length > 0){
             setOptionChart(RadioChooseCharts({chart: charts, onRadioChange, label: 'results'}))
+            _dispatch(updateFitContent(true))
+        }
     },[charts])
 
     return (

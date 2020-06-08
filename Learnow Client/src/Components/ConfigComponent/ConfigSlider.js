@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react'
-import { makeStyles } from '@material-ui/core/styles'
 import { navigate } from 'hookrouter'
 
 import { SliderComponent } from './SliderComponent'
 import { socketToWebServer } from '../../SocketIoClient'
 import { ConfigSliderWrapper, TextConfig, WrapperConfig, ButtonConfig } from './ConfigSliderStyle'
+import { useDispatch } from 'react-redux'
+import { updateFitContent } from '../../Redux/Actions'
 
 export const ConfigSlider = ({studentData, configObject, configKeys, configValues}) => {
 
     const [renderSliders, setRenderSliders] = useState(null)
     const [config, setConfig] = useState(null)
+
+    const _dispatch = useDispatch()
 
     const sliders = () => {
         return configKeys.map((key, index) => {
@@ -60,6 +63,7 @@ export const ConfigSlider = ({studentData, configObject, configKeys, configValue
     useEffect(() => {
         if (config) {
             setRenderSliders(sliders)
+            _dispatch(updateFitContent(true))
         }
     },[config])
 
