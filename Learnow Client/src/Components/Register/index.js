@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { navigate } from 'hookrouter'
-
 import { register, logout, notificationVisible } from '../../Redux/Actions'
 import { socketToWebServer } from '../../SocketIoClient'
 import { ToastNotification } from '../Toastify'
 import { SelectUserType } from './SelectUserType'
-import { RegisterPage, Logo, BackgroundRegisterPage, WrapperForm, Form, HeaderForm, WrapperButtons } from './RegisterStyle'
+import { Logo, Form, HeaderForm, WrapperButtons } from './RegisterStyle'
 import { useCookies } from 'react-cookie'
+import { ButtonType } from '../ButtonType/ButtonType'
+import EmailIcon from '@material-ui/icons/Email'
+import LockIcon from '@material-ui/icons/Lock'
+import AccountCircleIcon from '@material-ui/icons/AccountCircle'
+import SchoolIcon from '@material-ui/icons/School'
 
 export const Register = () => {
 
@@ -80,49 +84,44 @@ export const Register = () => {
     }
 
     return (
-        <RegisterPage>
-            <BackgroundRegisterPage>
-                <WrapperForm className="col-lg-8 offset-lg-2">
-                    <Form name="form" onSubmit={handleSubmit}>
-                        <HeaderForm>
-                            <Logo src={require('../../images/learnowIcon.png')}></Logo>
-                            <h4>Register</h4>
-                        </HeaderForm>
-                        <div className="form-group">
-                            <label>Name</label>
-                            <input type="text" name="name" value={user.name} onChange={handleChange} className={'form-control' + (submitted && !user.name ? ' is-invalid' : '')} />
-                            {submitted && !name &&
-                                <div className="invalid-feedback">Name is required</div>
-                            }
-                        </div>
-                        <div className="form-group">
-                            <label>Email</label>
-                            <input type="email" name="email" value={user.email} onChange={handleChange} className={'form-control' + (submitted && !user.email ? ' is-invalid' : '')} />
-                            {submitted && !email &&
-                                <div className="invalid-feedback">Email is required</div>
-                            }
-                        </div>
-                        <div className="form-group">
-                            <label>Password</label>
-                            <input type="password" name="password" value={user.password} onChange={handleChange} className={'form-control' + (submitted && !user.password ? ' is-invalid' : '')} />
-                            {submitted && !password &&
-                                <div className="invalid-feedback">Password is required</div>
-                            }
-                        </div>
-                        <div className="form-group">
-                            <label>User Type</label>
-                            <SelectUserType name='userType' onChange={handleChange} />
-                        </div>
-                        <WrapperButtons className="form-group">
-                            <button className="btn btn-primary">
-                                {submitted && <span className="spinner-border spinner-border-sm mr-1"></span>}
-                                Register
-                            </button>
-                        </WrapperButtons>
-                    </Form>
-                    {errorRegister}
-                </WrapperForm>
-            </BackgroundRegisterPage>
-        </RegisterPage>
+        <div className="col-lg-8 offset-lg-2">
+            <Form name="form" onSubmit={handleSubmit}>
+                <HeaderForm>
+                    <Logo src={require('../../images/learnowIcon.png')}></Logo>
+                </HeaderForm>
+                <div className="form-group">
+                    <AccountCircleIcon/>
+                    <input type="text" name="name" placeholder="name" value={user.name} onChange={handleChange} className={'form-control' + (submitted && !user.name ? ' is-invalid' : '')} />
+                    {submitted && !name &&
+                        <div className="invalid-feedback">Name is required</div>
+                    }
+                </div>
+                <div className="form-group">
+                    <EmailIcon/>
+                    <input type="email" name="email" placeholder="email" value={user.email} onChange={handleChange} className={'form-control' + (submitted && !user.email ? ' is-invalid' : '')} />
+                    {submitted && !email &&
+                        <div className="invalid-feedback">Email is required</div>
+                    }
+                </div>
+                <div className="form-group">
+                    <LockIcon/>
+                    <input type="password" name="password" placeholder="password" value={user.password} onChange={handleChange} className={'form-control' + (submitted && !user.password ? ' is-invalid' : '')} />
+                    {submitted && !password &&
+                        <div className="invalid-feedback">Password is required</div>
+                    }
+                </div>
+                <div className="form-group">
+                    <SchoolIcon/>
+                    <SelectUserType name='userType' onChange={handleChange} />
+                </div>
+                <WrapperButtons className="form-group">
+                    <ButtonType className="btn btn-primary">
+                        {submitted && <span className="spinner-border spinner-border-sm mr-1"></span>}
+                        SIGN UP
+                    </ButtonType>
+                </WrapperButtons>
+            </Form>
+            {errorRegister}
+        </div>
     )
 }
