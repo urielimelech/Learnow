@@ -35,10 +35,6 @@ export const MeasureDialog = () => {
 
   return (
     <div>
-        {open ? 
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Open responsive dialog
-      </Button> : null}
       <Dialog
         fullScreen={fullScreen}
         open={open}

@@ -7,6 +7,7 @@ import { WINDOW_WIDTH } from '../../consts'
 import { FlipCard } from './FlipCard'
 import { feedbackStyle } from './FeedbackStyle'
 import { Loading } from '../Loading'
+import { ButtonType } from '../ButtonType/ButtonType'
 
 export const FlipCards = ({sumImprovment = null}) => {
 
@@ -91,7 +92,7 @@ export const FlipCards = ({sumImprovment = null}) => {
             <div style={{justifyContent: 'center', display:'flex', flexWrap: 'wrap'}}>
                 {displayRecommendation? displayRecommendation : cards}
             </div>
-            <Button style ={feedbackStyle.buttonStyle} disabled={disableMore} onClick = {loadMore}> More Load</Button>
+            <Button style ={feedbackStyle.buttonStyle} disabled={disableMore} onClick = {loadMore}> LOAD MORE</Button>
         </div>
             :
             <Loading/>

@@ -12,6 +12,7 @@ import { dbURL, WINDOW_WIDTH } from '../../consts'
 import { TextMessageToastify } from '../TextMessageToastify'
 import { updateStudentForResearch } from '../../Redux/Actions'
 import { SideBar } from './SideBar'
+import { ButtonType } from '../ButtonType/ButtonType'
 
 export const Nav = ({page}) => {
 
@@ -111,7 +112,7 @@ export const Nav = ({page}) => {
                         }
                         {isUserExistsErr}
                     </form>
-                    <Button href='/' onClick={() => logoutUser()}>Logout</Button>
+                    <Button href='/' onClick={() => logoutUser()}>LOGOUT</Button>
                 </ul>
                 {page}
             </nav>

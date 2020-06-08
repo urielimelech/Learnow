@@ -10,9 +10,10 @@ import { ConfigComponent } from './Components/ConfigComponent'
 import { HomePage } from "./Components/HomePage"
 import { ChooseResultUserSessions } from "./Components/ChooseResultUserSessions"
 import { EducationalActivity } from "./Components/EducationalActivity"
+import { StartPage } from "./Components/StartPage/StartPage"
 
 const routes = {
-  "/": () =>  <Login/>,
+  "/": () =>  <StartPage/>,
   "/Home": () => <VerifyTokenJwt children={<HomePage/>} />,
   "/Session": () => <VerifyTokenJwt children={<StartSessionComponent/>} />,
   "/Results": () => <VerifyTokenJwt children={<Results/>} />,
@@ -20,7 +21,6 @@ const routes = {
   "/EffetiveRecommendations" : () => <VerifyTokenJwt children={<SessionsComparator/>} />,
   "/History" : () => <VerifyTokenJwt children={<ChooseResultUserSessions/>} />,
   "/Configuration": () => <VerifyTokenJwt children={<ConfigComponent/>} />,
-  "/Register" : () => <Register/>,
   "/EducationalActivity" : () => <VerifyTokenJwt children={<EducationalActivity/>} />
 }
 
