@@ -35,7 +35,7 @@ justify-content: space-between;
 `
 
 export const StyledSideBar = styled.div`
-background-color: #373a47;
+background-color: #4b545c;
 position: absolute;
 left: ${props => props.isDisplay ? 0 : -240}px;
 width: 300px;
