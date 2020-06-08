@@ -3,7 +3,7 @@ import { socketToWebServer } from '../../SocketIoClient'
 import { useSelector, useDispatch } from 'react-redux'
 import { SessionsList } from './SessionsList'
 import { Loading } from '../Loading'
-import { getLastSessionData } from '../../Redux/Actions'
+import { getLastSessionData, updateFitContent } from '../../Redux/Actions'
 import { navigate } from 'hookrouter'
 
 export const ChooseResultUserSessions = () => {
@@ -22,6 +22,7 @@ export const ChooseResultUserSessions = () => {
             socketToWebServer.emit('get all user sessions', studentForResearch.email)
         socketToWebServer.on('all user sessions', sessions => {
             setUserSessions(sessions)
+            _dispatch(updateFitContent(true))
         })
         return () => {
             socketToWebServer.off('all user sessions')
@@ -33,5 +34,8 @@ export const ChooseResultUserSessions = () => {
         navigate('/Results')
     }
 
-    return userSessions ? <SessionsList userSessions={userSessions} onSelect={onSelectSession}/> : <Loading/>
+    return userSessions ? 
+            <SessionsList userSessions={userSessions} onSelect={onSelectSession}/> 
+        : 
+            <Loading/>
 }

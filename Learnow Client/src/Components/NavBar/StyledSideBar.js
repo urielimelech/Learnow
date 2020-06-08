@@ -11,7 +11,7 @@ justify-content: flex-start;
 width: 100%;
 transition: 1s;
 align-items: flex-end;
-height: ${WINDOW_HEIGHT}px;
+height: 100%;
 `
 
 export const SideBarButtonsContainer = styled.div`
@@ -40,7 +40,7 @@ position: absolute;
 left: ${props => props.isDisplay ? 0 : -240}px;
 width: 300px;
 transition: 1s;
-height: ${WINDOW_HEIGHT}px;
+height: ${props => props.height > WINDOW_HEIGHT ? props.height : WINDOW_HEIGHT}px;
 z-index: 1;
 `
 

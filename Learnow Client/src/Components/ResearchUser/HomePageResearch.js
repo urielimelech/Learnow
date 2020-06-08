@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { CardComponent } from '../CardComponent'
 import { socketToWebServer } from '../../SocketIoClient'
 import { useDispatch, useSelector } from 'react-redux'
-import { setActivitiesCards, updateStudentForResearch } from '../../Redux/Actions'
+import { setActivitiesCards, updateStudentForResearch, updateFitContent } from '../../Redux/Actions'
 import axios from 'axios'
 import { dbURL } from '../../consts'
 import { StyledCardComponent } from './ResearchUserStyle'
@@ -16,6 +16,7 @@ export const HomePageResearch = ({data}) => {
        axios.get(`${dbURL}/getAllStudents`)
        .then(res => {
             setStudentsData(res.data)
+            _dispatch(updateFitContent(true))
         })
         .catch(err => {
             console.log({err})

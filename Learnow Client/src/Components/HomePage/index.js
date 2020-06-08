@@ -4,7 +4,7 @@ import { ActivitySelection } from './ActivitySelection'
 import { CardComponent } from '../CardComponent'
 import { sessionActivity } from '../SessionActivity'
 import { navigate } from 'hookrouter'
-import { session, chooseActivity } from '../../Redux/Actions/'
+import { session, chooseActivity, updateFitContent } from '../../Redux/Actions/'
 import { HomePageCards, WrapperCards } from './HomePageStyle'
 import { ResearchUser } from '../ResearchUser'
 
@@ -17,8 +17,10 @@ export const HomePage = () => {
     const renderSession =  (sessionActivity) => {
         return sessionActivity.map((element, index) => {
             const startSession = () => {
-                if (chosenActivity === null)
+                if (chosenActivity === null){
                     _dispatch(chooseActivity('None'))
+                    _dispatch(updateFitContent(true))
+                }
                 _dispatch(session(element)) 
                 navigate('/Session')
             }
