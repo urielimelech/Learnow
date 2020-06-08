@@ -13,7 +13,10 @@ import {
   SET_ACTIVITY_CARD,
   CHOOSE_ACTIVITY,
   SESSION_ACTIVITY,
-  STUDENT_FOR_RESEARCH
+  STUDENT_FOR_RESEARCH,
+  WINDOW_WIDTH,
+  WINDOW_HEIGHT,
+  FIT_CONTENT
 } from '../ActionTypes'
 
 const initialState = {
@@ -30,7 +33,10 @@ const initialState = {
   activitiesCards: null,
   chooseActivity: null,
   session: null,
-  studentForResearch: null
+  studentForResearch: null,
+  windowWidth: 0,
+  windowHeight: 0,
+  fitContent: false
 }
 
 export default (state = initialState, action) => {
@@ -110,6 +116,21 @@ export default (state = initialState, action) => {
       return {
         ...state,
         studentForResearch: action.data
+      }
+    case WINDOW_WIDTH:
+      return {
+        ...state,
+        windowWidth: action.data
+      }
+    case WINDOW_HEIGHT:
+      return {
+        ...state,
+        windowHeight: action.data
+      }
+    case FIT_CONTENT:
+      return {
+        ...state,
+        fitContent: action.data
       }
     default:
       return state
