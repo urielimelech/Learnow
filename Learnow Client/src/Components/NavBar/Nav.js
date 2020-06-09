@@ -118,9 +118,13 @@ export const Nav = ({page}) => {
                     </form>
                     :
                     null}
-                    <Button href='/' onClick={() => logoutUser()}>LOGOUT</Button>
+                    <ButtonType onClick={() =>{
+                        logoutUser()
+                        window.location.reload(false)
+                    } 
+                    }>LOGOUT</ButtonType>
                 </ul>
-                {page}
+                   {page} 
             </nav>
         </div>
         :

@@ -7,6 +7,7 @@ import { WrapperQuiz } from './styleQuiz'
 import { socketToWebServer } from '../../SocketIoClient'
 import { isVideoEnded, isConnectedToRoom, getLastSessionData, sessionEnded } from '../../Redux/Actions'
 import { CheckMeasureAvarage } from '../CheckMeasureAvarage'
+import { ButtonType } from '../ButtonType/ButtonType'
 
 export const Quiz = ({sessionQuiz}) => {
 
@@ -41,7 +42,7 @@ export const Quiz = ({sessionQuiz}) => {
     const onCompleteAction = obj => {
         obj.videoUrl = sessionQuiz.videoUrl
         socketToWebServer.emit('end quiz', {data: obj, ip: ip})
-        return <button onClick={turnOffIsVideoEnded}> go and see your Results </button> 
+        return <ButtonType onClick={turnOffIsVideoEnded}> go and see your Results </ButtonType> 
     }
 
     return <WrapperQuiz>

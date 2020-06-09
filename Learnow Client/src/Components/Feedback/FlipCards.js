@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Button } from '@material-ui/core'
 import { navigate } from 'hookrouter'
 import { chooseActivity, updateFitContent } from '../../Redux/Actions'
 import { WINDOW_WIDTH } from '../../consts'
 import { FlipCard } from './FlipCard'
-import { feedbackStyle } from './FeedbackStyle'
 import { Loading } from '../Loading'
 import { ButtonType } from '../ButtonType/ButtonType'
 
@@ -93,7 +91,7 @@ export const FlipCards = ({sumImprovment = null}) => {
             <div style={{justifyContent: 'center', display:'flex', flexWrap: 'wrap'}}>
                 {displayRecommendation? displayRecommendation : cards}
             </div>
-            <Button style ={feedbackStyle.buttonStyle} disabled={disableMore} onClick = {loadMore}> LOAD MORE</Button>
+            <ButtonType disabled={disableMore} onClick = {loadMore}> LOAD MORE</ButtonType>
         </div>
             :
             <Loading/>

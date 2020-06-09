@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react'
-import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
@@ -12,6 +11,7 @@ import CloseIcon from '@material-ui/icons/Close'
 import { navigate } from 'hookrouter'
 import { socketToWebServer } from '../../SocketIoClient'
 import { isConnectedToRoom } from '../../Redux/Actions'
+import { ButtonType } from '../ButtonType/ButtonType'
 
 export const MeasureDialog = () => {
   const [open, setOpen] = useState(false)
@@ -21,9 +21,6 @@ export const MeasureDialog = () => {
 
   const loggedUser = useSelector(state => state.MainReducer.loggedUser)
   const ip = useSelector(state => state.MainReducer.ip)
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
 
   const handleClose = () => {
     setOpen(false);
@@ -51,10 +48,10 @@ export const MeasureDialog = () => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleClose} color="primary">
+          <ButtonType autoFocus onClick={handleClose} color="primary">
             Continue to learn
-          </Button>
-          <Button onClick={() => {
+          </ButtonType>
+          <ButtonType onClick={() => {
                     setOpen(false)
                     socketToWebServer.emit('break session', ({email: loggedUser.userEmail, ip}))
                     _dispatch(isConnectedToRoom(false))
@@ -62,7 +59,7 @@ export const MeasureDialog = () => {
                 }} 
                 color="primary" autoFocus>
             Break from Learning
-          </Button>
+          </ButtonType>
         </DialogActions>
       </Dialog>
     </div>
