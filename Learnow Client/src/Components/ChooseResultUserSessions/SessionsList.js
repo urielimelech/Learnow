@@ -13,12 +13,12 @@ export const SessionsList = ({userSessions, onSelect=null}) => {
     }
 
     const renderSessionsCards = () => {
-        userSessions.sort((a, b) => a.startTimeStamp > b.startTimeStamp ? 1 : -1)
+        userSessions.sort((a, b) => a.startTimeStamp < b.startTimeStamp ? 1 : -1)
         return userSessions.map((session, index) => {
             const date = new Date(session.startTimeStamp)
             const time = getExactTime(date)
             const activity = session.activity
-            const headerText = `Session number ${index + 1}`
+            const headerText = `Session number ${userSessions.length - index}`
             const detailText = 
                 <div>
                     <Typography variant="body2" color="textSecondary" component="p">
