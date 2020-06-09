@@ -5,7 +5,6 @@ import { chooseActivity, updateFitContent } from '../../Redux/Actions'
 import { WINDOW_WIDTH } from '../../consts'
 import { FlipCard } from './FlipCard'
 import { Loading } from '../Loading'
-import { ButtonType } from '../ButtonType/ButtonType'
 
 export const FlipCards = ({sumImprovment = null}) => {
 
@@ -16,6 +15,7 @@ export const FlipCards = ({sumImprovment = null}) => {
     const [displayIndex, setDisplayIndex] = useState(3)
     const [disableMore, setDisableMore] = useState(false)
     const [displayRecommendation, setDisplayRecommendation] = useState([])
+    const [priority, setPriority] = useState([])
 
     const activitiesCards = useSelector(state => state.MainReducer.activitiesCards)
 
@@ -37,6 +37,21 @@ export const FlipCards = ({sumImprovment = null}) => {
             setDisableMore(true)
     },[cards, displayIndex])
 
+    useEffect(() => {
+        if (priority.length > 0) {
+            const card = renderCards(activitiesCards)
+            card.sort((a, b)=> {
+                for (let i = 0; i < priority.length; i++) {
+                    if (priority[i].activity.trim() === a.key)
+                        return -1
+                    else if (priority[i].activity.trim() === b.key)
+                        return 1
+                }
+            })
+            setCards(card)
+        }
+    },[priority])
+
     const definePriorityActivity = () => {
         const priorityActivity = sumImprovment.map(elem => {
             return {activity: elem.activity, sum: elem.low * weights[0] + elem.medium * weights[1] + elem.high * weights[2]}
@@ -44,17 +59,7 @@ export const FlipCards = ({sumImprovment = null}) => {
         priorityActivity.sort((a, b) => {
             return b.sum - a.sum
         })
-
-        const card = renderCards(activitiesCards)
-        card.sort((a, b)=> {
-            for (let i = 0; i < priorityActivity.length; i++) {
-                if (priorityActivity[i].activity === a.key)
-                    return -1
-                else if (priorityActivity[i].activity === b.key)
-                    return 1
-            }
-        })
-        setCards(card)
+        setPriority(priorityActivity)
     }
 
     const imgCard = img => {
@@ -66,21 +71,41 @@ export const FlipCards = ({sumImprovment = null}) => {
             setDisplayIndex(displayIndex+3)
     }
 
+    const checkRibbon = (title) => {
+        for (let i = 0; i < priority.length; i++) {
+            if (priority[i].activity.trim() === title) {
+                switch (i) {
+                    case 0:
+                        return require('../../images/first.png')
+                    case 1:
+                        return require('../../images/second.png')
+                    case 2:
+                        return require('../../images/third.png')
+                    default:
+                        return require('../../images/ribbon.png')
+                }
+            }
+        }
+        return null
+    }
+
     const renderCards = groupCards => {
-        return groupCards.map(e => {
+        return groupCards.map((e, index) => {
             const img = imgCard(e.ImgCard)
+            const ribbon = checkRibbon(e.Title)
             const selectActivity = () => {
                 _dispatch(chooseActivity(e.Title))
                 navigate('/Home')
             }
-            return ( 
-                <FlipCard 
-                    key={e.Title} 
-                    title={e.TitleCard} 
-                    img={img} 
-                    onPressSelect={selectActivity} 
-                    description={e.DescriptionCard} 
+            return (
+                <FlipCard
+                    key={e.Title}
+                    title={e.TitleCard}
+                    img={img}
+                    onPressSelect={selectActivity}
+                    description={e.DescriptionCard}
                     link={e.Link}
+                    ribbon={ribbon}
                 />
             )
         })
@@ -89,9 +114,9 @@ export const FlipCards = ({sumImprovment = null}) => {
     return activitiesCards ? 
         <div style={{width: WINDOW_WIDTH*0.8, textAlign:' center', margin: '0 auto'}}>
             <div style={{justifyContent: 'center', display:'flex', flexWrap: 'wrap'}}>
-                {displayRecommendation? displayRecommendation : cards}
+                {displayRecommendation ? displayRecommendation : <Loading/>}
             </div>
-            <ButtonType disabled={disableMore} onClick = {loadMore}> LOAD MORE</ButtonType>
+            <ButtonType disabled={disableMore} onClick = {loadMore}>LOAD MORE</ButtonType>
         </div>
             :
             <Loading/>

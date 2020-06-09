@@ -75,12 +75,12 @@ export const SessionList = ({userSessions, email, studentConfig}) => {
 
     /** list of session cards components */
     const duoComparation = () => {
-        userSessions.sort((aTimeStamp, bTimeStamp) => Number(bTimeStamp.startTimeStamp) - Number(aTimeStamp.startTimeStamp))
+        userSessions.sort((aTimeStamp, bTimeStamp) => Number(aTimeStamp.startTimeStamp) - Number(bTimeStamp.startTimeStamp))
         return userSessions.map((session, index) => {
             const date = new Date(session.startTimeStamp)
             const dateOfSession = date.toDateString()
             const timeOfSession = getExactTime(date)
-            const headerText = `Session number ${index + 1}`
+            const headerText = `Session number ${userSessions.length - index}`
             const detailText = 
                 <div>
                     <Typography variant="body2" color="textSecondary" component="p">
@@ -109,7 +109,7 @@ export const SessionList = ({userSessions, email, studentConfig}) => {
     }
 
     const quadComparation = () => {
-        userSessions.sort((aTimeStamp, bTimeStamp) => Number(aTimeStamp.startTimeStamp) - Number(bTimeStamp.startTimeStamp) ? 1 : -1)
+        userSessions.sort((aTimeStamp, bTimeStamp) => Number(bTimeStamp.startTimeStamp) - Number(aTimeStamp.startTimeStamp) ? 1 : -1)
         const tempResearcherSessions = userSessions.map((session, index) => {
             const nextSession = userSessions[index + 1]
             if (session.activity != 'None' && nextSession && nextSession.activity === 'None') {
@@ -119,13 +119,14 @@ export const SessionList = ({userSessions, email, studentConfig}) => {
                 return
         })
         const researcherSessions = tempResearcherSessions.filter(elem => elem !== undefined)
+        researcherSessions.sort((aElem, bElem) => aElem[1].startTimeStamp - bElem[1].startTimeStamp ? -1 : 1)
         return researcherSessions.map((session, index) => {
             const date0 = new Date(session[1].startTimeStamp)
             const date1 = new Date(session[0].startTimeStamp)
             const dateOfSession = date0.toDateString()
             const timeOfSession0 = getExactTime(date0)
             const timeOfSession1 = getExactTime(date1)
-            const headerText = `Session number ${index + 1}`
+            const headerText = `Session number ${researcherSessions.length - index}`
             const detailText = 
                 <div>
                     <Typography variant="body2" color="textSecondary" component="p">
@@ -169,19 +170,21 @@ export const SessionList = ({userSessions, email, studentConfig}) => {
     },[compareSession])
 
     return (
-        <StyledSessionListContainer>
-            <ButtonType onClick={() => {
+        <StyledSessionListContainer>          
+            <StyledButtonContainer>
+                <ButtonType onClick={() => {
                     setDisplayDuo(true)
                     resetSelection()
                 }}>
                 Compare between two single sessions
-            </ButtonType>
-            <ButtonType onClick={() => { 
+                </ButtonType>
+                <ButtonType onClick={() => { 
                     setDisplayDuo(false)
                     resetSelection()
                 }}>
                 Compare between four single sessions
-            </ButtonType>
+                </ButtonType>
+              </StyledButtonContainer>
             {displayDuo ? duoComparation() : quadComparation()}
             <StyledButtonContainer>
                 <ButtonType style={{width: '200px'}} onClick={() => displayDuo ? duoCompareSessions() : quadCompareSessions()} disabled={isBtnDisable} className="btn btn-primary">
