@@ -47,16 +47,18 @@ export const FlipCards = ({sumImprovment = null}) => {
             return b.sum - a.sum
         })
 
-        const card = renderCards(activitiesCards)
-        card.sort((a, b)=> {
-            for (let i = 0; i < priorityActivity.length; i++) {
-                if (priorityActivity[i].activity === a.key)
-                    return -1
-                else if (priorityActivity[i].activity === b.key)
-                    return 1
-            }
-        })
-        setCards(card)
+        if (activitiesCards) {
+            const card = renderCards(activitiesCards)
+            card.sort((a, b)=> {
+                for (let i = 0; i < priorityActivity.length; i++) {
+                    if (priorityActivity[i].activity === a.key)
+                        return -1
+                    else if (priorityActivity[i].activity === b.key)
+                        return 1
+                }
+            })
+            setCards(card)
+        }
     }
 
     const imgCard = img => {
@@ -93,7 +95,7 @@ export const FlipCards = ({sumImprovment = null}) => {
             <div style={{justifyContent: 'center', display:'flex', flexWrap: 'wrap'}}>
                 {displayRecommendation? displayRecommendation : cards}
             </div>
-            <Button style ={feedbackStyle.buttonStyle} disabled={disableMore} onClick = {loadMore}> LOAD MORE</Button>
+            <Button style ={feedbackStyle.buttonStyle} disabled={disableMore} onClick = {loadMore}>LOAD MORE</Button>
         </div>
             :
             <Loading/>
