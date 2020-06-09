@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import {Typography} from '@material-ui/core'
-import { Button } from 'react-bootstrap'
 
 export const ConfigSliderWrapper = styled.div`
 border: 1px solid #373A47;
@@ -23,9 +22,4 @@ display: flex;
 flex-diirection: row; 
 flex-wrap: wrap;
 width: 950px;
-`
-
-export const ButtonConfig = styled(Button)`
-margin:0 auto;
-width: '150px';
 `

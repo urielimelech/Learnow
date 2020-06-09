@@ -58,7 +58,7 @@ export const Login = () => {
     }
 
     return (
-        <div className="col-lg-8 offset-lg-2" > 
+        <div className="col-lg-8 offset-lg-2"> 
             <form name="form" onSubmit={handleSubmit}>
                 <HeaderForm>
                     <Logo src={require('../../images/learnowIcon.png')}></Logo>
