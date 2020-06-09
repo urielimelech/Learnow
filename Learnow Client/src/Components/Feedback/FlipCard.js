@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
 import ReactCardFlip from 'react-card-flip'
-import { Button } from '@material-ui/core'
-import { feedbackStyle, StyledCardFeedback, StyledImg, StyledFlipImg } from './FeedbackStyle'
+import { feedbackStyle, StyledCardFeedback, StyledImg, StyledFlipImg, StyledTitleFlipCard } from './FeedbackStyle'
 import { ButtonType } from '../ButtonType/ButtonType'
 
-export const FlipCard = ({title=null, img=null, onPressSelect=null, description=null, link=null}) => {
+export const FlipCard = ({title=null, img=null, onPressSelect=null, description=null, link=null, ribbon=null}) => {
     
     const [isFlipped, setIsFlipped] = useState(false)
 
@@ -16,7 +15,10 @@ export const FlipCard = ({title=null, img=null, onPressSelect=null, description=
     return (
         <ReactCardFlip isFlipped={isFlipped} flipDirection="vertical" style={{justifyContent: 'center'}}>
             <StyledCardFeedback onClick={handleClick}>
-                <h3>{title}</h3>
+                <StyledTitleFlipCard>
+                    <h4>{title}</h4>
+                    {ribbon ? <StyledImg height={75} width={75} src={ribbon}/> : null}
+                </StyledTitleFlipCard>
                 <StyledImg src={img}/>
                 <ButtonType onClick={onPressSelect} style={feedbackStyle.buttonStyle}>select</ButtonType>
             </StyledCardFeedback>   

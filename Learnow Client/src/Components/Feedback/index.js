@@ -120,8 +120,8 @@ export const Feedback = () => {
     return sumImprovment.length > 0 ? 
         <FlipCards sumImprovment={sumImprovment}/> 
         : 
-        howHelpfull.length === 0 ? 
-            <FlipCards/> 
+        howHelpfull.length === 0 ?
+            <FlipCards/>
             : 
             <Loading/>
 }
