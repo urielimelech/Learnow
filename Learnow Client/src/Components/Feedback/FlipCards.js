@@ -5,6 +5,7 @@ import { chooseActivity, updateFitContent } from '../../Redux/Actions'
 import { WINDOW_WIDTH } from '../../consts'
 import { FlipCard } from './FlipCard'
 import { Loading } from '../Loading'
+import { ButtonType } from '../ButtonType/ButtonType'
 
 export const FlipCards = ({sumImprovment = null}) => {
 

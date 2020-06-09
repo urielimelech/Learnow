@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import ReactCardFlip from 'react-card-flip'
-import { StyledCardFeedback, StyledImg, StyledFlipImg } from './FeedbackStyle'
+import { StyledCardFeedback, StyledImg, StyledFlipImg, StyledTitleFlipCard } from './FeedbackStyle'
 import { ButtonType } from '../ButtonType/ButtonType'
 
 export const FlipCard = ({title=null, img=null, onPressSelect=null, description=null, link=null, ribbon=null}) => {
