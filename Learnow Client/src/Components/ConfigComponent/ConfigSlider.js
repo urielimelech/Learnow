@@ -6,6 +6,7 @@ import { socketToWebServer } from '../../SocketIoClient'
 import { ConfigSliderWrapper, TextConfig, WrapperConfig, ButtonConfig } from './ConfigSliderStyle'
 import { useDispatch } from 'react-redux'
 import { updateFitContent } from '../../Redux/Actions'
+import {ButtonType} from '../ButtonType/ButtonType'
 
 export const ConfigSlider = ({studentData, configObject, configKeys, configValues}) => {
 
@@ -81,7 +82,7 @@ export const ConfigSlider = ({studentData, configObject, configKeys, configValue
     return (
         <WrapperConfig>
             {renderSliders}
-            <ButtonConfig onClick={saveConfiguration}>Save</ButtonConfig>
+            <ButtonType style={{margin:'0 auto', width: '150px'}} onClick={saveConfiguration}>SAVE</ButtonType>
         </WrapperConfig>
     )
 }

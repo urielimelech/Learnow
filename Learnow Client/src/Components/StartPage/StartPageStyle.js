@@ -1,8 +1,16 @@
 import styled from 'styled-components'
 
-export const WrapperMainPage = styled.div`
+export const WrapperStartPage = styled.div`
 display: flex;
 align-items: center;
+// background-color: #caf2e7;
+background: linear-gradient(to bottom, #ffffff, #a9e4f7);
+height: ${props => props.height ? props.height + 'px' : '100%'};
+`
+
+export const LogoStartPage = styled.img`
+align-self: flex-start;
+padding: 10px;
 `
 
 export const WrapperContent = styled.div`

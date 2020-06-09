@@ -44,7 +44,6 @@ export const HomePageResearch = ({data}) => {
         })
     }
 
-
     const renderResearcherComponentsCards = () => {
         return studentsData.map((elem, index) => {
 
@@ -57,7 +56,7 @@ export const HomePageResearch = ({data}) => {
     )}
 
     return (
-        <div>
+        <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', paddingTop: 20}}>
             {renderResearcherComponentsCards()}
         </div>
     )

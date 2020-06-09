@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { ResultCharts } from './ResultCharts'
-import { RadioChooseCharts } from '../RadioChooseCharts';
+import { RadioChooseCharts } from '../RadioChooseCharts'
 import { StyledResultComponent } from './ResultSessionStyle'
 import { Correlation } from './Correlation'
-import { Button } from '@material-ui/core'
 import { navigate } from 'hookrouter'
 import { useSelector, useDispatch } from 'react-redux'
-import { updateFitContent } from '../../Redux/Actions';
+import { updateFitContent } from '../../Redux/Actions'
+import { ButtonType } from '../ButtonType/ButtonType'
 
 export const Results = () => {
 
@@ -42,18 +42,22 @@ export const Results = () => {
             {charts.length > 0 ? optionChart ? optionChart : null : null}
             {charts.length > 0 ? charts[displayChart] : <ResultCharts getFullArr={getSessionCharts}/>}
             <Correlation/>
-            <Button onClick={() => navigate('/Home')}>
+            {charts.length > 0 ?
+            <div>
+                <ButtonType onClick={() => navigate('/Home')}>
                 Go Back Home
-            </Button>
-            {loggedUser.email === 'student' ? 
-                <Button onClick={() => navigate('/Recommendations')}>
-                    Continue To Recommendations For Activity
-                </Button>
-                :
-                <Button onClick={() => navigate('/EducationalActivity')}>
-                    Check Learning Activity
-                </Button>
-            }   
+                </ButtonType>
+                {loggedUser.email === 'student' ? 
+                    <ButtonType onClick={() => navigate('/Recommendations')}>
+                        Continue To Recommendations For Activity
+                    </ButtonType>
+                    :
+                    <ButtonType onClick={() => navigate('/EducationalActivity')}>
+                        Check Learning Activity
+                    </ButtonType>}
+            </div>
+            : 
+            null }  
         </StyledResultComponent>
     )
 }

@@ -34,8 +34,10 @@ export const ChooseResultUserSessions = () => {
         navigate('/Results')
     }
 
-    return userSessions ? 
-            <SessionsList userSessions={userSessions} onSelect={onSelectSession}/> 
+    return userSessions ?
+    <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', paddingTop: 20}}>
+         <SessionsList userSessions={userSessions} onSelect={onSelectSession}/>
+    </div> 
         : 
             <Loading/>
 }

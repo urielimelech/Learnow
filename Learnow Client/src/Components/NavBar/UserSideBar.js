@@ -69,7 +69,7 @@ export const UserSideBar = () => {
                             <HistoryIcon style={iconColor} fontSize='large'/>
                         </StyledSideBarButton>
                         <StyledSideBarButton style={{color: '#dddddd', justifyContent: 'space-between'}} onClick={() => navigate('/Configuration')}>
-                            User Configuration
+                            User Settings
                             <SettingsIcon style={iconColor} fontSize='large'/>
                         </StyledSideBarButton>
                     </SideBarButtonsContainer>

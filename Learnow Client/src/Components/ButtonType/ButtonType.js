@@ -1,36 +1,25 @@
 import React from 'react'
-import { Button } from '@material-ui/core'
+import './font.css'
 
-export const ButtonType = ({children, style, onClick, type, ...props}) => {
-        return type === 'Button' ?
-        <Button 
-                style={
-                        {...style, 
-                        border: '2px solid #35C2C0',
-                        outline: 0, 
-                        borderRadius: 5, 
-                        background: 'linear-gradient(to right, #0ce9ed, #35C2C0)', 
-                        minWidth: 100, 
-                        minHeight: 40
-                }} 
-                onClick={onClick}
-                type={type}
-                >
-                        {children}
-        </Button> 
-        :
-        <button 
+export const ButtonType = ({children, style, onClick, ...props}) => {
+        const disabled = props.disabled
+        return <button 
         style={
                 {...style, 
                 border: '2px solid #35C2C0',
                 outline: 0, 
-                borderRadius: 5, 
+                borderRadius: 30, 
                 background: 'linear-gradient(to right, #0ce9ed, #35C2C0)', 
                 minWidth: 100, 
-                minHeight: 40
+                minHeight: 40,
+                color: '#ffffff',
+                fontFamily: 'Rubik',
+                fontSize: '14px',
+                fontWeight: 700,
+                padding: 10,
+                opacity: disabled ? 0.5: 1
         }} 
         onClick={onClick}
-        type={type}
         >
                 {children}
         </button>

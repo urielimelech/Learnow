@@ -1,18 +1,9 @@
 import styled from 'styled-components'
 
-export const feedbackStyle = {
-    buttonStyle : {
-        width: '50px',
-        marginBottom:'10px',
-        backgroundColor: '#39C0BA',
-        color: '#ffffff',
-    }
-}
-
 export const StyledCardFeedback = styled.div`
-background-color: #8DD4D2;
+background-color: #a9e4f7;
 border-radius: 10px;
-border: 2px solid #4CC6C4;
+border: 2px solid #a9e4f7;
 height: 300px;
 width: 320px;
 margin: 20px;
