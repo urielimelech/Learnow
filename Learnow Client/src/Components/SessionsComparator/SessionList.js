@@ -7,6 +7,7 @@ import { socketToWebServer } from '../../SocketIoClient'
 import { CardComponent } from '../CardComponent'
 import { resetStyleList } from '../../Redux/Actions'
 import { StyledSessionListContainer, StyledCardComponent, StyledButtonContainer } from './SessionListStyle'
+import { ButtonType } from '../ButtonType/ButtonType'
 
 export const SessionList = ({userSessions, email, studentConfig}) => {
 
@@ -52,17 +53,17 @@ export const SessionList = ({userSessions, email, studentConfig}) => {
 
     /** send to web server the sessions needed to compare */
     const duoCompareSessions = () => {
-        socketToWebServer.emit('compare sessions', {sessionData: compareSession[1], secondSession: compareSession[0], studentConfig: studentConfig})
-        setCompareSession([])
-        _dispatch(resetStyleList(!resetStyle))
+        if (!isBtnDisable) {
+            socketToWebServer.emit('compare sessions', {sessionData: compareSession[1], secondSession: compareSession[0], studentConfig: studentConfig})
+        }
     }
 
     const quadCompareSessions = () => {
-        socketToWebServer.emit('compare sessions', {sessionData: compareSession[0][0], secondSession: compareSession[0][1], studentConfig: studentConfig})
-        socketToWebServer.emit('compare sessions', {sessionData: compareSession[1][0], secondSession: compareSession[1][1], studentConfig: studentConfig})
-        socketToWebServer.emit('compare sessions', {sessionData: compareSession[1][0], secondSession: compareSession[0][0], studentConfig: studentConfig})
-        setCompareSession([])
-        _dispatch(resetStyleList(!resetStyle))
+        if (!isBtnDisable){
+            socketToWebServer.emit('compare sessions', {sessionData: compareSession[0][0], secondSession: compareSession[0][1], studentConfig: studentConfig})
+            socketToWebServer.emit('compare sessions', {sessionData: compareSession[1][0], secondSession: compareSession[1][1], studentConfig: studentConfig})
+            socketToWebServer.emit('compare sessions', {sessionData: compareSession[1][0], secondSession: compareSession[0][0], studentConfig: studentConfig})
+        }
     }
 
     const getExactTime = date => {
@@ -155,6 +156,11 @@ export const SessionList = ({userSessions, email, studentConfig}) => {
         })
     }
 
+    const resetSelection = () => {
+        setCompareSession([])
+        _dispatch(resetStyleList(!resetStyle))
+    }
+
     useEffect(() => {
         if (compareSession.length === 2)
             setIsBtnDisable(false)
@@ -164,17 +170,23 @@ export const SessionList = ({userSessions, email, studentConfig}) => {
 
     return (
         <StyledSessionListContainer>
-            <Button onClick={() => setDisplayDuo(true)}>
+            <ButtonType onClick={() => {
+                    setDisplayDuo(true)
+                    resetSelection()
+                }}>
                 Compare between two single sessions
-            </Button>
-            <Button onClick={() => setDisplayDuo(false)}>
+            </ButtonType>
+            <ButtonType onClick={() => { 
+                    setDisplayDuo(false)
+                    resetSelection()
+                }}>
                 Compare between four single sessions
-            </Button>
+            </ButtonType>
             {displayDuo ? duoComparation() : quadComparation()}
             <StyledButtonContainer>
-                <button style={{width: '300px'}} onClick={() => displayDuo ? duoCompareSessions() : quadCompareSessions()} disabled={isBtnDisable} className="btn btn-primary">
-                    Compare Now
-                </button>
+                <ButtonType style={{width: '200px'}} onClick={() => displayDuo ? duoCompareSessions() : quadCompareSessions()} disabled={isBtnDisable} className="btn btn-primary">
+                    COMPARE NOW!
+                </ButtonType>
             </StyledButtonContainer>
         </StyledSessionListContainer>
     )

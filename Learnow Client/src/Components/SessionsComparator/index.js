@@ -5,13 +5,14 @@ import { socketToWebServer } from '../../SocketIoClient'
 import { SessionList } from './SessionList'
 import { ComparisonComponent } from './ComparisonComponent'
 import { updateFitContent } from '../../Redux/Actions'
+import { Loading } from '../Loading'
 
 export const SessionsComparator = () => {
 
     const studentForResearch = useSelector(state => state.MainReducer.studentForResearch)
 
     const [comparisonResult, setComparisonResult] = useState([])
-    const [sessionsList, setSessionsList] = useState([])
+    const [sessionsList, setSessionsList] = useState(null)
 
     const _dispatch = useDispatch()
 
@@ -39,7 +40,7 @@ export const SessionsComparator = () => {
                 comparisonResult.length === 3 ? 
                     <ComparisonComponent comparisonResult={comparisonResult}/>
                     :
-                    sessionsList
+                    sessionsList ? sessionsList : <Loading/>
             :
-            sessionsList
+            sessionsList ? sessionsList : <Loading/>
 }
