@@ -19,7 +19,7 @@ margin-top: 50px;
 `
 
 export const WrapperImg = styled.div`
-margin-top: 150px;
+margin-top: 80px;
 padding-right: 50px;
 `
 

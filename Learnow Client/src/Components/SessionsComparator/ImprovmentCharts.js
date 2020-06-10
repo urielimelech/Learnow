@@ -28,7 +28,7 @@ export const improvmentCharts = ({comparisonResult}) => {
                 key={index}
                 improve={[elem.activity[0], elem.activity[1]]}
                 width={'90%'}
-                height={'18rem'}
+                height={'30rem'}
                 chartType="ColumnChart"
                 loader={<div>Loading Chart</div>}
                 data={data}
