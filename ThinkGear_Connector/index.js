@@ -1,3 +1,3 @@
-import { startLearnow } from './modules/ProxyServer/index.js'
+import { startLearnow } from './modules/ProxyConnector/index.js'
 
 startLearnow()
