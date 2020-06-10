@@ -1,5 +1,5 @@
 import React from 'react'
-import './font.css'
+import '../TextType/font.css'
 
 export const ButtonType = ({children, style, onClick, ...props}) => {
         const disabled = props.disabled

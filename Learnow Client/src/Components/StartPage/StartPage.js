@@ -6,6 +6,7 @@ import { useCookies } from 'react-cookie'
 import { useSelector, useDispatch } from 'react-redux'
 import { navigate } from 'hookrouter'
 import { login, logout } from '../../Redux/Actions'
+import { TextType } from '../TextType/TextType'
 
 export const StartPage = () => {
 
@@ -53,10 +54,10 @@ export const StartPage = () => {
     return <WrapperStartPage height={windowHeight}>
         <LogoStartPage src={require('../../images/learnow-icon.png')}/>
         <WrapperContent>
-            <Title> A biofeedback system to improve the learning process </Title>
-            <Description> Welcome to learnow, A system that monitor and measures the attention and the meditation level, analyzes the metrics
+            <TextType header= {40} style={{fontWeight: 'bold', color: '#393842'}}> A biofeedback system to improve the learning process </TextType>
+            <TextType content ={20} style={{marginTop: '20px', color: '#393842'}}> Welcome to learnow, A system that monitor and measures the attention and the meditation level, analyzes the metrics
                 and recommends activities that can improve the level of attention and meditation to acheive an improved learning process
-            </Description>
+            </TextType>
             <ButtonType
             style={{marginTop: '60px', right: 5}}
             onClick={openModal}

@@ -8,6 +8,7 @@ import { CardComponent } from '../CardComponent'
 import { resetStyleList } from '../../Redux/Actions'
 import { StyledSessionListContainer, StyledCardComponent, StyledButtonContainer } from './SessionListStyle'
 import { ButtonType } from '../ButtonType/ButtonType'
+import { TextType } from '../TextType/TextType'
 
 export const SessionList = ({userSessions, email, studentConfig}) => {
 
@@ -83,15 +84,15 @@ export const SessionList = ({userSessions, email, studentConfig}) => {
             const headerText = `Session number ${userSessions.length - index}`
             const detailText = 
                 <div>
-                    <Typography variant="body2" color="textSecondary" component="p">
+                    <TextType>
                         Date Of Session: {dateOfSession}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
+                    </TextType>
+                    <TextType>
                         Time Of Session: {timeOfSession}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
+                    </TextType>
+                    <TextType>
                         Activity: {session.activity}
-                    </Typography>
+                    </TextType>
                 </div>
             const ButtonText = 'Select Session'
             const OnClickButton = () => {
@@ -129,18 +130,18 @@ export const SessionList = ({userSessions, email, studentConfig}) => {
             const headerText = `Session number ${researcherSessions.length - index}`
             const detailText = 
                 <div>
-                    <Typography variant="body2" color="textSecondary" component="p">
+                    <TextType>
                         Date Of Session: {dateOfSession}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
+                    </TextType>
+                    <TextType>
                         Time Of First Session: {timeOfSession0}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
+                    </TextType>
+                    <TextType>
                         Time Of Second Session: {timeOfSession1}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
+                    </TextType>
+                    <TextType>
                         Activity: {session[0].activity}
-                    </Typography>
+                    </TextType>
                 </div>
             const ButtonText = 'Select Session'
             const OnClickButton = () => {

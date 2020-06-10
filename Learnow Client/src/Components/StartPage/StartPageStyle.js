@@ -27,13 +27,3 @@ export const Img = styled.img`
 width: 600px;
 color: blue;
 `
-
-export const Title =  styled.div`
-font-size: 40px;
-font-weight :bold;
-`
-
-export const Description =  styled.div`
-font-size: 20px;
-margin-top: 20px;
-`

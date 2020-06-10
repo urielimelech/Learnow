@@ -7,6 +7,7 @@ import { ConfigSliderWrapper, TextConfig, WrapperConfig, ButtonConfig } from './
 import { useDispatch } from 'react-redux'
 import { updateFitContent } from '../../Redux/Actions'
 import {ButtonType} from '../ButtonType/ButtonType'
+import {TextType} from '../TextType/TextType'
 
 export const ConfigSlider = ({studentData, configObject, configKeys, configValues}) => {
 
@@ -41,9 +42,9 @@ export const ConfigSlider = ({studentData, configObject, configKeys, configValue
             }
             return (
                 <ConfigSliderWrapper key={key}>
-                    <TextConfig  gutterBottom>
+                    <TextType style={{textAlign: 'center', padding: 5}}>
                         {key.split('_').join(' ')}
-                    </TextConfig>
+                    </TextType>
                     <SliderComponent
                         startValue={configValues[index]}
                         step={params.steps}
