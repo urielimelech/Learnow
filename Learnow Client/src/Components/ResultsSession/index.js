@@ -44,9 +44,6 @@ export const Results = () => {
             <Correlation/>
             {charts.length > 0 ?
             <div>
-                <ButtonType onClick={() => navigate('/Home')}>
-                Go Back Home
-                </ButtonType>
                 {loggedUser.email === 'student' ? 
                     <ButtonType onClick={() => navigate('/Recommendations')}>
                         Continue To Recommendations For Activity

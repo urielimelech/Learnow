@@ -28,10 +28,8 @@ height: 60px;
 `
 
 export const StyledSideBarButton = styled(StyledLogoButton)`
-color: #dddddd;
 width: 100%;
 display: flex;
-justify-content: space-between;
 `
 
 export const StyledSideBar = styled.div`

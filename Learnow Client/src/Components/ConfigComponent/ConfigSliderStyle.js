@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import {Typography} from '@material-ui/core'
 
 export const ConfigSliderWrapper = styled.div`
 border: 1px solid #373A47;
@@ -8,10 +7,6 @@ padding-right: 30px;
 padding-left: 40px;
 width:400px;
 border-radius: 5px;
-`
-
-export const TextConfig = styled(Typography)`
-text-align: center
 `
 
 export const WrapperConfig = styled.div`
