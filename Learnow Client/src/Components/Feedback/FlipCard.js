@@ -23,7 +23,10 @@ export const FlipCard = ({title=null, img=null, onPressSelect=null, description=
                 <ButtonType onClick={onPressSelect}>select</ButtonType>
             </StyledCardFeedback>   
             <StyledCardFeedback onClick={handleClick}>
-                <StyledFlipImg src={img}/>
+                <StyledTitleFlipCard>
+                    <StyledFlipImg src={img}/>
+                    {ribbon ? <StyledImg height={75} width={75} src={ribbon}/> : null}
+                </StyledTitleFlipCard>
                 <div>{[description, ' ', link]}</div>
                 <ButtonType onClick={onPressSelect}>select</ButtonType>
             </StyledCardFeedback>
