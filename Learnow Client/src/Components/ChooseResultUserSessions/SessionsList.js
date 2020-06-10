@@ -2,6 +2,7 @@ import React from 'react'
 import { CardComponent } from '../CardComponent'
 import { Typography } from '@material-ui/core'
 import { StyledCardComponent } from '../SessionsComparator/SessionListStyle'
+import { TextType } from '../TextType/TextType'
 
 export const SessionsList = ({userSessions, onSelect=null}) => {
 
@@ -21,15 +22,15 @@ export const SessionsList = ({userSessions, onSelect=null}) => {
             const headerText = `Session number ${userSessions.length - index}`
             const detailText = 
                 <div>
-                    <Typography variant="body2" color="textSecondary" component="p">
+                    <TextType>
                         Date Of Session: {date.toDateString()}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
+                    </TextType>
+                    <TextType>
                         Start Time Of Session: {time}
-                    </Typography>
-                    <Typography variant="body2" color="textSecondary" component="p">
+                    </TextType>
+                    <TextType>
                         Activity: {activity}
-                    </Typography>
+                    </TextType>
                 </div>
             const ButtonText = 'Select Session'
             const onClickButton = () => {

@@ -1,11 +1,11 @@
 import React from 'react'
 import CardContent from '@material-ui/core/CardContent'
-import Typography from '@material-ui/core/Typography'
+import { TextType } from '../TextType/TextType'
 
 export const ExpandedContent = ({expandedText}) => {
     const renderContent = () => {
         return expandedText.map((element, index) => {
-            return <Typography key={index} paragraph>{element}</Typography>
+            return <TextType key={index} paragraph>{element}</TextType>
         })
     }
 

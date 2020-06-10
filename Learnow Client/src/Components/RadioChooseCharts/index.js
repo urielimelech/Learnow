@@ -1,5 +1,5 @@
 import React from 'react'
-import { FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from '@material-ui/core'
+import { FormControl, RadioGroup, FormControlLabel, Radio } from '@material-ui/core'
 
 export const RadioChooseCharts = ({chart, onRadioChange, label}) => {
 
@@ -23,7 +23,6 @@ export const RadioChooseCharts = ({chart, onRadioChange, label}) => {
 
     return (
         <FormControl component='fieldset'>
-            <FormLabel component='legend'>Choose chart to display</FormLabel>
             <RadioGroup row aria-label='position' name='position' onChange={handleRadioChange}>
                 {chartsChooseButtons}
             </RadioGroup>

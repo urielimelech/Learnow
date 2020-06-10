@@ -1,6 +1,6 @@
 export const StyledCardComponent = {
     Card: {
-        width: 300,
+        width: 350,
         marginRight: 30,
         marginBottom: 30,
         height: 150,
@@ -15,6 +15,7 @@ export const StyledCardComponent = {
     CardImgStyle : {
         height: 100,
         width:100,
-        objectFit: 'contain'
+        objectFit: 'contain',
+        padding: 5
     }
 }

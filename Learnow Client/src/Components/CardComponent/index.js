@@ -4,13 +4,12 @@ import CardActionArea from '@material-ui/core/CardActionArea'
 import CardActions from '@material-ui/core/CardActions'
 import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
-import Typography from '@material-ui/core/Typography'
 import Collapse from '@material-ui/core/Collapse'
-
 import { ExpandButton } from './ExpandButton'
 import { ExpandedContent } from './ExpandedContent'
 import { StyledCard } from './StyledCard'
 import { ButtonType } from '../ButtonType/ButtonType'
+import { TextType } from '../TextType/TextType'
 
 export const CardComponent = ({headerText, detailText=null, isAbleToExpand=false, expandedText=null, buttonText=null, onClickButton=null, img=null, style=null, onClickCard=null}) => {
     
@@ -44,12 +43,12 @@ export const CardComponent = ({headerText, detailText=null, isAbleToExpand=false
             border={isPressed ? '2px solid #a9e4f7' : null}
             backgroundcolor={isPressed ? '#a9e4f7' : null}
         >
-            <CardActionArea  style={{ display: 'flex', flexDirection: 'row'}} /*style = {style ? style.CardStyle : null}*/>
+            <CardActionArea  style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', width: '100%'}} /*style = {style ? style.CardStyle : null}*/>
                 {img ? 
                     <CardMedia style = {style ? style.CardImgStyle : null}
                         image={img}
                         component = "img"
-                        title="Contemplative Reptile"
+                        title="student user"
                     />
                     : 
                     null
@@ -58,14 +57,14 @@ export const CardComponent = ({headerText, detailText=null, isAbleToExpand=false
                     null 
                 :  
                     <CardContent style={style ? style.CardContent : null}>
-                        <Typography gutterBottom variant="h5" component="h2">
+                        <TextType header={20}>
                             {headerText}
-                        </Typography>
+                        </TextType>
                         {
                             detailText ? 
-                                <Typography variant="body2" color="textSecondary" component="div">
+                                <TextType>
                                     {detailText}
-                                </Typography> 
+                                </TextType> 
                             :
                                 null
                         }

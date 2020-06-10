@@ -8,6 +8,7 @@ import HistoryIcon from '@material-ui/icons/History'
 import StarsIcon from '@material-ui/icons/Stars'
 import BallotIcon from '@material-ui/icons/Ballot'
 import SettingsIcon from '@material-ui/icons/Settings'
+import { TextType } from '../TextType/TextType'
 
 export const UserSideBar = () => {
 
@@ -23,9 +24,16 @@ export const UserSideBar = () => {
             {loggedUser.userType ? 
                 <StyledLogoButton style={{height: '10rem', width: '10rem', display: 'flex', alignSelf: 'center', marginTop: '2rem'}} onClick={() => navigate('/Home')}>
                     {loggedUser.userType === 'student' ? 
+                    <div>
                         <img style={{width: '10rem', height: '10rem'}} src={require('../../images/student_img.png')}/>
+                        <TextType style={{color: '#ffffff', width: 280, padding: 7}}> Welcome {loggedUser.name}</TextType>
+                    </div> 
                     :
+                    <div>
                         <img style={{width: '10rem', height: '10rem'}} src={require('../../images/human-resources.png')}/>
+                        <TextType style={{color: '#ffffff', width: 280, padding: 7}}> Welcome {loggedUser.name}</TextType>
+                    </div>
+                        
                     }
                 </StyledLogoButton> 
             : 
@@ -33,15 +41,15 @@ export const UserSideBar = () => {
             {loggedUser.userType === 'student' ? 
                 <SideBarButtonsContainer isUserConnected={loggedUser.userType ? true : false}>
                     <StyledSideBarButton style={{color: '#dddddd', justifyContent: 'space-between'}} onClick={() => navigate('/Results')}>
-                        Session Results
+                        <TextType>Session Results</TextType>
                         <TrendingUpIcon style={iconColor} fontSize='large'/>
                     </StyledSideBarButton>
                     <StyledSideBarButton style={{color: '#dddddd', justifyContent: 'space-between'}} onClick={() => navigate('/Recommendations')}>
-                        Effective Recommendations
+                        <TextType>Effective Recommendations</TextType>
                         <EventNoteIcon style={iconColor} fontSize='large'/>
                     </StyledSideBarButton>
                     <StyledSideBarButton style={{color: '#dddddd', justifyContent: 'space-between'}} onClick={() => navigate('/History')}>
-                        Sessions History
+                        <TextType>Sessions History</TextType>
                         <HistoryIcon style={iconColor} fontSize='large'/>
                     </StyledSideBarButton>
                 </SideBarButtonsContainer>
@@ -49,27 +57,27 @@ export const UserSideBar = () => {
                 loggedUser.userType === 'researcher' ?
                     <SideBarButtonsContainer isUserConnected={loggedUser.userType ? true : false}>
                         <StyledSideBarButton style={{color: '#dddddd', justifyContent: 'space-between'}} onClick={() => navigate('/Results')}>
-                            Session Results
+                            <TextType>Session Results</TextType>
                             <TrendingUpIcon style={iconColor} fontSize='large'/>
                         </StyledSideBarButton>
                         <StyledSideBarButton style={{color: '#dddddd', justifyContent: 'space-between'}} onClick={() => navigate('/Recommendations')}>
-                            Recommendations
+                            <TextType>Recommendations</TextType>
                             <EventNoteIcon style={iconColor} fontSize='large'/>
                         </StyledSideBarButton>
                         <StyledSideBarButton style={{color: '#dddddd', justifyContent: 'space-between'}} onClick={() => navigate('/EffetiveRecommendations')}>
-                            Effective Recommendations
+                            <TextType>Effective Recommendations</TextType>
                             <StarsIcon style={iconColor} fontSize='large'/>
                         </StyledSideBarButton>
                         <StyledSideBarButton style={{color: '#dddddd', justifyContent: 'space-between'}} onClick={() => navigate('/EducationalActivity')}>
-                            Session Educational Activity
+                            <TextType>Session Educational Activity</TextType>
                             <BallotIcon style={iconColor} fontSize='large'/>
                         </StyledSideBarButton>
                         <StyledSideBarButton style={{color: '#dddddd', justifyContent: 'space-between'}} onClick={() => navigate('/History')}>
-                            Sessions History
+                            <TextType>Sessions History</TextType>
                             <HistoryIcon style={iconColor} fontSize='large'/>
                         </StyledSideBarButton>
                         <StyledSideBarButton style={{color: '#dddddd', justifyContent: 'space-between'}} onClick={() => navigate('/Configuration')}>
-                            User Settings
+                            <TextType>User Settings</TextType>
                             <SettingsIcon style={iconColor} fontSize='large'/>
                         </StyledSideBarButton>
                     </SideBarButtonsContainer>
