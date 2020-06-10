@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { ActivitySelection } from './ActivitySelection'
 import { CardComponent } from '../CardComponent'
@@ -14,12 +14,15 @@ export const HomePage = () => {
     const chosenActivity = useSelector(state=> state.MainReducer.chooseActivity)
     const loggedUser = useSelector(state=> state.MainReducer.loggedUser)
 
+    useEffect(() => {
+        _dispatch(updateFitContent(true))
+    },[])
+
     const renderSession =  (sessionActivity) => {
         return sessionActivity.map((element, index) => {
             const startSession = () => {
                 if (chosenActivity === null){
                     _dispatch(chooseActivity('None'))
-                    _dispatch(updateFitContent(true))
                 }
                 _dispatch(session(element)) 
                 navigate('/Session')

@@ -25,6 +25,12 @@ export const SideBar = ({isDisplay}) => {
         }
     },[fitContent])
 
+    /** update content height */
+    // useEffect(() => {
+    //     if (content && windowHeight !== content.clientHeight)
+    //         _dispatch(updateWindowHeight(content.clientHeight))
+    // },[windowHeight])
+
     return (
         <StyledSideBar isDisplay={isDisplay} height={windowHeight}>
             {isDisplay ? <UserSideBar/> : <IconSideBar/>}
