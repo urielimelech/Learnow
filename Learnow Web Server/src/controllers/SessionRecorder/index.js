@@ -7,9 +7,10 @@ import { socketWithThinkgear } from './ThinkgearSocket/index.js'
 
 /** create http server to serve io requests */
 const serverPort = serverConnectionOptions.port
-// const serverHost = serverConnectionOptions.host
-const serverApp = http.createServer()
-// serverApp.listen(serverPort, serverHost)
+const serverApp = http.createServer((req, res) => {
+    res.write('This is a logic server of learnow application.\nGo here to learnow app -> https://learnow-5ed2b.firebaseapp.com/')
+    res.end('')
+})
 serverApp.listen(serverPort)
 
 export const serverIOService = io(serverApp)

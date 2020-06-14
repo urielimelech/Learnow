@@ -1,5 +1,5 @@
 import React from 'react'
-import './font.css'
+import Rubik from './fonts/Rubik-Regular.ttf'
 
 export const TextType = ({children, style, ...props}) => {
         const header = props.header
@@ -8,7 +8,7 @@ export const TextType = ({children, style, ...props}) => {
         return <div 
         style={
                 {...style, 
-                fontFamily: 'Rubik',
+                fontFamily: Rubik,
                 fontSize: header ? header : content,
                 fontWeight: header ? 'bold' : null
                 }} 

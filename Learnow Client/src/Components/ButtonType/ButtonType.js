@@ -1,5 +1,5 @@
 import React from 'react'
-import '../TextType/font.css'
+import Rubik from '../TextType/fonts/Rubik-Regular.ttf'
 
 export const ButtonType = ({children, style, onClick, ...props}) => {
         const disabled = props.disabled
@@ -13,7 +13,7 @@ export const ButtonType = ({children, style, onClick, ...props}) => {
                 minWidth: 100, 
                 minHeight: 40,
                 color: '#ffffff',
-                fontFamily: 'Rubik',
+                fontFamily: Rubik,
                 fontSize: '14px',
                 fontWeight: 700,
                 padding: 10,
