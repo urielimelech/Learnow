@@ -1,3 +1,5 @@
 node_modules
 consts.js
 build
+.gitignore
+.elasticbeanstalk/
