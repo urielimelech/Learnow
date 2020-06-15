@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { ResultCharts } from './ResultCharts'
 import { RadioChooseCharts } from '../RadioChooseCharts'
-import { StyledResultComponent } from './ResultSessionStyle'
-import { Correlation } from './Correlation'
+import { StyledResultComponent, StyledChartContainer } from './ResultSessionStyle'
 import { navigate } from 'hookrouter'
 import { useSelector, useDispatch } from 'react-redux'
 import { updateFitContent } from '../../Redux/Actions'
@@ -41,9 +40,8 @@ export const Results = () => {
         <StyledResultComponent>
             {charts.length > 0 ? optionChart ? optionChart : null : null}
             {charts.length > 0 ? charts[displayChart] : <ResultCharts getFullArr={getSessionCharts}/>}
-            <Correlation/>
             {charts.length > 0 ?
-            <div>
+            <div style={{marginTop: 20}}>
                 {loggedUser.email === 'student' ? 
                     <ButtonType onClick={() => navigate('/Recommendations')}>
                         Continue To Recommendations For Activity

@@ -11,5 +11,9 @@ export const StyledCardComponent = {
     },
     expand: {
         height: '100%'
+    },
+    CardImgStyle: {
+        height: 50,
+        width: 50
     }
 }

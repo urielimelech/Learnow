@@ -15,8 +15,14 @@ export const QuestionsCard = () => {
         return questions.map((elem, index) => {
             const question = elem.question
             const correctAnswer = elem.answers[Number(elem.correctAnswer) - 1]
-            const answerInVideo = Number(elem.timeOfAnswerInVideoBySeconds)
+            const minutesAnswerInVideo =  Math.floor(Number(elem.timeOfAnswerInVideoBySeconds) / 60)
+            const secondsAnswerInVideo = Number(elem.timeOfAnswerInVideoBySeconds) % 60
+            const checkMinutes = minutesAnswerInVideo < 10 ? `0${ Math.floor(Number(elem.timeOfAnswerInVideoBySeconds) / 60)}` : Math.floor(Number(elem.timeOfAnswerInVideoBySeconds) / 60)
+            const checkSeconds = secondsAnswerInVideo < 10 ? `0${Number(elem.timeOfAnswerInVideoBySeconds) % 60}` : Number(elem.timeOfAnswerInVideoBySeconds) % 60
+            const answerInVideo = `${checkMinutes} : ${checkSeconds}`
             const userInput = quizData.userInput[index].index - 1
+            const userAnswer = elem.answers[userInput]
+            const img = userAnswer=== correctAnswer ? require('../../images/correct.png') : require('../../images/incorrect.png')
 
             return <CardComponent 
                 style= {StyledCardComponent}
@@ -24,16 +30,17 @@ export const QuestionsCard = () => {
                 headerText={`Question Number ${index + 1}`}
                 isAbleToExpand={true}
                 expandedText={[
-                    'Question: ', question, 
+                    `Question Number ${index + 1}: `, question, 
                     'Correct Answer: ', correctAnswer, 
-                    'User Answer: ', userInput, 
+                    'User Answer: ', userAnswer, 
                     'Answer In Video:', answerInVideo
                 ]}
+                img={img}
             />
         })
     }
 
-    return <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', marginTop: 20}}>
+    return <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', marginTop: 30}}>
         {Object.keys(lastSessionData).length > 0 ? renderQuestionsCards() : <Loading/>}
     </div>
     

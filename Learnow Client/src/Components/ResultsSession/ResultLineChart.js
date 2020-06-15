@@ -1,7 +1,7 @@
 import React from 'react'
 import Chart from 'react-google-charts'
 import { Loading } from '../Loading'
-import { WINDOW_WIDTH, WINDOW_HEIGHT } from '../../consts'
+import { StyledChartContainer } from './ResultSessionStyle'
 
 export const ResultLineChart = ({data, title}) => {
     const options = {
@@ -26,14 +26,17 @@ export const ResultLineChart = ({data, title}) => {
         }
     }
     return (
-        <Chart 
-            data={data} 
-            width={'90%'} 
-            height={'18rem'}
-            chartType="LineChart" 
-            loader={<Loading/>} 
-            options={options} 
-            rootProps={{ 'data-testid': '2' }}
-        />
+        <StyledChartContainer>
+            <Chart 
+                style={{display: 'flex', justifyContent: 'center', alignSelf: 'center'}}
+                data={data} 
+                width={'90%'} 
+                height={'25rem'}
+                chartType="LineChart" 
+                loader={<Loading/>} 
+                options={options} 
+                rootProps={{ 'data-testid': '2' }}
+            />
+        </StyledChartContainer>
     )
 }

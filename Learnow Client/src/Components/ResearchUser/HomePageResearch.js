@@ -6,11 +6,13 @@ import { setActivitiesCards, updateStudentForResearch, updateFitContent } from '
 import axios from 'axios'
 import { dbURL } from '../../consts'
 import { StyledCardComponent } from './ResearchUserStyle'
+import { navigate } from 'hookrouter'
 
 export const HomePageResearch = ({data}) => {
 
     const _dispatch = useDispatch()
     const [studentsData, setStudentsData] = useState([])
+    const studentForResearch = useSelector(state => state.MainReducer.studentForResearch)
 
     const getAllStudents = () => {
        axios.get(`${dbURL}/getAllStudents`)
@@ -22,6 +24,11 @@ export const HomePageResearch = ({data}) => {
             console.log({err})
         })
     }
+
+    useEffect(() => {
+        if(studentForResearch)
+            navigate('/History')
+    },[studentForResearch])
 
     useEffect(()=> {
         getAllStudents()
