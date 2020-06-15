@@ -35,7 +35,7 @@ export const sessionActivity = [
                 "timeOfAnswerInVideoBySeconds": "52"
               },
               {
-                "question": "What is the result of 141 / 3? calculate with long division?",
+                "question": "What is the result of 141 / 3? Calculate with long division",
                 "questionType": "text",
                 "answerSelectionType": "single",
                 "answers": [
