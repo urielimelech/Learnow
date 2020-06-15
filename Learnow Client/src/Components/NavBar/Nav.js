@@ -90,13 +90,16 @@ export const Nav = ({page}) => {
         loggedUser.userType ? 
         <div style={{display: 'flex'}}>
             <SideBar isDisplay={barStyle}/>
-            <nav id='nav' className="navbar-expand navbar-light" style={barStyle ? {width: openBarWidth, position:'absolute', marginLeft: 300, transition: '1s'} : {marginLeft: 60, width: openBarWidth, position:'absolute', transition: '1s'}}>
+            <nav id='nav' className="navbar-expand navbar-light" style={barStyle ? {width: openBarWidth, position:'absolute', marginLeft: 300, transition: '1s', backgroundColor: '#F4F6F9'} : {marginLeft: 60, width: openBarWidth, position:'absolute', transition: '1s', backgroundColor: '#F4F6F9'}}>
                 <ul className="navbar-nav" style={{borderBottom: '1px solid #dee2e6', width:'100%', display: 'flex', alignItems:'center', flexWrap: 'nowrap', justifyContent:'space-between', height: '4rem', padding: 10}}>
                     <li className="nav-item" style={{display:'flex'}}>
                         <Button className="nav-link" style={{backgroundColor: 'none'}} onClick={() => setBarStyle(!barStyle)}>
                             <MenuIcon/>
                         </Button>
-                        <Button className="nav-link" style={{backgroundColor: 'none'}} onClick={() => navigate('/Home')}>
+                        <Button className="nav-link" style={{backgroundColor: 'none'}} onClick={() =>{
+                            _dispatch(updateStudentForResearch(null))
+                            navigate('/Home')
+                            }}>
                             <HomeIcon/>
                         </Button>
                     </li>
@@ -140,7 +143,9 @@ export const Nav = ({page}) => {
                     } 
                     }>LOGOUT</ButtonType>
                 </ul>
-                <div style={{backgroundColor: '#F4F6F9', minHeight: windowHeight-64, height: '100%'}}>
+                {/* <div style={{backgroundColor: '#F4F6F9', minHeight: windowHeight-64, height: '100%'}}> */}
+                <div style={{ backgroundColor: '#ffffff', minHeight: windowHeight-64, height: '100%'}}>
+
                     {page} 
                 </div>
                    
