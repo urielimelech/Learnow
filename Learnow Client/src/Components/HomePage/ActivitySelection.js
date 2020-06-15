@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import InputLabel from '@material-ui/core/InputLabel'
 import FormHelperText from '@material-ui/core/FormHelperText'
@@ -63,7 +63,7 @@ export const ActivitySelection = () => {
             <FormControl className={classes.formControl} disabled={loggedUser.userType === 'researcher' ? true : false}>
                 <InputLabel id="demo-simple-select-helper-label"><TextType>Activity</TextType></InputLabel>
                     <ActivityList/>
-                <FormHelperText><TextType>Select an activity that you finished right now</TextType></FormHelperText>
+                <TextType style={{color: '#929595'}} content={14}>Select an activity that you finished right now</TextType>
             </FormControl>
             {/* <Button onClick={saveActivity}>Continue</Button> */}
             {/* <Dialog disableBackdropClick disableEscapeKeyDown open={open} onClose={handleClose}>
