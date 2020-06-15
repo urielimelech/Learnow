@@ -24,7 +24,7 @@ export const RadioChooseCharts = ({chart, onRadioChange, label}) => {
     return (
         <FormControl component='fieldset'>
             <RadioGroup row aria-label='position' name='position' onChange={handleRadioChange}>
-                {chartsChooseButtons}
+               {chartsChooseButtons}
             </RadioGroup>
         </FormControl>
     )

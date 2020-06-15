@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Loading } from '../Loading'
 import { ResultLineChart } from './ResultLineChart'
+import { CorrelationChart } from './CorrelationChart'
 
 export const ResultCharts = ({getFullArr}) => {
 
@@ -111,11 +112,12 @@ export const ResultCharts = ({getFullArr}) => {
     useEffect(() => {
         if (quizSessionData !== null) {
             setResultCharts(prev => [...prev, <ResultLineChart data={quizSessionData} title={'Quiz'} key={2}/>])
+            setResultCharts(prev => [...prev, <CorrelationChart correlation={lastSessionData} title={'Quiz Answers in'} key={3}/>])
         }
     },[quizSessionData])
 
     useEffect(() => {
-        if (resultCharts.length === 3) {
+        if (resultCharts.length === 4) {
             getFullArr(resultCharts)
         }
     },[resultCharts])
