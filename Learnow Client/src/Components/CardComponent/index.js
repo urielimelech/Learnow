@@ -41,7 +41,7 @@ export const CardComponent = ({headerText, detailText=null, isAbleToExpand=false
             width={style ? style.Card ? style.Card.width ? style.Card.width : '100%' : null : null}
             height={style ? style.Card ? style.Card.height ? expanded ? style.expand.height : style.Card.height : '100%' : null : null}
             border={isPressed ? '2px solid #a9e4f7' : null}
-            backgroundcolor={isPressed ? '#a9e4f7' : null}
+            backgroundcolor={isPressed ? '#a9e4f7' : '#F4F6F9'}
         >
             <CardActionArea  style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', width: '100%'}} /*style = {style ? style.CardStyle : null}*/>
                 {img ? 
