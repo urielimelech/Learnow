@@ -63,12 +63,12 @@ const compareSessions = (session1, session2, config) => {
     const howAvarageMeditationImproved = isAvarageMeditationImproved ? howHelpful(diffAvarageMeditation, config.comparator_diff_avarage_meditation) : false
 
     return {
-        lowest_attention: howLowestAttentionImproved, 
-        highest_attention: howHighestAttentionImproved, 
-        lowest_meditation: howLowestMeditationImproved, 
-        highest_meditation: howHighestMeditationImproved,
-        avarage_attention: howAvarageAttentionImproved, 
-        avarage_meditation: howAvarageMeditationImproved
+        lowest_attention_level: howLowestAttentionImproved, 
+        highest_attention_level: howHighestAttentionImproved, 
+        lowest_meditation_level: howLowestMeditationImproved, 
+        highest_meditation_level: howHighestMeditationImproved,
+        avarage_attention_level: howAvarageAttentionImproved, 
+        avarage_meditation_level: howAvarageMeditationImproved
     }
 }
 
