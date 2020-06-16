@@ -13,6 +13,7 @@ export const IconSideBar = () => {
 
     const iconColor = {color: '#dddddd'}
     const loggedUser = useSelector(state => state.MainReducer.loggedUser)
+    const studentForResearch = useSelector(state => state.MainReducer.studentForResearch)
 
     return (
         <StyledIconSideBar>
@@ -33,6 +34,7 @@ export const IconSideBar = () => {
                 </SideBarButtonsContainer>
             :
                 loggedUser.userType === 'researcher' ? 
+                studentForResearch ?
                     <SideBarButtonsContainer>
                         <StyledLogoButton onClick={() => navigate('/Results')}>
                             <TrendingUpIcon style={iconColor} fontSize='large'/>
@@ -54,7 +56,10 @@ export const IconSideBar = () => {
                         </StyledLogoButton>
                     </SideBarButtonsContainer>
                 : 
-                    null}
+                    null
+                :
+                null
+                }
         </StyledIconSideBar>
     ) 
 }
