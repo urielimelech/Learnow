@@ -13,7 +13,7 @@ import { TextType } from '../TextType/TextType'
 export const UserSideBar = () => {
 
     const loggedUser = useSelector(state => state.MainReducer.loggedUser)
-
+    const studentForResearch = useSelector(state => state.MainReducer.studentForResearch)
     const iconColor = {color: '#dddddd'}
 
     return (
@@ -55,6 +55,7 @@ export const UserSideBar = () => {
                 </SideBarButtonsContainer>
             :
                 loggedUser.userType === 'researcher' ?
+                studentForResearch ? 
                     <SideBarButtonsContainer isUserConnected={loggedUser.userType ? true : false}>
                         <StyledSideBarButton style={{color: '#dddddd', justifyContent: 'space-between'}} onClick={() => navigate('/Results')}>
                             <TextType>Session Results</TextType>
@@ -82,7 +83,10 @@ export const UserSideBar = () => {
                         </StyledSideBarButton>
                     </SideBarButtonsContainer>
                 :    
-                    null}
+                    null
+                :
+                null
+                }
         </StyledUserSideBar>
     )
 }

@@ -1,9 +1,10 @@
 import React from 'react'
 import { Chart } from 'react-google-charts'
 import { green, blue, yellow, red } from '@material-ui/core/colors'
+import { Loading } from '../Loading'
 
 export const improvmentCharts = ({comparisonResult}) => {
-
+    
     const charts = comparisonResult.map((elem, index) => {
         const labels = Object.keys(elem.comparisonData).map(elem => {
             return elem.split('_').join(' ')
@@ -30,7 +31,7 @@ export const improvmentCharts = ({comparisonResult}) => {
                 width={'90%'}
                 height={'30rem'}
                 chartType="ColumnChart"
-                loader={<div>Loading Chart</div>}
+                loader={<Loading/>}
                 data={data}
                 options={{
                     title: `Improvement of Measurments between ${elem.activity[0]} activity and ${elem.activity[1]} activity`,

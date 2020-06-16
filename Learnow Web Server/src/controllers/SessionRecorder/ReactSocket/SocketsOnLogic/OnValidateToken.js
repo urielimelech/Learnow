@@ -7,6 +7,9 @@ export const onValidateToken = (soc, token) => {
         .then(res => {
             soc.emit('get dbToken', {success: res.data.success, message: res.data.message, token: res.data.token})
         })
-        .catch(err=> soc.emit('get dbToken', {success: err.response.data.success, message: err.response.data.message})
+        .catch(err=> {
+            console.log({err})
+            soc.emit('get dbToken', {success: err.response.data.success, message: err.response.data.message}
+        ) }
         )
 }

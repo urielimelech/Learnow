@@ -10,7 +10,7 @@ export const VerifyTokenJwt = ({children}) => {
 
     const verified = useSelector(state => state.MainReducer.isVerify)
     const _dispatch = useDispatch()
-    const check15Min = 1000 * 60 * 15
+    const check5Min = 1000 * 60 * 5
 
     const [cookies, setCookie, removeCookie] = useCookies(['email', 'token', 'name', 'userType', 'route'])
 
@@ -65,8 +65,9 @@ export const VerifyTokenJwt = ({children}) => {
             navigate(cookies['route'])
             /** check token with server every 5 minutes */
             setInterval(() => {
-                checkTokenWithServer()
-            }, check15Min)
+                const token = cookies['token']
+                socketToWebServer.emit('validate token', token)
+            }, check5Min)
         }
     }, [verified])
     

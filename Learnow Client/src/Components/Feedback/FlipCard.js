@@ -3,6 +3,7 @@ import ReactCardFlip from 'react-card-flip'
 import { StyledCardFeedback, StyledImg, StyledFlipImg, StyledTitleFlipCard } from './FeedbackStyle'
 import { ButtonType } from '../ButtonType/ButtonType'
 import { TextType } from '../TextType/TextType'
+import { Button } from '@material-ui/core'
 
 export const FlipCard = ({title=null, img=null, onPressSelect=null, description=null, link=null, ribbon=null}) => {
     
@@ -11,6 +12,10 @@ export const FlipCard = ({title=null, img=null, onPressSelect=null, description=
     const handleClick = e => {
         e.preventDefault();
         setIsFlipped(!isFlipped)
+    }
+
+    const getRecommendation = link => {        
+        window.open(link, '_blank')
     }
 
     return (
@@ -28,7 +33,8 @@ export const FlipCard = ({title=null, img=null, onPressSelect=null, description=
                     <StyledFlipImg src={img}/>
                     {ribbon ? <StyledImg height={75} width={75} src={ribbon}/> : null}
                 </StyledTitleFlipCard>
-                <TextType content={15}>{[description, ' ', link]}</TextType>
+                <TextType style={{height:100}} content={15}>{[description]}</TextType>
+                <Button><img  style={{height: 30, width: 30}} src={require('../../images/link.png')} onClick={() => getRecommendation(link)}></img> </Button>
                 <ButtonType onClick={onPressSelect}>select</ButtonType>
             </StyledCardFeedback>
         </ReactCardFlip>

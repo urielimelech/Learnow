@@ -6,6 +6,7 @@ import axios from 'axios'
 import { navigate } from 'hookrouter'
 import { Button, TextField, FormHelperText } from '@material-ui/core'
 import { useCookies } from 'react-cookie'
+import StudentIcon from '@material-ui/icons/School'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { dbURL } from '../../consts'
@@ -13,12 +14,14 @@ import { TextMessageToastify } from '../TextMessageToastify'
 import { updateStudentForResearch } from '../../Redux/Actions'
 import { SideBar } from './SideBar'
 import { ButtonType } from '../ButtonType/ButtonType'
+import { TextType } from '../TextType/TextType'
 
 export const Nav = ({page}) => {
 
     const loggedUser = useSelector(state => state.MainReducer.loggedUser)
     const windowWidth = useSelector(state => state.MainReducer.windowWidth)
     const windowHeight = useSelector(state => state.MainReducer.windowHeight)
+    const studentForResearch = useSelector(state => state.MainReducer.studentForResearch)
     const _dispatch = useDispatch()
     
     const [barStyle, setBarStyle] = useState(false)
@@ -103,6 +106,15 @@ export const Nav = ({page}) => {
                             <HomeIcon/>
                         </Button>
                     </li>
+                    {loggedUser.userType === 'researcher' && studentForResearch ? 
+                    <div style={{display: 'flex'}}>
+                        <StudentIcon/>
+                        <TextType header={16} style={{color: '#343A40', paddingLeft: 10}}>Student: {studentForResearch.name}</TextType>
+                    </div>
+                    :
+                        null
+                    
+                    }
                     {loggedUser.userType === 'researcher' ? 
                     <form onSubmit={handleSumbit} style={{width: '30%', display: 'flex'}}>
                         <TextField 
