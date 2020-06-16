@@ -21,8 +21,21 @@ export const StyledCardComponent = {
     }
 }
 
+export const StyledQaudCardComponent = {
+    Card: {
+        width: 300,
+        marginRight: 30,
+        marginBottom: 30,
+        height: 230
+    },
+    CardContent: {
+        textAlign: 'center'
+    }
+}
+
 export const StyledButtonContainer = styled.div`
-flex: 0 1 100%;
-text-align: center;
+justify-content: center;
 margin: 30px 0px;
+width:100%;
+display: flex;
 `

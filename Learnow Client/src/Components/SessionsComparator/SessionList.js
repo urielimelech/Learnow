@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import Typography from '@material-ui/core/Typography'
-import { Button } from '@material-ui/core'
 import { useDispatch, useSelector } from 'react-redux'
-
 import { socketToWebServer } from '../../SocketIoClient'
 import { CardComponent } from '../CardComponent'
 import { resetStyleList } from '../../Redux/Actions'
-import { StyledSessionListContainer, StyledCardComponent, StyledButtonContainer } from './SessionListStyle'
+import { StyledSessionListContainer, StyledCardComponent, StyledButtonContainer, StyledQaudCardComponent } from './SessionListStyle'
 import { ButtonType } from '../ButtonType/ButtonType'
 import { TextType } from '../TextType/TextType'
 
@@ -153,7 +150,7 @@ export const SessionList = ({userSessions, email, studentConfig}) => {
                 detailText={detailText} 
                 buttonText={ButtonText} 
                 onClickButton={OnClickButton} 
-                style={StyledCardComponent}
+                style={StyledQaudCardComponent}
             />
         })
     }
@@ -173,18 +170,20 @@ export const SessionList = ({userSessions, email, studentConfig}) => {
     return (
         <StyledSessionListContainer>          
             <StyledButtonContainer>
-                <ButtonType onClick={() => {
-                    setDisplayDuo(true)
-                    resetSelection()
-                }}>
-                Compare between two single sessions
-                </ButtonType>
-                <ButtonType onClick={() => { 
-                    setDisplayDuo(false)
-                    resetSelection()
-                }}>
-                Compare between four single sessions
-                </ButtonType>
+                <div style={{ display: 'flex', justifyContent: 'space-evenly', width: '70%'}}>
+                    <ButtonType onClick={() => {
+                        setDisplayDuo(true)
+                        resetSelection()
+                    }}>
+                        Compare between two single sessions
+                    </ButtonType>
+                    <ButtonType onClick={() => { 
+                        setDisplayDuo(false)
+                        resetSelection()
+                    }}>
+                        Compare between four single sessions
+                    </ButtonType>
+                </div>
               </StyledButtonContainer>
             {displayDuo ? duoComparation() : quadComparation()}
             <StyledButtonContainer>
