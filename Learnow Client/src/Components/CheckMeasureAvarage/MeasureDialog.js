@@ -53,7 +53,7 @@ export const MeasureDialog = () => {
           </ButtonType>
           <ButtonType onClick={() => {
                     setOpen(false)
-                    socketToWebServer.emit('break session', ({email: loggedUser.userEmail, ip}))
+                    socketToWebServer.emit('break session', ({ip}))
                     _dispatch(isConnectedToRoom(false))
                     navigate('/Recommendations') 
                 }} 
