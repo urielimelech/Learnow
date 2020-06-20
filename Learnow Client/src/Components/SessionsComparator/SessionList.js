@@ -74,11 +74,17 @@ export const SessionList = ({userSessions, email, studentConfig}) => {
     /** list of session cards components */
     const duoComparation = () => {
         userSessions.sort((aTimeStamp, bTimeStamp) => Number(aTimeStamp.startTimeStamp) - Number(bTimeStamp.startTimeStamp))
-        return userSessions.map((session, index) => {
+        const tempResearcherSessions = userSessions.map((session, index) => {
+            if (session.isBroken === true)
+                return
+            return session
+        })
+        const researcherSessions = tempResearcherSessions.filter(elem => elem !== undefined)
+        return researcherSessions.map((session, index) => {
             const date = new Date(session.startTimeStamp)
             const dateOfSession = date.toDateString()
             const timeOfSession = getExactTime(date)
-            const headerText = `Session number ${userSessions.length - index}`
+            const headerText = `Session number ${researcherSessions.length - index}`
             const detailText = 
                 <div>
                     <TextType>
@@ -111,6 +117,8 @@ export const SessionList = ({userSessions, email, studentConfig}) => {
         const tempResearcherSessions = userSessions.map((session, index) => {
             const nextSession = userSessions[index + 1]
             if (session.activity != 'None' && nextSession && nextSession.activity === 'None') {
+                if (session.isBroken === true)
+                    return
                 return [session, nextSession]
             }
             else if (session.activity === 'None')

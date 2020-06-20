@@ -66,16 +66,26 @@ export const ResultCharts = ({getFullArr}) => {
       }
 
     const getSessionSerie = lastSessionData => {
-        const minMaxArr = findMinMax(lastSessionData)
-        const sessionData = lastSessionData.monitorData.map(e => {
-            const timeStamp = differenceInSec(e.timeStamp, lastSessionData.startTimeStamp)
-            return [timeStamp, 
-                e.attention, (e.attention === minMaxArr[0] ? `${e.attention} is Minimum Value` : (e.attention === minMaxArr[1] ? `${e.attention} is Maximum Value` : null)),
-                e.meditation, (e.meditation === minMaxArr[2] ? `${e.meditation} is Minimum Value` : (e.meditation === minMaxArr[3] ? `${e.meditation} is Maximum Value` : null)),
-            ]
-        })
-        sessionData.unshift(['x', 'attention', {role: 'tooltip'}, 'meditation', {role: 'tooltip'}])
-        return sessionData
+        if (lastSessionData.isBroken === true){
+            const sessionData = lastSessionData.monitorData.map(e => {
+                const timeStamp = differenceInSec(e.timeStamp, lastSessionData.startTimeStamp)
+                return [timeStamp, e.attention, e.meditation]
+            })
+            sessionData.unshift(['x', 'attention', 'meditation'])
+            return sessionData
+        }
+        else {
+            const minMaxArr = findMinMax(lastSessionData)
+            const sessionData = lastSessionData.monitorData.map(e => {
+                const timeStamp = differenceInSec(e.timeStamp, lastSessionData.startTimeStamp)
+                return [timeStamp,
+                    e.attention, (e.attention === minMaxArr[0] ? `${e.attention} is Minimum Value` : (e.attention === minMaxArr[1] ? `${e.attention} is Maximum Value` : null)),
+                    e.meditation, (e.meditation === minMaxArr[2] ? `${e.meditation} is Minimum Value` : (e.meditation === minMaxArr[3] ? `${e.meditation} is Maximum Value` : null)),
+                ]
+            })
+            sessionData.unshift(['x', 'attention', {role: 'tooltip'}, 'meditation', {role: 'tooltip'}])
+            return sessionData
+        }
     }
 
     const getVideoSessionSerie = (lastSessionData, sessionData) => {
@@ -97,8 +107,10 @@ export const ResultCharts = ({getFullArr}) => {
 
     useEffect(() => {
         if (sessionData !== null) {
-            setVideoSessionData(getVideoSessionSerie(lastSessionData, sessionData))
-            setQuizSessionData(getQuizSessionSerie(lastSessionData, sessionData))
+            if (!lastSessionData.isBroken) {
+                setVideoSessionData(getVideoSessionSerie(lastSessionData, sessionData))
+                setQuizSessionData(getQuizSessionSerie(lastSessionData, sessionData))
+            }
             setResultCharts(prev => [...prev, <ResultLineChart data={sessionData} title={'Full'} key={0}/>])
         }
     },[sessionData])
@@ -120,6 +132,8 @@ export const ResultCharts = ({getFullArr}) => {
         if (resultCharts.length === 4) {
             getFullArr(resultCharts)
         }
+        else if (lastSessionData.isBroken && resultCharts.length > 0)
+            getFullArr(resultCharts)
     },[resultCharts])
 
     return (
