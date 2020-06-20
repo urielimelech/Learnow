@@ -5,6 +5,7 @@ export const onEndQuiz = (serverIOService, soc, rooms, data, ip) => {
         /** clear the session data from web server when session ended */
         if (e.roomName === ip && e.sessionData.monitorData.length > 0) {
             e.sessionData.quizData = data
+            e.sessionData.isBroken = false
             e.sessionData = writeSessionToDataBase(e.sessionData, e.config)
             e.isReadyForVideo = false
             soc.emit('last ended session', e.sessionData)

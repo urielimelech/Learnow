@@ -19,7 +19,8 @@ module.exports = {
             answersQuiz             = [],
             correlation             = {},
             feedback                = [],
-            activity                = ''
+            activity                = '',
+            isBroken                = null
         } = req.body
         const session = new Session({
             userEmail,
@@ -37,7 +38,8 @@ module.exports = {
             answersQuiz,
             correlation,
             feedback,
-            activity
+            activity,
+            isBroken
         })
         session.save().then( (result) => {
                 console.log(result)
