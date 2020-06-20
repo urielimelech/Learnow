@@ -25,8 +25,6 @@ const sendSessionToDB = session => {
 
 const dataSessionAnalysis = (sessionData, userConfig) => {
     if (sessionData.monitorData.length !== 0) {
-        sessionData.startTimeStamp = sessionData.monitorData[0].timeStamp
-        sessionData.endTimeStamp = sessionData.monitorData[sessionData.monitorData.length-1].timeStamp
         sessionData.avarageAttention = getAvarageAttention(sessionData.monitorData)
         sessionData.avarageMeditation = getAvarageMeditation(sessionData.monitorData)
         sessionData.lowestAttentionLevel = lowestAttentionLevel(sessionData.monitorData, userConfig.analyzer_lowest_attention_range)
@@ -40,8 +38,14 @@ const dataSessionAnalysis = (sessionData, userConfig) => {
     return sessionData
 }
 
-export const writeSessionToDataBase = (sessionData, userConfig) => {
-    sessionData = dataSessionAnalysis(sessionData, userConfig)
+export const writeSessionToDataBase = (sessionData, userConfig, broken = false) => {
+    if (!broken){
+        sessionData = dataSessionAnalysis(sessionData, userConfig)
+        if (sessionData.correlation.videoCorrelation.length === 0)
+            sessionData.isBroken = true
+    }
+    sessionData.startTimeStamp = sessionData.monitorData[0].timeStamp
+    sessionData.endTimeStamp = sessionData.monitorData[sessionData.monitorData.length-1].timeStamp
     sendSessionToDB(sessionData)
     return sessionData
 }

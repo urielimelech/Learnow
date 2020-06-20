@@ -1,8 +1,8 @@
 import React from 'react'
 import { CardComponent } from '../CardComponent'
-import { Typography } from '@material-ui/core'
 import { StyledCardComponent } from '../SessionsComparator/SessionListStyle'
 import { TextType } from '../TextType/TextType'
+import BrokenImageIcon from '@material-ui/icons/BrokenImage'
 
 export const SessionsList = ({userSessions, onSelect=null}) => {
 
@@ -19,7 +19,11 @@ export const SessionsList = ({userSessions, onSelect=null}) => {
             const date = new Date(session.startTimeStamp)
             const time = getExactTime(date)
             const activity = session.activity
-            const headerText = `Session number ${userSessions.length - index}`
+            const isBroken = session.isBroken
+            const headerText = <div style={{display: 'flex', justifyContent: 'center', flexDirection: 'row'}}>
+                    <TextType>Session number {userSessions.length - index}</TextType>
+                    {isBroken ? <BrokenImageIcon style={{marginLeft: 20, marginTop: 3}}/> : null}
+                </div>
             const detailText = 
                 <div>
                     <TextType>

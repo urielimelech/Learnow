@@ -95,7 +95,7 @@ export const socketWithReact = (serverIOService, soc, rooms, userConfigs) => {
 
     /** end session when user break the session and move to feedback page */
     soc.on('break session', ({ip}) => {
-        onBreakSession(serverIOService, rooms, ip)
+        onBreakSession(serverIOService, soc, rooms, ip)
     })
 
     /** get all comparison data between sessions for recommendation */
