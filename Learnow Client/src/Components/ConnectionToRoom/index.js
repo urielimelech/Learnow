@@ -15,7 +15,7 @@ export const ConnectionToRoom = () => {
   
     useEffect(() => {
         getComputerIp()
-        // _dispatch(setIp('46.120.20.73'))
+        // _dispatch(setIp('109.67.30.163'))
         return () => {
             socketToWebServer.off('new TGC')
             socketToWebServer.emit('kill TGC', )
@@ -29,15 +29,11 @@ export const ConnectionToRoom = () => {
     },[connectedToRoom, ip])
     
     const getComputerIp = async () => {
-        try {
-            const result = await axios.get (
-                'https://cors-anywhere.herokuapp.com/http://api.ipify.org:80'
-            )
-            _dispatch(setIp(result.data))
-        }
-        catch (e){
-            console.log('catch', 'error gettin IP address')
-        }
+        axios.get('http://localhost:5000/getIP')
+        .then (res => {
+            _dispatch(setIp(res.data.ip))
+        })
+        .catch(e => console.log('catch', e, 'error gettin IP address'))
     }
     return null
 }
