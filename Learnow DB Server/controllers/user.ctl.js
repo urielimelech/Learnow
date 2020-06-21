@@ -64,5 +64,31 @@ module.exports = {
         }, err =>{
             res.status(404).send(`{"Failure": "No Documents Were Found"}`)
         });
+    },
+
+    getAllStudentsByStartsWith: async (req, res) => {
+        const userType = 'student'
+        const _email = req.query._email
+        await User.find({userType: userType}).then(result => {
+            if(result.length){
+                const allStudents = result.map(elem => {
+                const lowerCaseName = elem.name.toLowerCase()
+                   if (lowerCaseName.startsWith(_email.toLowerCase())) {
+                        return {
+                            name: elem.name,
+                            email: elem.email,
+                            userType: elem.userType,
+                        } 
+                   }
+                }).filter(item => {
+                    return item !== undefined
+                })
+
+                res.send(JSON.stringify(allStudents))
+            }
+            else res.status(404).send(`{"Failure": "No Documents Were Found"}`)
+        }, err =>{
+            res.status(404).send(`{"Failure": "No Documents Were Found"}`)
+        });
     }
 }
