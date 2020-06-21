@@ -1,12 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRoutes } from 'hookrouter'
 
 import Routes from './routes'
-import { BurgerNav } from './Components/NavBar/BurgerNav'
 import { CookiesProvider } from 'react-cookie'
 import { Nav } from './Components/NavBar/Nav'
 import { useDispatch } from 'react-redux'
-import { updateWindowHeight, updateWindowWidth } from './Redux/Actions'
+import { updateWindowHeight, updateWindowWidth, updateFitContent } from './Redux/Actions'
 
 const App = () => {
 
@@ -15,9 +14,18 @@ const App = () => {
   const resizeWindow = () => {
     _dispatch(updateWindowHeight(window.innerHeight))
     _dispatch(updateWindowWidth(window.innerWidth))
+    _dispatch(updateFitContent(true))
   }
 
+  const [content, setContent] = useState(null)
+
   useEffect(() => {
+    if (content)
+      _dispatch(updateWindowHeight(content))
+  },[content])
+
+  useEffect(() => {
+    setContent(document.getElementById('root').clientHeight)
     resizeWindow()
     window.addEventListener("resize", resizeWindow)
     return () => window.removeEventListener("resize", resizeWindow)
@@ -28,7 +36,6 @@ const App = () => {
   return (
     <CookiesProvider>
       <Nav page={routeResult}/>
-      {/* <BurgerNav page={routeResult}/> */}
     </CookiesProvider>
   )
 }
