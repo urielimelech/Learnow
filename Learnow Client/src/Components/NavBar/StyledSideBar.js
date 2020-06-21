@@ -38,7 +38,8 @@ position: absolute;
 left: ${props => props.isDisplay ? 0 : -240}px;
 width: 300px;
 transition: 1s;
-height: ${props => props.height > WINDOW_HEIGHT ? props.height : WINDOW_HEIGHT}px;
+min-height: ${props => props.minHeight ? props.minHeight : WINDOW_HEIGHT}px;
+height: ${props => props.height ? props.height : WINDOW_HEIGHT}px;
 z-index: 1;
 `
 

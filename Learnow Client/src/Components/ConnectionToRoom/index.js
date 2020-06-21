@@ -15,7 +15,6 @@ export const ConnectionToRoom = () => {
   
     useEffect(() => {
         getComputerIp()
-        // _dispatch(setIp('109.67.30.163'))
         return () => {
             socketToWebServer.off('new TGC')
             socketToWebServer.emit('kill TGC', )
