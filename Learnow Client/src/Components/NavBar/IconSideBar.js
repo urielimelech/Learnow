@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyledIconSideBar, StyledLogoButton, SideBarButtonsContainer } from './StyledSideBar'
 import { navigate } from 'hookrouter'
-import TrendingUpIcon from '@material-ui/icons/TrendingUp'
+import EqualizerIcon from '@material-ui/icons/Equalizer'
 import EventNoteIcon from '@material-ui/icons/EventNote'
 import HistoryIcon from '@material-ui/icons/History'
 import StarsIcon from '@material-ui/icons/Stars'
@@ -23,7 +23,7 @@ export const IconSideBar = () => {
             {loggedUser.userType === 'student' ? 
                 <SideBarButtonsContainer>
                     <StyledLogoButton onClick={() => navigate('/Results')}>
-                        <TrendingUpIcon style={iconColor} fontSize='large'/>
+                        <EqualizerIcon style={iconColor} fontSize='large'/>
                     </StyledLogoButton>
                     <StyledLogoButton onClick={() => navigate('/Recommendations')}>
                         <EventNoteIcon style={iconColor} fontSize='large'/>
@@ -37,7 +37,7 @@ export const IconSideBar = () => {
                 studentForResearch ?
                     <SideBarButtonsContainer>
                         <StyledLogoButton onClick={() => navigate('/Results')}>
-                            <TrendingUpIcon style={iconColor} fontSize='large'/>
+                            <EqualizerIcon style={iconColor} fontSize='large'/>
                         </StyledLogoButton>
                         <StyledLogoButton onClick={() => navigate('/Recommendations')}>
                             <EventNoteIcon style={iconColor} fontSize='large'/>
