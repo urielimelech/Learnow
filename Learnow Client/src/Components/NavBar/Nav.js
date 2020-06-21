@@ -11,7 +11,7 @@ import StudentIcon from '@material-ui/icons/School'
 import { useDispatch, useSelector } from 'react-redux'
 import { dbURL } from '../../consts'
 import { TextMessageToastify } from '../TextMessageToastify'
-import { updateStudentForResearch } from '../../Redux/Actions'
+import { updateStudentForResearch, updateUserCards } from '../../Redux/Actions'
 import { SideBar } from './SideBar'
 import { ButtonType } from '../ButtonType/ButtonType'
 import { TextType } from '../TextType/TextType'
@@ -22,6 +22,7 @@ export const Nav = ({page}) => {
     const windowWidth = useSelector(state => state.MainReducer.windowWidth)
     const windowHeight = useSelector(state => state.MainReducer.windowHeight)
     const studentForResearch = useSelector(state => state.MainReducer.studentForResearch)
+    const userCards = useSelector(state =>  state.MainReducer.userCards )
     const _dispatch = useDispatch()
     
     const [barStyle, setBarStyle] = useState(false)
@@ -63,9 +64,9 @@ export const Nav = ({page}) => {
     }
 
     const getStudentData = () => {
-        axios.get(`${dbURL}/getStudentData?email=${email}`)
+        axios.get(`${dbURL}/getAllStudentsByStartsWith?_email=${email}`)
         .then(res => {
-            _dispatch(updateStudentForResearch(res.data))
+            _dispatch(updateUserCards(res.data))
         })
         .catch(err => {
             console.log({err})
@@ -74,7 +75,7 @@ export const Nav = ({page}) => {
     }
 
     const handleClick = () => {
-        validateEmail()
+        // validateEmail()
         getStudentData()
     }
 
@@ -97,13 +98,13 @@ export const Nav = ({page}) => {
                 <ul className="navbar-nav" style={{borderBottom: '1px solid #dee2e6', width:'100%', display: 'flex', alignItems:'center', flexWrap: 'nowrap', justifyContent:'space-between', height: '4rem', padding: 10}}>
                     <li className="nav-item" style={{display:'flex'}}>
                         <Button className="nav-link" style={{backgroundColor: 'none'}} onClick={() => setBarStyle(!barStyle)}>
-                            <MenuIcon/>
+                            <MenuIcon style={{color: '#343A40'}}/>
                         </Button>
                         <Button className="nav-link" style={{backgroundColor: 'none'}} onClick={() =>{
                             _dispatch(updateStudentForResearch(null))
                             navigate('/Home')
                             }}>
-                            <HomeIcon/>
+                            <HomeIcon style={{color: '#343A40'}}/>
                         </Button>
                     </li>
                     {loggedUser.userType === 'researcher' && studentForResearch ? 
@@ -122,8 +123,8 @@ export const Nav = ({page}) => {
                             style={{width:'70%', border: '1px solid #dee2e6 5px'}}
                             size='small'
                             id="outlined-textarea"
-                            label="Search User Email"
-                            placeholder="Search student Email"
+                            label="Search Student Email"
+                            placeholder="Search Student Email"
                             variant="outlined"
                             onChange = {handleChange}
                             value={email}
@@ -157,7 +158,6 @@ export const Nav = ({page}) => {
                 </ul>
                 {/* <div style={{backgroundColor: '#F4F6F9', minHeight: windowHeight-64, height: '100%'}}> */}
                 <div style={{ backgroundColor: '#ffffff', minHeight: windowHeight-64, height: '100%'}}>
-
                     {page} 
                 </div>
                    
