@@ -1,4 +1,91 @@
 export const sessionActivity = [
+  {
+    img: require('../../images/longdivision.jpg'),
+    quizSummary: {
+        "videoUrl": 'https://www.youtube.com/watch?v=HdU_rf7eMTI',
+        "quizTitle": "Division Lesson Quiz",
+        "quizSynopsis": "Please answer the Questions about the video. Good Luck",
+        "questions": [
+          {
+            "question": "What is the first step when solving a long division?",
+            "questionType": "text",
+            "answerSelectionType": "single",
+            "answers": [
+              "Counts the amount of times the divider enters within the first digit",
+              "Counts the amount of times the divider enters within the second digit",
+              "Counts the amount of times the divider enters within the third digit",
+              "Divide the first digit in the divider"
+            ],
+            "correctAnswer": "1",
+            "messageForCorrectAnswer": "Correct answer. Good job.",
+            "messageForIncorrectAnswer": "Incorrect answer.",
+            "explanation": "when we need to solve an exercise with long division, we begin our division with the most left digit to the most right digit.",
+            "point": "30",
+            "timeOfAnswerInVideoBySeconds": "73"
+          },
+          {
+            "question": "If the digit is smaller than the divider, what should we do?",
+            "questionType": "text",
+            "answerSelectionType": "single",
+            "answers": [
+              "Add zero to the right of the digit", "Advanced to the next digit and try to divide again", "Add to the divider the digit 0"
+            ],
+            "correctAnswer": "2",
+            "messageForCorrectAnswer": "Correct answer. Good job.",
+            "messageForIncorrectAnswer": "Incorrect answer.",
+            "explanation": "If the number is smaller than the divider, we need to advance to the next digit and try to divide again until it is possible to divide the number by the divider.",
+            "point": "30",
+            "timeOfAnswerInVideoBySeconds": "157"
+          },
+          {
+            "question": "Why is it better to solve small chunks of division?",
+            "questionType": "text",
+            "answerSelectionType": "single",
+            "answers": [
+              "The way of solution is easier",
+              "The way of solution is faster",
+              "The chance of error decreases"
+            ],
+            "correctAnswer": "3",
+            "messageForCorrectAnswer": "Correct answer. Good job.",
+            "messageForIncorrectAnswer": "Incorrect answer.",
+            "explanation": "Solving in small chunks increse the chance to get a correct answer.",
+            "point": "30",
+            "timeOfAnswerInVideoBySeconds": "273"
+          },
+          {
+            "question": "When the divider has two digits:",
+            "questionType": "text",
+            "answerSelectionType": "single",
+            "answers": [
+              "Check the amount of times the divider enters within the first digit only",
+              "Check the amount of times the divider enters within the two first digits",
+              "Advance to the next digit"
+            ],
+            "correctAnswer": "2",
+            "messageForCorrectAnswer": "Correct answer. Good job.",
+            "messageForIncorrectAnswer": "Incorrect answer.",
+            "explanation": "If the divider has two digits, need to automatically check the first 2 digits.",
+            "point": "30",
+            "timeOfAnswerInVideoBySeconds": "353"
+          },
+          {
+            "question": "What is the result of 4228 / 28? Calculate with long division",
+            "questionType": "text",
+            "answerSelectionType": "single",
+            "answers": [
+                "200", "151", "237", "100"
+            ],
+            "correctAnswer": "2",
+            "messageForCorrectAnswer": "Correct answer. Good job.",
+            "messageForIncorrectAnswer": "Incorrect answer.",
+            "explanation": "go to: https://divisible.info/LongDivision/How-to-calculate-141/divided-by-3-using-long-division.html",
+            "point": "40",
+            "timeOfAnswerInVideoBySeconds": "780"
+          }
+        ]
+    }
+},
     {
         img: require('../../images/division.jpg'),
         quizSummary: {

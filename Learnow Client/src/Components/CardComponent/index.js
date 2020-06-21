@@ -48,7 +48,7 @@ export const CardComponent = ({headerText, detailText=null, isAbleToExpand=false
                     <CardMedia style = {style ? style.CardImgStyle : null}
                         image={img}
                         component = "img"
-                        title="student user"
+                        title="card img"
                     />
                     : 
                     null
@@ -57,9 +57,9 @@ export const CardComponent = ({headerText, detailText=null, isAbleToExpand=false
                     null 
                 :  
                     <CardContent style={style ? style.CardContent : null}>
-                        <TextType header={20}>
+                        {headerText ? <TextType header={20}>
                             {headerText}
-                        </TextType>
+                        </TextType> : null }
                         {
                             detailText ? 
                                 <TextType>
