@@ -5,7 +5,7 @@ import { CardComponent } from '../CardComponent'
 import { sessionActivity } from '../SessionActivity'
 import { navigate } from 'hookrouter'
 import { session, chooseActivity, updateFitContent } from '../../Redux/Actions/'
-import { HomePageCards, WrapperCards } from './HomePageStyle'
+import { HomePageCards, WrapperCards, StyledCardComponent } from './HomePageStyle'
 import { ResearchUser } from '../ResearchUser'
 
 export const HomePage = () => {
@@ -29,7 +29,8 @@ export const HomePage = () => {
             }
             return <HomePageCards key={index}>
                 <CardComponent 
-                    headerText={element.quizSummary.quizTitle} 
+                    style={StyledCardComponent}
+                    // headerText={element.quizSummary.quizTitle} 
                     buttonText={"Start"} onClickButton={startSession} img={element.img}
                 />
             </HomePageCards>

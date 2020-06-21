@@ -2,7 +2,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { navigate } from 'hookrouter'
 import { StyledLogoButton, SideBarButtonsContainer, StyledUserSideBar, StyledSideBarButton } from './StyledSideBar'
-import TrendingUpIcon from '@material-ui/icons/TrendingUp'
+import EqualizerIcon from '@material-ui/icons/Equalizer'
 import EventNoteIcon from '@material-ui/icons/EventNote'
 import HistoryIcon from '@material-ui/icons/History'
 import StarsIcon from '@material-ui/icons/Stars'
@@ -42,7 +42,7 @@ export const UserSideBar = () => {
                 <SideBarButtonsContainer isUserConnected={loggedUser.userType ? true : false}>
                     <StyledSideBarButton style={{color: '#dddddd', justifyContent: 'space-between'}} onClick={() => navigate('/Results')}>
                         <TextType>Session Results</TextType>
-                        <TrendingUpIcon style={iconColor} fontSize='large'/>
+                        <EqualizerIcon style={iconColor} fontSize='large'/>
                     </StyledSideBarButton>
                     <StyledSideBarButton style={{color: '#dddddd', justifyContent: 'space-between'}} onClick={() => navigate('/Recommendations')}>
                         <TextType>Effective Recommendations</TextType>
@@ -59,7 +59,7 @@ export const UserSideBar = () => {
                     <SideBarButtonsContainer isUserConnected={loggedUser.userType ? true : false}>
                         <StyledSideBarButton style={{color: '#dddddd', justifyContent: 'space-between'}} onClick={() => navigate('/Results')}>
                             <TextType>Session Results</TextType>
-                            <TrendingUpIcon style={iconColor} fontSize='large'/>
+                            <EqualizerIcon style={iconColor} fontSize='large'/>
                         </StyledSideBarButton>
                         <StyledSideBarButton style={{color: '#dddddd', justifyContent: 'space-between'}} onClick={() => navigate('/Recommendations')}>
                             <TextType>Recommendations</TextType>

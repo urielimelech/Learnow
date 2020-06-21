@@ -34,6 +34,7 @@ app.post('/register', [userCtl.addUser, userConfig.addUserConfig, userHandler.re
 app.get('/checkUserToken', middleware.checkToken)
 app.get('/getStudentData', [userCtl.getUser, userConfig.getUserConfigByEmail, userCtl.getStudentData])
 app.get('/getAllStudents', userCtl.getAllStudents)
+app.get('/getAllStudentsByStartsWith', userCtl.getAllStudentsByStartsWith)
 
 /** User configuration routes */
 app.put('/updateUserConfig', userConfig.updateUserConfig)

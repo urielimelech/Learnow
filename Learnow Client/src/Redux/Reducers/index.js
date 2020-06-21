@@ -16,7 +16,8 @@ import {
   STUDENT_FOR_RESEARCH,
   WINDOW_WIDTH,
   WINDOW_HEIGHT,
-  FIT_CONTENT
+  FIT_CONTENT,
+  USER_CARDS
 } from '../ActionTypes'
 
 const initialState = {
@@ -36,7 +37,8 @@ const initialState = {
   studentForResearch: null,
   windowWidth: 0,
   windowHeight: 0,
-  fitContent: false
+  fitContent: false,
+  userCards: null
 }
 
 export default (state = initialState, action) => {
@@ -131,6 +133,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         fitContent: action.data
+      }
+    case USER_CARDS:
+      return {
+        ...state,
+        userCards: action.data
       }
     default:
       return state

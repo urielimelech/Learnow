@@ -16,7 +16,8 @@ import {
     STUDENT_FOR_RESEARCH,
     WINDOW_WIDTH,
     WINDOW_HEIGHT,
-    FIT_CONTENT
+    FIT_CONTENT,
+    USER_CARDS
 } from '../ActionTypes'
 
 export const isVideoEnded = data => ({ type: IS_VIDEO_ENDED, data: data })
@@ -54,3 +55,5 @@ export const updateWindowWidth = windowWidth => ({type: WINDOW_WIDTH, data: wind
 export const updateWindowHeight = windowHeight => ({type: WINDOW_HEIGHT, data: windowHeight})
 
 export const updateFitContent = fitContent => ({type: FIT_CONTENT, data: fitContent})
+
+export const updateUserCards = userCards => ({type: USER_CARDS, data: userCards})
