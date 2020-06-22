@@ -5,10 +5,12 @@ import { useSelector } from 'react-redux'
 import { Loading } from '../Loading'
 import { socketToWebServer } from '../../SocketIoClient'
 import { FlipCards } from './FlipCards'
+import { FeedbackChart } from './FeedbackChart'
 
 export const Feedback = () => {
 
     const loggedUser = useSelector(state => state.MainReducer.loggedUser)
+    const studentForResearch = useSelector(state => state.MainReducer.studentForResearch)
 
     const [allComparisonData, setAllComparisonData] = useState(null)
     const [howHelpfull, setHowHelpfull] = useState([])
@@ -114,14 +116,25 @@ export const Feedback = () => {
     }
   
     const displayCards = () => {
-        socketToWebServer.emit('get all comparison', loggedUser.email)
+        if(loggedUser.userType === 'student')
+            socketToWebServer.emit('get all comparison', loggedUser.email)
+        else
+            socketToWebServer.emit('get all comparison', studentForResearch.email)
     }
 
-    return sumImprovment.length > 0 ? 
-        <FlipCards sumImprovment={sumImprovment}/> 
-        : 
-        howHelpfull.length === 0 ?
-            <FlipCards/>
+    return loggedUser.userType === 'student' ?
+        sumImprovment.length > 0 ?         
+            <FlipCards sumImprovment={sumImprovment}/> 
             : 
-            <Loading/>
+            howHelpfull.length === 0 ?
+                <FlipCards/>
+                : 
+                <Loading/>
+        :
+        sumImprovment.length > 0 ? 
+            <div style={{paddingTop: 20}}>
+                <FeedbackChart sumImprovment={sumImprovment}/> 
+            </div>        
+            : 
+            null
 }

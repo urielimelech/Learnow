@@ -14,6 +14,7 @@ export const Results = () => {
     const [displayChart, setDisplayChart] = useState(0)
 
     const loggedUser = useSelector(state => state.MainReducer.loggedUser)
+    const lastSessionData = useSelector(state => state.MainReducer.lastSessionData)
 
     const _dispatch = useDispatch()
 
@@ -42,14 +43,17 @@ export const Results = () => {
             {charts.length > 0 ? charts[displayChart] : <ResultCharts getFullArr={getSessionCharts}/>}
             {charts.length > 0 ?
             <div style={{marginTop: 20}}>
-                {loggedUser.email === 'student' ? 
+                {loggedUser.userType === 'student' ? 
                     <ButtonType onClick={() => navigate('/Recommendations')}>
                         Continue To Recommendations For Activity
                     </ButtonType>
                     :
+                    !lastSessionData.isBroken ?
                     <ButtonType onClick={() => navigate('/EducationalActivity')}>
                         Check Learning Activity
-                    </ButtonType>}
+                    </ButtonType>
+                    :
+                    null}
             </div>
             : 
             null }  
