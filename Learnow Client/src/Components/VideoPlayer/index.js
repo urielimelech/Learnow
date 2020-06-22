@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import 'react-toastify/dist/ReactToastify.min.css'
 
-import { WrapperVideo, Video } from './VideoStyle'
+import { WrapperVideo } from './VideoStyle'
 import { isVideoEnded, notificationVisible } from '../../Redux/Actions'
 import { socketToWebServer } from '../../SocketIoClient'
 import { ToastNotification } from '../Toastify'
 import { VideoWarning } from './VideoWarning'
 import { CheckMeasureAvarage } from '../CheckMeasureAvarage'
+import ReactPlayer from 'react-player'
 
 export const VideoPlayer = ({sessionVideo, sessionQuiz}) =>{
 
@@ -18,29 +19,16 @@ export const VideoPlayer = ({sessionVideo, sessionQuiz}) =>{
 
   const ip = useSelector(state => state.MainReducer.ip)
   const loggedUser = useSelector(state => state.MainReducer.loggedUser)
-  // const isNotificationVisible = useSelector(state => state.MainReducer.isNotificationVisible)
   const activity = useSelector(state => state.MainReducer.chooseActivity)
 
   const answerTimeInVideo = sessionQuiz.questions.map(elem => {
     return Number(elem.timeOfAnswerInVideoBySeconds)
   }).sort( (a,b) => a-b )
-  
-  /**
-   * remove listeners for data to client on unmount component
-   */
-  useEffect(() => {
-    return () => socketToWebServer.off('data to client')
-  },[])
 
   useEffect(() => {
     if(videoState)
       emitWhenAnswerOccuredInVideo()
   },[videoState])
-
-  // useEffect(() => {
-  //   if (!isNotificationVisible)
-  //     setWatchVideoWarning(null)
-  // },[isNotificationVisible])
 
   const emitWhenAnswerOccuredInVideo = () => {
     if (Math.floor(videoState.playedSeconds) === answerTimeInVideo[index]) {
@@ -59,9 +47,6 @@ export const VideoPlayer = ({sessionVideo, sessionQuiz}) =>{
   const onStartVideo = () => {
     const email = loggedUser.email
     socketToWebServer.emit('ready for data stream', ({ip: ip, email: email, activity: activity}))
-    socketToWebServer.on('data to client', data => {
-      console.log(data)
-    })
   }
 
   const onEndVideo = () => {
@@ -74,7 +59,7 @@ export const VideoPlayer = ({sessionVideo, sessionQuiz}) =>{
   }
 
   return  <WrapperVideo>
-            <Video
+            <ReactPlayer
               url={sessionVideo}
               controls={true}
               onStart = {onStartVideo}

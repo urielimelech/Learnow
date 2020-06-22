@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import { VideoPlayer } from '../VideoPlayer'
 import { Quiz } from '../Quiz'
 import { Loading } from '../Loading'
+import { LiveChart } from './LiveChart'
 
 export const StudentSession = () => {
 
@@ -13,10 +14,13 @@ export const StudentSession = () => {
     return (
         <div>
             {session ? 
-                IsVideoEnded ? 
-                    <Quiz sessionQuiz={session.quizSummary}/>
-                :
-                    <VideoPlayer sessionVideo={session.quizSummary.videoUrl} sessionQuiz={session.quizSummary}/>
+                <div>
+                    {IsVideoEnded ? 
+                        <Quiz sessionQuiz={session.quizSummary}/>
+                    :
+                        <VideoPlayer sessionVideo={session.quizSummary.videoUrl} sessionQuiz={session.quizSummary}/>}
+                    <LiveChart/>
+                </div>
             :
                 <Loading/>}
         </div>
