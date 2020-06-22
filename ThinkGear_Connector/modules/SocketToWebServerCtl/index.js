@@ -27,6 +27,7 @@ export const WebServerSocketController = ip => {
     socketToWebServer.on('disconnect', () => {
         neuroskySocket.write(JSON.stringify(recordingCommands.stop_recording))
         neuroskySocket.end()
+        neuroskySocket.removeAllListeners()
         neuroskySocket.destroy()
         TGC.kill()
     })
@@ -38,6 +39,7 @@ export const WebServerSocketController = ip => {
         socketToWebServer.emit('disconnected sensor', ip)
         neuroskySocket.write(JSON.stringify(recordingCommands.stop_recording))
         neuroskySocket.end()
+        neuroskySocket.removeAllListeners()
         neuroskySocket.destroy()
         TGC.kill()
     })
@@ -92,6 +94,7 @@ export const WebServerSocketController = ip => {
         socketToWebServer.emit('session ended from headset', ip)
         neuroskySocket.write(JSON.stringify(recordingCommands.stop_recording))
         neuroskySocket.end()
+        neuroskySocket.removeAllListeners()
         neuroskySocket.destroy()
         TGC.kill()
     })
@@ -100,6 +103,7 @@ export const WebServerSocketController = ip => {
     socketToWebServer.on('session ended by quiz', () => {
         neuroskySocket.write(JSON.stringify(recordingCommands.stop_recording))
         neuroskySocket.end()
+        neuroskySocket.removeAllListeners()
         neuroskySocket.destroy()
         socketToWebServer.off('session ended by quiz')
         TGC.kill()

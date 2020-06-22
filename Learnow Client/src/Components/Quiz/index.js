@@ -19,7 +19,6 @@ export const Quiz = ({sessionQuiz}) => {
         _dispatch(sessionEnded(true))
         _dispatch(isConnectedToRoom(false))
         _dispatch(isVideoEnded(false))
-        socketToWebServer.off('data to client')
         socketToWebServer.off('last ended session')
     }
 
@@ -27,10 +26,7 @@ export const Quiz = ({sessionQuiz}) => {
         socketToWebServer.on('last ended session', sessionData => {
             _dispatch(getLastSessionData(sessionData))
         })
-        socketToWebServer.on('data to client', data => {
-            console.log(data)
-        })
-        return (() => loggedUser.userType !== 'student' ? disconnectFromWebServer() : null)
+        return () => loggedUser.userType !== 'student' ? disconnectFromWebServer() : null
     },[])
 
     const turnOffIsVideoEnded = () => {

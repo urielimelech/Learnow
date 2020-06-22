@@ -14,7 +14,6 @@ const getComputerIp = async (serial) => {
         if (chainedIP !== '') {
             socketToWebServer.emit('new TGC connection', chainedIP)
         }
-        return result.data
     }
     catch (e){
         console.log('catch', e)
@@ -41,6 +40,7 @@ export const getIP = async (req, res, next) => {
     }
     catch (e){
         console.log('error get ip', e)
+        return res.status(404).json({error: e})
     }
     
 }
