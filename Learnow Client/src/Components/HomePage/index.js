@@ -7,6 +7,8 @@ import { navigate } from 'hookrouter'
 import { session, chooseActivity, updateFitContent } from '../../Redux/Actions/'
 import { HomePageCards, WrapperCards, StyledCardComponent } from './HomePageStyle'
 import { ResearchUser } from '../ResearchUser'
+import { BreakSessionDialog } from '../BreakSessionDialog/BreakSessionDialog'
+
 
 export const HomePage = () => {
     
@@ -39,6 +41,7 @@ export const HomePage = () => {
 
     return loggedUser.userType === 'student' ? 
         <div>
+            <BreakSessionDialog/>
             <ActivitySelection/>
             <WrapperCards>{sessionActivity ? renderSession(sessionActivity) : null}</WrapperCards>
         </div>
