@@ -59,6 +59,17 @@ module.exports = {
         }, err =>{
             res.status(404).send(`{"Failure": "No Documents Were Found"}`);
         });
+    },
+    getUserLastSession: async (req, res) => {
+        const userEmail = req.query.userEmail
+        await Session.find({userEmail:userEmail}).then(result => {
+            result.sort((a,b) => a.startTimeStamp < b.startTimeStamp ? 1 : -1)
+            if(result.length){
+                res.send(JSON.stringify(result[0]));
+            }
+            else res.status(404).send(`{"Failure": "No Documents Were Found"}`)
+        }, err =>{
+            res.status(404).send(`{"Failure": "No Documents Were Found"}`)
+        })
     }
 }
-

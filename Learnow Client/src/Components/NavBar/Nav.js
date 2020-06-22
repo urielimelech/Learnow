@@ -102,6 +102,7 @@ export const Nav = ({page}) => {
                         </Button>
                         <Button className="nav-link" style={{backgroundColor: 'none'}} onClick={() =>{
                             _dispatch(updateStudentForResearch(null))
+                            setBarStyle(false)
                             navigate('/Home')
                             }}>
                             <HomeIcon style={{color: '#343A40'}}/>
