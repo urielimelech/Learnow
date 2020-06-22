@@ -14,6 +14,7 @@ export const UserSideBar = () => {
 
     const loggedUser = useSelector(state => state.MainReducer.loggedUser)
     const studentForResearch = useSelector(state => state.MainReducer.studentForResearch)
+    const lastSessionData = useSelector(state => state.MainReducer.lastSessionData)
     const iconColor = {color: '#dddddd'}
     const [navCatagory, setNavCatagory] = useState(null)
     const chosenNavButtonColor = '#35C2C0'
@@ -130,19 +131,22 @@ export const UserSideBar = () => {
                             <TextType>Effective Recommendations</TextType>
                             <StarsIcon style={iconColor} fontSize='large'/>
                         </StyledSideBarButton>
-                        <StyledSideBarButton 
-                            style={{
-                                color: '#dddddd', 
-                                justifyContent: 'space-between',
-                                backgroundColor: navCatagory === 'EducationalActivity' ? chosenNavButtonColor : null
-                            }} 
-                            onClick={() => {
-                                setNavCatagory('EducationalActivity')
-                                navigate('/EducationalActivity')
-                            }}>
-                            <TextType>Session Educational Activity</TextType>
-                            <BallotIcon style={iconColor} fontSize='large'/>
-                        </StyledSideBarButton>
+                        {!lastSessionData.isBroken ?
+                            <StyledSideBarButton 
+                                style={{
+                                    color: '#dddddd', 
+                                    justifyContent: 'space-between',
+                                    backgroundColor: navCatagory === 'EducationalActivity' ? chosenNavButtonColor : null
+                                }} 
+                                onClick={() => {
+                                    setNavCatagory('EducationalActivity')
+                                    navigate('/EducationalActivity')
+                                }}>
+                                <TextType>Session Educational Activity</TextType>
+                                <BallotIcon style={iconColor} fontSize='large'/>
+                            </StyledSideBarButton>
+                            :
+                            null}
                         <StyledSideBarButton 
                             style={{
                                 color: '#dddddd', 

@@ -15,6 +15,7 @@ export const IconSideBar = () => {
     const iconColor = {color: '#dddddd'}
     const loggedUser = useSelector(state => state.MainReducer.loggedUser)
     const studentForResearch = useSelector(state => state.MainReducer.studentForResearch)
+    const lastSessionData = useSelector(state => state.MainReducer.lastSessionData)
     const [navCatagory, setNavCatagory] = useState(null)
     const chosenNavButtonColor = '#35C2C0'
     const _dispatch = useDispatch()
@@ -96,16 +97,19 @@ export const IconSideBar = () => {
                             }}>
                             <StarsIcon style={iconColor} fontSize='large'/>
                         </StyledLogoButton>
-                        <StyledLogoButton
-                            style={{
-                                backgroundColor: navCatagory === 'EducationalActivity' ? chosenNavButtonColor : null
-                            }}
-                            onClick={() => {
-                                setNavCatagory('EducationalActivity')
-                                navigate('/EducationalActivity')
-                            }}>
-                            <BallotIcon style={iconColor} fontSize='large'/>
-                        </StyledLogoButton>
+                        {!lastSessionData.isBroken ?
+                            <StyledLogoButton
+                                style={{
+                                    backgroundColor: navCatagory === 'EducationalActivity' ? chosenNavButtonColor : null
+                                }}
+                                onClick={() => {
+                                    setNavCatagory('EducationalActivity')
+                                    navigate('/EducationalActivity')
+                                }}>
+                                <BallotIcon style={iconColor} fontSize='large'/>
+                            </StyledLogoButton>
+                            :
+                            null}
                         <StyledLogoButton 
                             style={{
                                 backgroundColor: navCatagory === 'History' ? chosenNavButtonColor : null
