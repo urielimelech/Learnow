@@ -25,12 +25,13 @@ app.use((req, res, next) => {
 });
 
 /** Session routes */
-app.get('/getAllSessions', sessionCtl.getAllSessions);
-app.post('/addSession', sessionCtl.addSession);
+app.get('/getAllSessions', sessionCtl.getAllSessions)
+app.post('/addSession', sessionCtl.addSession)
+app.get('/getUserLastSession', sessionCtl.getUserLastSession)
 
 /** User routes */
-app.get('/login', [userCtl.getUser, userConfig.getUserConfigByEmail, userHandler.login]);
-app.post('/register', [userCtl.addUser, userConfig.addUserConfig, userHandler.register]);
+app.get('/login', [userCtl.getUser, userConfig.getUserConfigByEmail, userHandler.login])
+app.post('/register', [userCtl.addUser, userConfig.addUserConfig, userHandler.register])
 app.get('/checkUserToken', middleware.checkToken)
 app.get('/getStudentData', [userCtl.getUser, userConfig.getUserConfigByEmail, userCtl.getStudentData])
 app.get('/getAllStudents', userCtl.getAllStudents)
@@ -44,9 +45,9 @@ app.post('/addComparisonResult', comparisonCtl.addComparisonResult)
 app.get('/getAllComparisonResult', comparisonCtl.getAllComparisonResult)
 
 const server = app.listen(port, () => {
-    console.log(`listening on port ${port}`);
-});
+    console.log(`listening on port ${port}`)
+})
 
 app.all('*', (req, res) => {
     res.status(404).send(`{"success": false, "message": "Bad Route"}`)
-});
+})
