@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { navigate } from 'hookrouter'
 import { StyledLogoButton, SideBarButtonsContainer, StyledUserSideBar, StyledSideBarButton } from './StyledSideBar'
@@ -15,11 +15,18 @@ export const UserSideBar = () => {
     const loggedUser = useSelector(state => state.MainReducer.loggedUser)
     const studentForResearch = useSelector(state => state.MainReducer.studentForResearch)
     const iconColor = {color: '#dddddd'}
+    const [navCatagory, setNavCatagory] = useState(null)
+    const chosenNavButtonColor = '#35C2C0'
 
     return (
         <StyledUserSideBar>
-            <StyledLogoButton onClick={() => navigate('/Home')} style={{alignSelf:'center'}}>
-                <img src={require('../../images/learnow-icon.png')}/>
+            <StyledLogoButton 
+                onClick={() =>{ 
+                    setNavCatagory('Home')
+                    navigate('/Home')
+                }} 
+                style={{alignSelf:'center'}}>
+                    <img src={require('../../images/learnow-icon.png')}/>
             </StyledLogoButton>
             {loggedUser.userType ? 
                 <StyledLogoButton style={{height: '10rem', width: '10rem', display: 'flex', alignSelf: 'center', marginTop: '2rem'}} onClick={() => navigate('/Home')}>
@@ -40,15 +47,42 @@ export const UserSideBar = () => {
                 null}
             {loggedUser.userType === 'student' ? 
                 <SideBarButtonsContainer isUserConnected={loggedUser.userType ? true : false}>
-                    <StyledSideBarButton style={{color: '#dddddd', justifyContent: 'space-between'}} onClick={() => navigate('/Results')}>
+                    <StyledSideBarButton 
+                        style={{
+                            color: '#dddddd',
+                            justifyContent: 'space-between',
+                            backgroundColor: navCatagory === 'Results' ? chosenNavButtonColor : null
+                        }} 
+                        onClick={() => {
+                            setNavCatagory('Results')
+                            navigate('/Results')
+                        }}>
                         <TextType>Session Results</TextType>
                         <EqualizerIcon style={iconColor} fontSize='large'/>
                     </StyledSideBarButton>
-                    <StyledSideBarButton style={{color: '#dddddd', justifyContent: 'space-between'}} onClick={() => navigate('/Recommendations')}>
+                    <StyledSideBarButton 
+                        style={{
+                            color: '#dddddd', 
+                            justifyContent: 'space-between', 
+                            backgroundColor: navCatagory === 'Recommendations' ? chosenNavButtonColor : null
+                        }} 
+                        onClick={() => {
+                            setNavCatagory('Recommendations')
+                            navigate('/Recommendations')
+                        }}>
                         <TextType>Effective Recommendations</TextType>
                         <EventNoteIcon style={iconColor} fontSize='large'/>
                     </StyledSideBarButton>
-                    <StyledSideBarButton style={{color: '#dddddd', justifyContent: 'space-between'}} onClick={() => navigate('/History')}>
+                    <StyledSideBarButton 
+                        style={{
+                            color: '#dddddd', 
+                            justifyContent: 'space-between',
+                            backgroundColor: navCatagory === 'History' ? chosenNavButtonColor : null
+                        }} 
+                        onClick={() => {
+                            setNavCatagory('History')
+                            navigate('/History')
+                        }}>
                         <TextType>Sessions History</TextType>
                         <HistoryIcon style={iconColor} fontSize='large'/>
                     </StyledSideBarButton>
@@ -57,27 +91,81 @@ export const UserSideBar = () => {
                 loggedUser.userType === 'researcher' ?
                 studentForResearch ? 
                     <SideBarButtonsContainer isUserConnected={loggedUser.userType ? true : false}>
-                        <StyledSideBarButton style={{color: '#dddddd', justifyContent: 'space-between'}} onClick={() => navigate('/Results')}>
+                        <StyledSideBarButton 
+                            style={{
+                                color: '#dddddd', 
+                                justifyContent: 'space-between',
+                                backgroundColor: navCatagory === 'Results' ? chosenNavButtonColor : null
+                            }} 
+                            onClick={() => {
+                                setNavCatagory('Results')
+                                navigate('/Results')
+                            }}>
                             <TextType>Session Results</TextType>
                             <EqualizerIcon style={iconColor} fontSize='large'/>
                         </StyledSideBarButton>
-                        <StyledSideBarButton style={{color: '#dddddd', justifyContent: 'space-between'}} onClick={() => navigate('/Recommendations')}>
+                        <StyledSideBarButton 
+                            style={{
+                                color: '#dddddd', 
+                                justifyContent: 'space-between',
+                                backgroundColor: navCatagory === 'Recommendations' ? chosenNavButtonColor : null
+                            }} 
+                            onClick={() => {
+                                setNavCatagory('Recommendations')
+                                navigate('/Recommendations')
+                            }}>
                             <TextType>Recommendations</TextType>
                             <EventNoteIcon style={iconColor} fontSize='large'/>
                         </StyledSideBarButton>
-                        <StyledSideBarButton style={{color: '#dddddd', justifyContent: 'space-between'}} onClick={() => navigate('/EffetiveRecommendations')}>
+                        <StyledSideBarButton 
+                            style={{
+                                color: '#dddddd', 
+                                justifyContent: 'space-between',
+                                backgroundColor: navCatagory === 'EffetiveRecommendations' ? chosenNavButtonColor : null
+                            }} 
+                            onClick={() => {
+                                setNavCatagory('EffetiveRecommendations')
+                                navigate('/EffetiveRecommendations')
+                            }}>
                             <TextType>Effective Recommendations</TextType>
                             <StarsIcon style={iconColor} fontSize='large'/>
                         </StyledSideBarButton>
-                        <StyledSideBarButton style={{color: '#dddddd', justifyContent: 'space-between'}} onClick={() => navigate('/EducationalActivity')}>
+                        <StyledSideBarButton 
+                            style={{
+                                color: '#dddddd', 
+                                justifyContent: 'space-between',
+                                backgroundColor: navCatagory === 'EducationalActivity' ? chosenNavButtonColor : null
+                            }} 
+                            onClick={() => {
+                                setNavCatagory('EducationalActivity')
+                                navigate('/EducationalActivity')
+                            }}>
                             <TextType>Session Educational Activity</TextType>
                             <BallotIcon style={iconColor} fontSize='large'/>
                         </StyledSideBarButton>
-                        <StyledSideBarButton style={{color: '#dddddd', justifyContent: 'space-between'}} onClick={() => navigate('/History')}>
+                        <StyledSideBarButton 
+                            style={{
+                                color: '#dddddd', 
+                                justifyContent: 'space-between',
+                                backgroundColor: navCatagory === 'History' ? chosenNavButtonColor : null
+                            }} 
+                            onClick={() => {
+                                setNavCatagory('History')
+                                navigate('/History')
+                            }}>
                             <TextType>Sessions History</TextType>
                             <HistoryIcon style={iconColor} fontSize='large'/>
                         </StyledSideBarButton>
-                        <StyledSideBarButton style={{color: '#dddddd', justifyContent: 'space-between'}} onClick={() => navigate('/Configuration')}>
+                        <StyledSideBarButton 
+                            style={{
+                                color: '#dddddd', 
+                                justifyContent: 'space-between',
+                                backgroundColor: navCatagory === 'Configuration' ? chosenNavButtonColor : null
+                            }} 
+                            onClick={() => {
+                                setNavCatagory('Configuration')
+                                navigate('/Configuration')
+                            }}>
                             <TextType>User Settings</TextType>
                             <SettingsIcon style={iconColor} fontSize='large'/>
                         </StyledSideBarButton>
