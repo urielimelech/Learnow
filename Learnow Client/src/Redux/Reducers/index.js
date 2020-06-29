@@ -17,7 +17,8 @@ import {
   WINDOW_WIDTH,
   WINDOW_HEIGHT,
   FIT_CONTENT,
-  USER_CARDS
+  USER_CARDS,
+  IS_SEARCHING
 } from '../ActionTypes'
 
 const initialState = {
@@ -38,7 +39,8 @@ const initialState = {
   windowWidth: 0,
   windowHeight: 0,
   fitContent: false,
-  userCards: null
+  userCards: null,
+  isSearching: false
 }
 
 export default (state = initialState, action) => {
@@ -138,6 +140,11 @@ export default (state = initialState, action) => {
       return {
         ...state,
         userCards: action.data
+      }
+      case IS_SEARCHING:
+      return {
+        ...state,
+        isSearching: action.data
       }
     default:
       return state
