@@ -74,7 +74,7 @@ export const SessionList = ({userSessions, email, studentConfig}) => {
     /** list of session cards components */
     const duoComparation = () => {
         userSessions.sort((aTimeStamp, bTimeStamp) => Number(bTimeStamp.startTimeStamp) - Number(aTimeStamp.startTimeStamp))
-        const tempResearcherSessions = userSessions.map((session, index) => {
+        const tempResearcherSessions = userSessions.map(session => {
             if (session.isBroken === true)
                 return
             return session
