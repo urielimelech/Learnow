@@ -17,7 +17,7 @@ height: 100%;
 export const SideBarButtonsContainer = styled.div`
 display: flex;
 flex-direction: column;
-margin-top: ${props => props.isUserConnected ? '3' : '15'}rem;
+margin-top: ${props => props.isUserConnected ? '3' : '5.3'}rem;
 `
 
 export const StyledLogoButton = styled(Button)`

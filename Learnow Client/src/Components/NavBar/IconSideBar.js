@@ -31,108 +31,118 @@ export const IconSideBar = () => {
                 <img style={{width: 60, height: 60}} src={require('../../images/learnowIcon.png')}/>
             </StyledLogoButton>
             {loggedUser.userType === 'student' ? 
-                <SideBarButtonsContainer>
-                    <StyledLogoButton 
-                        style={{
-                            backgroundColor: navCatagory === 'Results' ? chosenNavButtonColor : null
-                        }}
-                        onClick={() => {
-                            setNavCatagory('Results')
-                            navigate('/Results')
-                        }}>
-                        <EqualizerIcon style={iconColor} fontSize='large'/>
+                <div>
+                    <StyledLogoButton style={{marginTop: '1rem'}} >
+                        <img style={{width: 60, height: 60}} src={require('../../images/studenticon.png')}/>
                     </StyledLogoButton>
-                    <StyledLogoButton
-                        style={{
-                            backgroundColor: navCatagory === 'Recommendations' ? chosenNavButtonColor : null
-                        }}
-                        onClick={() => {
-                            setNavCatagory('Recommendations')
-                            navigate('/Recommendations')
-                        }}>
-                        <EventNoteIcon style={iconColor} fontSize='large'/>
-                    </StyledLogoButton>
-                    <StyledLogoButton
-                        style={{
-                            backgroundColor: navCatagory === 'History' ? chosenNavButtonColor : null
-                        }} 
-                        onClick={() => {
-                            setNavCatagory('History')
-                            navigate('/History')
-                        }}>
-                        <HistoryIcon style={iconColor} fontSize='large'/>
-                    </StyledLogoButton>
-                </SideBarButtonsContainer>
-            :
-                loggedUser.userType === 'researcher' ? 
-                studentForResearch ?
                     <SideBarButtonsContainer>
                         <StyledLogoButton 
                             style={{
                                 backgroundColor: navCatagory === 'Results' ? chosenNavButtonColor : null
-                            }} 
+                            }}
                             onClick={() => {
                                 setNavCatagory('Results')
                                 navigate('/Results')
                             }}>
                             <EqualizerIcon style={iconColor} fontSize='large'/>
                         </StyledLogoButton>
-                        <StyledLogoButton 
+                        <StyledLogoButton
                             style={{
                                 backgroundColor: navCatagory === 'Recommendations' ? chosenNavButtonColor : null
-                            }} 
+                            }}
                             onClick={() => {
                                 setNavCatagory('Recommendations')
                                 navigate('/Recommendations')
-                                }}>
+                            }}>
                             <EventNoteIcon style={iconColor} fontSize='large'/>
                         </StyledLogoButton>
-                        <StyledLogoButton 
-                            style={{
-                                backgroundColor: navCatagory === 'EffetiveRecommendations' ? chosenNavButtonColor : null
-                            }} 
-                            onClick={() => {
-                                setNavCatagory('EffetiveRecommendations')
-                                navigate('/EffetiveRecommendations')
-                            }}>
-                            <StarsIcon style={iconColor} fontSize='large'/>
-                        </StyledLogoButton>
-                        {!lastSessionData.isBroken ?
-                            <StyledLogoButton
-                                style={{
-                                    backgroundColor: navCatagory === 'EducationalActivity' ? chosenNavButtonColor : null
-                                }}
-                                onClick={() => {
-                                    setNavCatagory('EducationalActivity')
-                                    navigate('/EducationalActivity')
-                                }}>
-                                <BallotIcon style={iconColor} fontSize='large'/>
-                            </StyledLogoButton>
-                            :
-                            null}
-                        <StyledLogoButton 
+                        <StyledLogoButton
                             style={{
                                 backgroundColor: navCatagory === 'History' ? chosenNavButtonColor : null
-                            }}
+                            }} 
                             onClick={() => {
                                 setNavCatagory('History')
                                 navigate('/History')
                             }}>
                             <HistoryIcon style={iconColor} fontSize='large'/>
                         </StyledLogoButton>
-                        <StyledLogoButton 
-                            style={{
-                                backgroundColor: navCatagory === 'Configuration' ? chosenNavButtonColor : null
-                            }}
-                            onClick={() => {
-                                setNavCatagory('Configuration')
-                                navigate('/Configuration')
-                            }}>
-                            <SettingsIcon style={iconColor} fontSize='large'/>
-                        </StyledLogoButton>
                     </SideBarButtonsContainer>
-                : 
-                    null
+                </div>
+            :
+                loggedUser.userType === 'researcher' ? 
+                    <div>
+                        <StyledLogoButton style={{marginTop: '1rem'}} >
+                            <img style={{width: 60, height: 60}} src={require('../../images/researchericon.png')}/>
+                        </StyledLogoButton>
+                        {studentForResearch ?
+                            <SideBarButtonsContainer>
+                                <StyledLogoButton 
+                                    style={{
+                                        backgroundColor: navCatagory === 'Results' ? chosenNavButtonColor : null
+                                    }} 
+                                    onClick={() => {
+                                        setNavCatagory('Results')
+                                        navigate('/Results')
+                                    }}>
+                                    <EqualizerIcon style={iconColor} fontSize='large'/>
+                                </StyledLogoButton>
+                                <StyledLogoButton 
+                                    style={{
+                                        backgroundColor: navCatagory === 'Recommendations' ? chosenNavButtonColor : null
+                                    }} 
+                                    onClick={() => {
+                                        setNavCatagory('Recommendations')
+                                        navigate('/Recommendations')
+                                        }}>
+                                    <EventNoteIcon style={iconColor} fontSize='large'/>
+                                </StyledLogoButton>
+                                <StyledLogoButton 
+                                    style={{
+                                        backgroundColor: navCatagory === 'EffetiveRecommendations' ? chosenNavButtonColor : null
+                                    }} 
+                                    onClick={() => {
+                                        setNavCatagory('EffetiveRecommendations')
+                                        navigate('/EffetiveRecommendations')
+                                    }}>
+                                    <StarsIcon style={iconColor} fontSize='large'/>
+                                </StyledLogoButton>
+                                {!lastSessionData.isBroken ?
+                                    <StyledLogoButton
+                                        style={{
+                                            backgroundColor: navCatagory === 'EducationalActivity' ? chosenNavButtonColor : null
+                                        }}
+                                        onClick={() => {
+                                            setNavCatagory('EducationalActivity')
+                                            navigate('/EducationalActivity')
+                                        }}>
+                                        <BallotIcon style={iconColor} fontSize='large'/>
+                                    </StyledLogoButton>
+                                    :
+                                    null}
+                                <StyledLogoButton 
+                                    style={{
+                                        backgroundColor: navCatagory === 'History' ? chosenNavButtonColor : null
+                                    }}
+                                    onClick={() => {
+                                        setNavCatagory('History')
+                                        navigate('/History')
+                                    }}>
+                                    <HistoryIcon style={iconColor} fontSize='large'/>
+                                </StyledLogoButton>
+                                <StyledLogoButton 
+                                    style={{
+                                        backgroundColor: navCatagory === 'Configuration' ? chosenNavButtonColor : null
+                                    }}
+                                    onClick={() => {
+                                        setNavCatagory('Configuration')
+                                        navigate('/Configuration')
+                                    }}>
+                                    <SettingsIcon style={iconColor} fontSize='large'/>
+                                </StyledLogoButton>
+                            </SideBarButtonsContainer>
+                        : 
+                            null}
+                    </div>
                 :
                 null
                 }

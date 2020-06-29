@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { navigate } from 'hookrouter'
 import { StyledLogoButton, SideBarButtonsContainer, StyledUserSideBar, StyledSideBarButton } from './StyledSideBar'
@@ -30,15 +30,15 @@ export const UserSideBar = () => {
                     <img src={require('../../images/learnow-icon.png')}/>
             </StyledLogoButton>
             {loggedUser.userType ? 
-                <StyledLogoButton style={{height: '10rem', width: '10rem', display: 'flex', alignSelf: 'center', marginTop: '2rem'}} onClick={() => navigate('/Home')}>
+                <StyledLogoButton style={{height: '5rem', width: '5rem', display: 'flex', alignSelf: 'center', marginTop: '2rem'}} onClick={() => navigate('/Home')}>
                     {loggedUser.userType === 'student' ? 
                     <div>
-                        <img style={{width: '10rem', height: '10rem'}} src={require('../../images/student_img.png')}/>
+                        <img style={{width: '5rem', height: '5rem'}} src={require('../../images/studenticon.png')}/>
                         <TextType style={{color: '#ffffff', width: 280, padding: 7}}> Welcome {loggedUser.name}</TextType>
                     </div> 
                     :
                     <div>
-                        <img style={{width: '10rem', height: '10rem'}} src={require('../../images/human-resources.png')}/>
+                        <img style={{width: '5rem', height: '5rem'}} src={require('../../images/researchericon.png')}/>
                         <TextType style={{color: '#ffffff', width: 280, padding: 7}}> Welcome {loggedUser.name}</TextType>
                     </div>
                         
