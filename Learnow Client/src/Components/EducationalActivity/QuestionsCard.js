@@ -2,7 +2,7 @@ import React from 'react'
 import { Loading } from '../Loading'
 import { useSelector } from 'react-redux'
 import { CardComponent } from '../CardComponent'
-import { StyledCardComponent } from './EducationalActivityStyle'
+import { StyledCardComponent, WrapperQuestionsCard } from './EducationalActivityStyle'
 
 export const QuestionsCard = () => {
 
@@ -40,7 +40,7 @@ export const QuestionsCard = () => {
         })
     }
 
-    return <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', marginTop: 30}}>
+    return <div style={WrapperQuestionsCard}>
         {Object.keys(lastSessionData).length > 0 ? renderQuestionsCards() : <Loading/>}
     </div>
     

@@ -3,6 +3,8 @@ import { improvmentCharts } from './ImprovmentCharts'
 import { RadioChooseCharts } from '../RadioChooseCharts'
 import { StyledComparisonComponent } from './ComparisonComponentStyle'
 import { useSelector } from 'react-redux'
+import { ButtonType } from '../ButtonType/ButtonType'
+import { navigate } from 'hookrouter'
 
 export const ComparisonComponent = ({comparisonResult}) => {
 
@@ -30,6 +32,7 @@ export const ComparisonComponent = ({comparisonResult}) => {
         <StyledComparisonComponent>
             {loggedUser.userType === 'researcher' ? chartChoose : null}
             {chart ? chart[displayChart] : chart}
+            <ButtonType onClick={()=> navigate('/Recommendations')}>CHECK MOST EFFECTIVE FEEDBACK</ButtonType>
         </StyledComparisonComponent>
     )
 }

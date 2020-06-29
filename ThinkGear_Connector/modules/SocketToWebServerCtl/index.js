@@ -25,6 +25,7 @@ export const WebServerSocketController = ip => {
 
     /** kill the proccess of TGC when the sensors disconnect */
     socketToWebServer.on('disconnect', () => {
+        console.log('web server disconnection')
         neuroskySocket.write(JSON.stringify(recordingCommands.stop_recording))
         neuroskySocket.end()
         neuroskySocket.removeAllListeners()
@@ -91,6 +92,7 @@ export const WebServerSocketController = ip => {
 
     /** on error from sensors, disconnect */
     neuroskySocket.on('error', (err) => {
+        console.log('neurosky error')
         socketToWebServer.emit('session ended from headset', ip)
         neuroskySocket.write(JSON.stringify(recordingCommands.stop_recording))
         neuroskySocket.end()
@@ -101,6 +103,7 @@ export const WebServerSocketController = ip => {
 
     /** on end of quiz, terminates process and send data to DB */
     socketToWebServer.on('session ended by quiz', () => {
+        console.log('web server end of session')
         neuroskySocket.write(JSON.stringify(recordingCommands.stop_recording))
         neuroskySocket.end()
         neuroskySocket.removeAllListeners()
