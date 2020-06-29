@@ -15,16 +15,16 @@ import { ButtonType } from '../ButtonType/ButtonType'
 
 export const MeasureDialog = () => {
   const [open, setOpen] = useState(false)
-  const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const theme = useTheme()
+  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const _dispatch = useDispatch()
 
   const loggedUser = useSelector(state => state.MainReducer.loggedUser)
   const ip = useSelector(state => state.MainReducer.ip)
 
   const handleClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   useEffect(()=>{
       setOpen(true)

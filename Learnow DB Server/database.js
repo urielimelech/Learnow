@@ -5,13 +5,11 @@ const mongoose    = require('mongoose'),
     url = consts.MLAB_URL,
       options     = {
             useNewUrlParser:    true,
-            // useCreateIndex:     true,
             useUnifiedTopology: true,
             // user:               process.env.DB_USER,
             // pass:               process.env.DB_PASS,
             user:               consts.DB_USER,
             pass:              consts.DB_PASS,
-            // autoReconnect :true
     };
 
 mongoose.connect(url ,options).then(

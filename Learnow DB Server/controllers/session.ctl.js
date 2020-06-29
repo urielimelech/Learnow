@@ -1,5 +1,4 @@
 const   Session      = require('../models/session.js')
-        // ObjectId  = require('mongoose').Types.ObjectId;
 
 module.exports = {
     addSession: (req, res) => {
@@ -43,21 +42,21 @@ module.exports = {
         })
         session.save().then( (result) => {
                 console.log(result)
-                res.status(200).send(`{"result": "Success", "params": ${JSON.stringify(result)}}`);
+                res.status(200).send(`{"result": "Success", "params": ${JSON.stringify(result)}}`)
             },
             (err) => {
-                console.log(err);
-                res.status(404).send(`{"result": "Failure", "params":{"startTimeStamp": "${startTimeStamp}", "endTimeStamp": "${endTimeStamp}"}, "error": ${JSON.stringify(err)}}`);
+                console.log(err)
+                res.status(404).send(`{"result": "Failure", "params":{"startTimeStamp": "${startTimeStamp}", "endTimeStamp": "${endTimeStamp}"}, "error": ${JSON.stringify(err)}}`)
         })
     },
     getAllSessions: async (req, res) => {
         const userEmail = req.query.userEmail
         await Session.find({userEmail:userEmail}).then(result => {
             if(result.length)
-                res.send(JSON.stringify(result));
-            else res.status(404).send(`{"Failure": "No Documents Were Found"}`);
+                res.status(200).send(JSON.stringify(result))
+            else res.status(404).send(`{"Failure": "No Sessions Were Found"}`)
         }, err =>{
-            res.status(404).send(`{"Failure": "No Documents Were Found"}`);
+            res.status(404).send(`{"Failure": "No Documents Were Found"}`)
         });
     },
     getUserLastSession: async (req, res) => {
@@ -65,9 +64,9 @@ module.exports = {
         await Session.find({userEmail:userEmail}).then(result => {
             result.sort((a,b) => a.startTimeStamp < b.startTimeStamp ? 1 : -1)
             if(result.length){
-                res.send(JSON.stringify(result[0]));
+                res.status(200).send(JSON.stringify(result[0]))
             }
-            else res.status(404).send(`{"Failure": "No Documents Were Found"}`)
+            else res.status(404).send(`{"Failure": "No Sessions Were Found"}`)
         }, err =>{
             res.status(404).send(`{"Failure": "No Documents Were Found"}`)
         })

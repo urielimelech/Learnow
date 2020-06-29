@@ -1,11 +1,11 @@
 export const sessionConfig = () => {
     const config = {
-        comparator_diff_lowest_attention: 0,
-        comparator_diff_highest_attention: 0,
-        comparator_diff_lowest_meditation: 0,
-        comparator_diff_highest_meditation: 0,
-        comparator_diff_avarage_attention: 0,
-        comparator_diff_avarage_meditation: 0,
+        comparator_difference_lowest_attention: 0,
+        comparator_difference_highest_attention: 0,
+        comparator_difference_lowest_meditation: 0,
+        comparator_difference_highest_meditation: 0,
+        comparator_difference_avarage_attention: 0,
+        comparator_difference_avarage_meditation: 0,
 
         /** Threshold variables that define how the activity helped to improve the metrics 
          * attention and meditation between the compared sessions */

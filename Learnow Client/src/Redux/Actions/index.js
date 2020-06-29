@@ -17,7 +17,8 @@ import {
     WINDOW_WIDTH,
     WINDOW_HEIGHT,
     FIT_CONTENT,
-    USER_CARDS
+    USER_CARDS,
+    IS_SEARCHING
 } from '../ActionTypes'
 
 export const isVideoEnded = data => ({ type: IS_VIDEO_ENDED, data: data })
@@ -57,3 +58,5 @@ export const updateWindowHeight = windowHeight => ({type: WINDOW_HEIGHT, data: w
 export const updateFitContent = fitContent => ({type: FIT_CONTENT, data: fitContent})
 
 export const updateUserCards = userCards => ({type: USER_CARDS, data: userCards})
+
+export const setSearching = searching => ({type: IS_SEARCHING, data: searching})

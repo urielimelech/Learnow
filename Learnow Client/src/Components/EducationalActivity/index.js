@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import ReactPlayer from 'react-player'
 import { QuestionsCard } from './QuestionsCard'
 import { updateFitContent } from '../../Redux/Actions'
+import { WrapperReactPlayer } from './EducationalActivityStyle'
 
 
 export const EducationalActivity = () => {
@@ -15,7 +16,7 @@ export const EducationalActivity = () => {
         _dispatch(updateFitContent(true))
     },[])
    
-    return <div style={{ display: 'flex', flexDirection: 'column',alignItems: 'center', paddingTop: 30}}>
+    return <div style={WrapperReactPlayer}>
             <ReactPlayer 
                 url={ lastSessionData.quizData ? lastSessionData.quizData.videoUrl : null}
                 width={350}

@@ -3,7 +3,7 @@ import { navigate } from 'hookrouter'
 
 import { SliderComponent } from './SliderComponent'
 import { socketToWebServer } from '../../SocketIoClient'
-import { ConfigSliderWrapper, TextConfig, WrapperConfig, ButtonConfig } from './ConfigSliderStyle'
+import { ConfigSliderWrapper, WrapperConfig } from './ConfigSliderStyle'
 import { useDispatch } from 'react-redux'
 import { updateFitContent } from '../../Redux/Actions'
 import {ButtonType} from '../ButtonType/ButtonType'

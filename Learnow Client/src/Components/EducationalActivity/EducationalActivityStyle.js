@@ -17,3 +17,18 @@ export const StyledCardComponent = {
         width: 50
     }
 }
+
+export const WrapperReactPlayer = {
+    display: 'flex', 
+    flexDirection: 'column',
+    alignItems: 'center', 
+    paddingTop: 30
+}
+
+export const WrapperQuestionsCard = {
+    display: 'flex', 
+    flexDirection: 'row', 
+    justifyContent: 'center', 
+    marginTop: 30, 
+    flexWrap: 'wrap'
+}
