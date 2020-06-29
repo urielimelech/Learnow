@@ -73,7 +73,7 @@ export const SessionList = ({userSessions, email, studentConfig}) => {
 
     /** list of session cards components */
     const duoComparation = () => {
-        userSessions.sort((aTimeStamp, bTimeStamp) => Number(aTimeStamp.startTimeStamp) - Number(bTimeStamp.startTimeStamp))
+        userSessions.sort((aTimeStamp, bTimeStamp) => Number(bTimeStamp.startTimeStamp) - Number(aTimeStamp.startTimeStamp))
         const tempResearcherSessions = userSessions.map((session, index) => {
             if (session.isBroken === true)
                 return
@@ -113,19 +113,20 @@ export const SessionList = ({userSessions, email, studentConfig}) => {
     }
 
     const quadComparation = () => {
-        userSessions.sort((aTimeStamp, bTimeStamp) => Number(bTimeStamp.startTimeStamp) - Number(aTimeStamp.startTimeStamp) ? 1 : -1)
+        userSessions.sort((aTimeStamp, bTimeStamp) => Number(bTimeStamp.startTimeStamp) - Number(aTimeStamp.startTimeStamp))
         const tempResearcherSessions = userSessions.map((session, index) => {
             const nextSession = userSessions[index + 1]
             if (session.activity != 'None' && nextSession && nextSession.activity === 'None') {
                 if (session.isBroken === true)
                     return
-                return [session, nextSession]
+                if (nextSession.isBroken === false)
+                    return [session, nextSession]
             }
             else if (session.activity === 'None')
                 return
         })
         const researcherSessions = tempResearcherSessions.filter(elem => elem !== undefined)
-        researcherSessions.sort((aElem, bElem) => aElem[1].startTimeStamp - bElem[1].startTimeStamp ? -1 : 1)
+        researcherSessions.sort((aElem, bElem) => bElem[1].startTimeStamp - aElem[1].startTimeStamp)
         return researcherSessions.map((session, index) => {
             const date0 = new Date(session[1].startTimeStamp)
             const date1 = new Date(session[0].startTimeStamp)
