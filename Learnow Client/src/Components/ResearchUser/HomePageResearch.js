@@ -2,17 +2,19 @@ import React, { useEffect, useState } from 'react'
 import { CardComponent } from '../CardComponent'
 import { socketToWebServer } from '../../SocketIoClient'
 import { useDispatch, useSelector } from 'react-redux'
-import { setActivitiesCards, updateStudentForResearch, updateFitContent, updateUserCards } from '../../Redux/Actions'
+import { setActivitiesCards, updateStudentForResearch, updateFitContent, updateUserCards, setSearching } from '../../Redux/Actions'
 import axios from 'axios'
 import { dbURL } from '../../consts'
 import { StyledCardComponent } from './ResearchUserStyle'
 import { navigate } from 'hookrouter'
+import { WrapperHomePageResearcher } from './HomePageResearchStyle'
 
 export const HomePageResearch = ({data}) => {
 
     const _dispatch = useDispatch()
     const [studentsData, setStudentsData] = useState([])
     const studentForResearch = useSelector(state => state.MainReducer.studentForResearch)
+    const isSearching = useSelector(state => state.MainReducer.isSearching)
     const userCards = useSelector(state =>  state.MainReducer.userCards )
 
     const getAllStudents = () => {
@@ -33,7 +35,10 @@ export const HomePageResearch = ({data}) => {
     },[studentForResearch])
 
     useEffect(()=> {
-        getAllStudents()
+        if(!isSearching)
+            getAllStudents()
+        else
+            _dispatch(setSearching(false))
     },[])
 
     const getStudentData = (email) => {
@@ -45,7 +50,6 @@ export const HomePageResearch = ({data}) => {
             socketToWebServer.on('suggestions cards', data => {
                 _dispatch(setActivitiesCards(data))
             })
-            // setStudentForResearch(<HomePageResearch data={res.data}/>)
         })
         .catch(err => {
             console.log({err})
@@ -72,7 +76,7 @@ export const HomePageResearch = ({data}) => {
     }
 
     return (
-        <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', paddingTop: 20}}>
+        <div style={WrapperHomePageResearcher}>
              {userCards ? renderResearcherComponentsCards(userCards) : renderResearcherComponentsCards()}
         </div>
     )

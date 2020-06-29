@@ -11,7 +11,7 @@ import StudentIcon from '@material-ui/icons/School'
 import { useDispatch, useSelector } from 'react-redux'
 import { dbURL } from '../../consts'
 import { TextMessageToastify } from '../TextMessageToastify'
-import { updateStudentForResearch, updateUserCards } from '../../Redux/Actions'
+import { updateStudentForResearch, updateUserCards, setSearching } from '../../Redux/Actions'
 import { SideBar } from './SideBar'
 import { ButtonType } from '../ButtonType/ButtonType'
 import { TextType } from '../TextType/TextType'
@@ -66,7 +66,10 @@ export const Nav = ({page}) => {
     const getStudentData = () => {
         axios.get(`${dbURL}/getAllStudentsByStartsWith?_email=${email}`)
         .then(res => {
+            _dispatch(setSearching(true))
+            _dispatch(updateStudentForResearch(null))
             _dispatch(updateUserCards(res.data))
+            navigate('/Home')
         })
         .catch(err => {
             console.log({err})
@@ -75,19 +78,7 @@ export const Nav = ({page}) => {
     }
 
     const handleClick = () => {
-        // validateEmail()
         getStudentData()
-    }
-
-    const validateEmail = () => { 
-        const validEmailRegex = 
-        RegExp(/^(([^<>()\],;:\s@]+([^<>()\],;:\s@]+)*)|(.+))@(([^<>()[\],;:\s@]+\.)+[^<>()[\],;:\s@]{2,})$/i)
-        if(email.match(validEmailRegex)){
-            setError(false)          
-        }
-        else {
-            setError(true)
-        }
     }
 
     return (
