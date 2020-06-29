@@ -115,10 +115,10 @@ export const Feedback = () => {
         setSumImprovment(tempArray)
     }
   
-    const displayCards = () => {
-        if(loggedUser.userType === 'student')
+    const displayCards = () => {     
+        if (loggedUser.userType === 'student')
             socketToWebServer.emit('get all comparison', loggedUser.email)
-        else
+        else if (studentForResearch !== null)
             socketToWebServer.emit('get all comparison', studentForResearch.email)
     }
 
