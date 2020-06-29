@@ -30,7 +30,7 @@ module.exports = {
                 next()
             }
             else 
-            res.status(404).send(`{"success": false, "message": "No Documents Were Found"}`)
+            res.status(404).send(`{"success": false, "message": "User is not exist. Please sign up first."}`)
         }, err =>{
             res.status(404).send(`{"success": false, "message": "No Documents Were Found"}`)
         })
@@ -58,9 +58,9 @@ module.exports = {
                         userType: elem.userType,
                     }
                 })
-                res.send(JSON.stringify(allStudents))
+                res.status(200).send(JSON.stringify(allStudents))
             }
-            else res.status(404).send(`{"Failure": "No Documents Were Found"}`)
+            else res.status(404).send(`{"Failure": "No Students Were Found."}`)
         }, err =>{
             res.status(404).send(`{"Failure": "No Documents Were Found"}`)
         });
@@ -84,9 +84,9 @@ module.exports = {
                     return item !== undefined
                 })
 
-                res.send(JSON.stringify(allStudents))
+                res.status(200).send(JSON.stringify(allStudents))
             }
-            else res.status(404).send(`{"Failure": "No Documents Were Found"}`)
+            else res.status(404).send(`{"Failure": "No Students Were Found"}`)
         }, err =>{
             res.status(404).send(`{"Failure": "No Documents Were Found"}`)
         });

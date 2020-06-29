@@ -1,5 +1,4 @@
 const   UserConfig      = require('../models/userConfig.js')
-        // ObjectId  = require('mongoose').Types.ObjectId
 
 module.exports = {
     addUserConfig: async (req, res, next) => {
@@ -43,6 +42,6 @@ module.exports = {
         if (result)
             res.status(200).send(JSON.stringify(result))
         else   
-            res.status(400).send(`{"success": false,, "message": could not update configuration}`)
+            res.status(400).send(`{"success": false, "message": could not update configuration}`)
     }
 }
