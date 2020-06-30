@@ -18,7 +18,8 @@ import {
   WINDOW_HEIGHT,
   FIT_CONTENT,
   USER_CARDS,
-  IS_SEARCHING
+  IS_SEARCHING,
+  IS_SHOW_BREAK_DIALOG
 } from '../ActionTypes'
 
 const initialState = {
@@ -40,7 +41,8 @@ const initialState = {
   windowHeight: 0,
   fitContent: false,
   userCards: null,
-  isSearching: false
+  isSearching: false,
+  isShowBreakDialog: false
 }
 
 export default (state = initialState, action) => {
@@ -141,10 +143,15 @@ export default (state = initialState, action) => {
         ...state,
         userCards: action.data
       }
-      case IS_SEARCHING:
+    case IS_SEARCHING:
       return {
         ...state,
         isSearching: action.data
+      }
+    case IS_SHOW_BREAK_DIALOG:
+      return {
+        ...state,
+        isShowBreakDialog: action.data
       }
     default:
       return state

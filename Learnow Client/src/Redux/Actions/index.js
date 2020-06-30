@@ -18,7 +18,8 @@ import {
     WINDOW_HEIGHT,
     FIT_CONTENT,
     USER_CARDS,
-    IS_SEARCHING
+    IS_SEARCHING,
+    IS_SHOW_BREAK_DIALOG
 } from '../ActionTypes'
 
 export const isVideoEnded = data => ({ type: IS_VIDEO_ENDED, data: data })
@@ -60,3 +61,5 @@ export const updateFitContent = fitContent => ({type: FIT_CONTENT, data: fitCont
 export const updateUserCards = userCards => ({type: USER_CARDS, data: userCards})
 
 export const setSearching = searching => ({type: IS_SEARCHING, data: searching})
+
+export const setIsShowBreakDialog = showBreakDialog => ({type: IS_SHOW_BREAK_DIALOG, data: showBreakDialog})

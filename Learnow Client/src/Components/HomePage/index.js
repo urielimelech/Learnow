@@ -15,6 +15,7 @@ export const HomePage = () => {
     const _dispatch = useDispatch()
     const chosenActivity = useSelector(state=> state.MainReducer.chooseActivity)
     const loggedUser = useSelector(state=> state.MainReducer.loggedUser)
+    const isShowBreakDialog = useSelector(state => state.MainReducer.isShowBreakDialog)
 
     useEffect(() => {
         _dispatch(updateFitContent(true))
@@ -41,7 +42,7 @@ export const HomePage = () => {
 
     return loggedUser.userType === 'student' ? 
         <div>
-            <BreakSessionDialog/>
+            {isShowBreakDialog && <BreakSessionDialog/>}
             <ActivitySelection/>
             <WrapperCards>{sessionActivity ? renderSession(sessionActivity) : null}</WrapperCards>
         </div>

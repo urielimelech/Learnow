@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 import { Loading } from '../Loading'
 import { socketToWebServer } from '../../SocketIoClient'
 import { FlipCards } from './FlipCards'
 import { FeedbackChart } from './FeedbackChart'
+import { setIsShowBreakDialog } from '../../Redux/Actions'
 
 export const Feedback = () => {
 
@@ -15,6 +16,7 @@ export const Feedback = () => {
     const [allComparisonData, setAllComparisonData] = useState(null)
     const [howHelpfull, setHowHelpfull] = useState([])
     const [sumImprovment, setSumImprovment] = useState([])
+    const _dispatch = useDispatch()
  
     useEffect(() =>{
         if(howHelpfull.length > 0)
@@ -28,6 +30,7 @@ export const Feedback = () => {
     },[allComparisonData])
 
     useEffect(() => {
+        _dispatch(setIsShowBreakDialog(false))
         socketToWebServer.on('all comparison', (data) => {
             if(data) {
                 setAllComparisonData(data)

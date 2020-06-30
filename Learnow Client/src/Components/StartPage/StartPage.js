@@ -5,7 +5,7 @@ import { DialogLogin } from './DialogLogin'
 import { useCookies } from 'react-cookie'
 import { useSelector, useDispatch } from 'react-redux'
 import { navigate } from 'hookrouter'
-import { login, logout } from '../../Redux/Actions'
+import { login, logout, setIsShowBreakDialog } from '../../Redux/Actions'
 import { TextType } from '../TextType/TextType'
 
 export const StartPage = () => {
@@ -37,6 +37,7 @@ export const StartPage = () => {
 
     useEffect(() => {
         checkCookies()
+        _dispatch(setIsShowBreakDialog(true))
     }, [])
 
     const checkCookies = () => {
