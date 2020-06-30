@@ -19,7 +19,7 @@
     "react-cookie": "^4.0.3",
     "react-dom": "^16.13.0",
     "react-google-charts": "^3.0.15",
-    "react-player": "^1.15.2",
+    "react-player": "^2.3.1",
     "react-quiz-component-timestamp-per-answer": "0.3.4",
     "react-redux": "^7.2.0",
     "react-scripts": "3.4.0",
