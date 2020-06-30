@@ -109,6 +109,7 @@ export const WebServerSocketController = ip => {
         neuroskySocket.removeAllListeners()
         neuroskySocket.destroy()
         socketToWebServer.off('session ended by quiz')
+        socketToWebServer.off('open TGC')
         TGC.kill()
     })
 }

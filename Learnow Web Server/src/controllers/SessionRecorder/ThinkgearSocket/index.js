@@ -8,6 +8,7 @@ export const socketWithThinkgear = (serverIOService, soc, rooms) => {
      * remove session data when TGC has disconnected in the middle of a session
      */
     soc.on('disconnect', () => {
+        console.log('on disconnect neuro')
         rooms.forEach(obj => {
             if (obj.neuro === soc.id) {
                 const roomName = obj.roomName
@@ -65,21 +66,25 @@ export const socketWithThinkgear = (serverIOService, soc, rooms) => {
 
     /** on poor signal, notify all clients in room to check sensor contacts */
     soc.on('poor signal', ip => {
+        console.log('on poor signal neuro')
         serverIOService.sockets.in(ip).emit('check sensor', 1)
     })
 
     /** on sensor not connected, notify all clients in room to connect the sensor */
     soc.on('sensor not connected', ip => {
+        console.log('on sensor not connected neuro')
         serverIOService.sockets.in(ip).emit('check sensor', 2)
     })
 
     /** on connected sensor, notify react that session can be started */
     soc.on('connected sensor', ip => {
+        console.log('on connected sensor neuro')
         serverIOService.sockets.in(ip).emit('sensor ready', )
     })
 
-    /**  */
+    /** on disconnected sensor  */
     soc.on('disconnected sensor', ip => {
+        console.log('on disconnected sensor neuro')
         serverIOService.sockets.in(ip).emit('sensor disconnected', )
     })
 }
