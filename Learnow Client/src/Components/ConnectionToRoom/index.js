@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import axios from 'axios'
 
 import { socketToWebServer } from '../../SocketIoClient'
-import { setIp } from '../../Redux/Actions'
+import { setIp, isConnectedToRoom } from '../../Redux/Actions'
 
 export const ConnectionToRoom = () => {
 
@@ -18,6 +18,7 @@ export const ConnectionToRoom = () => {
         return () => {
             socketToWebServer.off('new TGC')
             socketToWebServer.emit('kill TGC', )
+            _dispatch(isConnectedToRoom(false))
         }
     },[])
 

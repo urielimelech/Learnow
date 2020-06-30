@@ -13,17 +13,16 @@ const getComputerIp = async (serial) => {
         console.log(chainedIP)
         if (chainedIP !== '') {
             socketToWebServer.emit('new TGC connection', chainedIP)
+            socketToWebServer.on('open TGC', () => {
+                console.log('call to new tgc')
+                WebServerSocketController(chainedIP)
+            })
         }
     }
     catch (e){
         console.log('catch', e)
     }
 }
-
-socketToWebServer.on('open TGC', () => {
-    console.log('call to new tgc')
-    WebServerSocketController(chainedIP)
-})
 
 export const getIP = async (req, res, next) => {
     const chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
