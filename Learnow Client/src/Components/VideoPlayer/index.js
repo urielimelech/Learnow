@@ -60,6 +60,7 @@ export const VideoPlayer = ({sessionVideo, sessionQuiz}) =>{
 
   return  <WrapperVideo>
             <ReactPlayer
+              style={{marginTop: 20}}
               url={sessionVideo}
               controls={true}
               onStart = {onStartVideo}

@@ -38,12 +38,12 @@ const compareSessions = (session1, session2, config) => {
     const diffAvarageMeditation = session2Meditation.avarage - session1Meditation.avarage
 
     /** check if there is an improvment */
-    const isLowestAttentionImproved = diffLowestAttention > config.comparator_diff_lowest_attention ? true : false
-    const isHighestAttentionImproved = diffHighestAttention > config.comparator_diff_highest_attention ? true : false
-    const isLowestMeditationImproved = diffLowestMeditation > config.comparator_diff_lowest_meditation ? true : false
-    const isHighestMeditationImproved = diffHighestMeditation > config.comparator_diff_highest_meditation ? true : false
-    const isAvarageAttentionImproved = diffAvarageAttention > config.comparator_diff_avarage_attention ? true : false
-    const isAvarageMeditationImproved = diffAvarageMeditation > config.comparator_diff_avarage_meditation ? true : false
+    const isLowestAttentionImproved = diffLowestAttention > config.comparator_difference_lowest_attention ? true : false
+    const isHighestAttentionImproved = diffHighestAttention > config.comparator_difference_highest_attention ? true : false
+    const isLowestMeditationImproved = diffLowestMeditation > config.comparator_difference_lowest_meditation ? true : false
+    const isHighestMeditationImproved = diffHighestMeditation > config.comparator_difference_highest_meditation ? true : false
+    const isAvarageAttentionImproved = diffAvarageAttention > config.comparator_difference_avarage_attention ? true : false
+    const isAvarageMeditationImproved = diffAvarageMeditation > config.comparator_difference_avarage_meditation ? true : false
 
     const howHelpful = (diff, specConfig) => {
         if (diff > specConfig + config.comparator_high_improve)
@@ -55,12 +55,12 @@ const compareSessions = (session1, session2, config) => {
     }
  
      /** check the improvment level in sessions */
-    const howLowestAttentionImproved = isLowestAttentionImproved ? howHelpful(diffLowestAttention, config.comparator_diff_lowest_attention) : false
-    const howHighestAttentionImproved = isHighestAttentionImproved ? howHelpful(diffHighestAttention, config.comparator_diff_highest_attention) : false
-    const howLowestMeditationImproved = isLowestMeditationImproved ? howHelpful(diffLowestMeditation, config.comparator_diff_lowest_meditation) : false
-    const howHighestMeditationImproved = isHighestMeditationImproved ? howHelpful(diffHighestMeditation, config.comparator_diff_highest_meditation) : false
-    const howAvarageAttentionImproved = isAvarageAttentionImproved ? howHelpful(diffAvarageAttention, config.comparator_diff_avarage_attention) : false
-    const howAvarageMeditationImproved = isAvarageMeditationImproved ? howHelpful(diffAvarageMeditation, config.comparator_diff_avarage_meditation) : false
+    const howLowestAttentionImproved = isLowestAttentionImproved ? howHelpful(diffLowestAttention, config.comparator_difference_lowest_attention) : false
+    const howHighestAttentionImproved = isHighestAttentionImproved ? howHelpful(diffHighestAttention, config.comparator_difference_highest_attention) : false
+    const howLowestMeditationImproved = isLowestMeditationImproved ? howHelpful(diffLowestMeditation, config.comparator_difference_lowest_meditation) : false
+    const howHighestMeditationImproved = isHighestMeditationImproved ? howHelpful(diffHighestMeditation, config.comparator_difference_highest_meditation) : false
+    const howAvarageAttentionImproved = isAvarageAttentionImproved ? howHelpful(diffAvarageAttention, config.comparator_difference_avarage_attention) : false
+    const howAvarageMeditationImproved = isAvarageMeditationImproved ? howHelpful(diffAvarageMeditation, config.comparator_difference_avarage_meditation) : false
 
     return {
         lowest_attention_level: howLowestAttentionImproved, 

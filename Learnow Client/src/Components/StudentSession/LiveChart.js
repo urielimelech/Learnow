@@ -51,7 +51,8 @@ export const LiveChart = () => {
             1: { curveType: 'function' }
         },
         title: `live Session`,
-        colors: ['#000080', '#28ca27'],
+        // colors: ['#000080', '#28ca27'],
+        colors: ['#000080', '#B22222'],
         tooltip: {
             textStyle: {
                 fontSize: 15

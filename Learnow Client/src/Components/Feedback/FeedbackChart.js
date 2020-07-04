@@ -10,12 +10,10 @@ export const FeedbackChart = improvment => {
     const rawData = sumImprovment.map(elem => {
         const activity = elem.activity
         const sum = elem.low * weights[0] + elem.medium * weights[1] + elem.high * weights[2]
-        return [activity, sum, `low: ${elem.low}, 
-        medium: ${elem.medium}, 
-        high: ${elem.high}`]
+        return [activity, sum]
     })
 
-    const data = [['Activity', 'Improvement Level', {role:'annotation'}], ...rawData]
+    const data = [['Activity', 'Improvement Level'], ...rawData]
 
     return <StyledFeedbackChartContainer>
         <Chart
