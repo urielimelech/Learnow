@@ -34,7 +34,8 @@ export const improvmentCharts = ({comparisonResult}) => {
                 loader={<Loading/>}
                 data={data}
                 options={{
-                    title: `Improvement of Measurments between ${elem.activity[0]} activity and ${elem.activity[1]} activity`,
+                    // title: `Improvement of Measurments between ${elem.activity[0]} activity and ${elem.activity[1]} activity`,
+                    title: `${elem.activity[1]} activity contributed more than ${elem.activity[0]} activity`,
                     titleTextStyle: {
                         fontSize: 20,
                         bold: true
