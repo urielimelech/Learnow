@@ -20,14 +20,12 @@ export const LiveChart = () => {
 
     useEffect(() => {
         socketToWebServer.on('data to client', data => {
-            console.log(data)
             setSensorData(prev => [...prev, data])
         })
         return () => socketToWebServer.off('data to client')
     },[])
 
     useEffect(() => {
-        console.log(sensorData)
         if (sensorData.length > 0) {
             const sessionData = sensorData.map(e => {
                 const timeStamp = differenceInSec(e.timeStamp, sensorData[0].timeStamp)

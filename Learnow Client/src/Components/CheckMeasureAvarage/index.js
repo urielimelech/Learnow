@@ -12,7 +12,6 @@ export const CheckMeasureAvarage = () => {
 
     useEffect(() => {
       socketToWebServer.on('avarage in worked session', ({attention, meditation}) => {
-        console.log({attention}, {meditation})
         const lowLevel = 30
         if (attention < lowLevel || meditation < lowLevel) {
           if (loggedUser.userType === 'student')

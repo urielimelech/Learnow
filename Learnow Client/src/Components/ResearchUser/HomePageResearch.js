@@ -9,7 +9,7 @@ import { StyledCardComponent } from './ResearchUserStyle'
 import { navigate } from 'hookrouter'
 import { WrapperHomePageResearcher } from './HomePageResearchStyle'
 
-export const HomePageResearch = ({data}) => {
+export const HomePageResearch = () => {
 
     const _dispatch = useDispatch()
     const [studentsData, setStudentsData] = useState([])
@@ -53,7 +53,6 @@ export const HomePageResearch = ({data}) => {
         })
         .catch(err => {
             console.log({err})
-            // setIsUserExistsErr(<TextMessageToastify msg={'user is not exists'}/>)
         })
     }
 

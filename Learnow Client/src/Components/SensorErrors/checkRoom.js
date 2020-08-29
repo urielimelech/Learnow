@@ -53,7 +53,6 @@ export const CheckRoom = () => {
 
     /** delete error msg when error time ended */
     useEffect(() => {
-        console.log(isNotificationVisible)
         if (!isNotificationVisible) {
             setError(null)
             setMsg(null)
