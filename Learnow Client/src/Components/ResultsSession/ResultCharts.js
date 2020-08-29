@@ -36,8 +36,8 @@ export const ResultCharts = ({getFullArr}) => {
     }
 
     const findMinMax = lastSessionData => {
-        let minAtt = lastSessionData.lowestAttentionLevel[0].attention, maxAtt = lastSessionData.highestAttentionLevel[0].attention
-        let minMed = lastSessionData.lowestMeditationLevel[0].meditation, maxMed = lastSessionData.highestMeditationLevel[0].meditation
+        let minAtt = lastSessionData.lowestAttentionLevel[0]?.attention, maxAtt = lastSessionData.highestAttentionLevel[0]?.attention
+        let minMed = lastSessionData.lowestMeditationLevel[0]?.meditation, maxMed = lastSessionData.highestMeditationLevel[0]?.meditation
         let i = 1
         while (i < lastSessionData.lowestAttentionLevel.length) {
             let tempLowAtt = lastSessionData.lowestAttentionLevel[i].attention
