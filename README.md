@@ -12,7 +12,7 @@ The system processes the impact measures of each break from learning activity fo
 
 ## Built With
 
-* [Node.js] - Programming Technology
+* [Node.js](https://nodejs.org/en/docs/) - Programming Technology
 * [Express](https://expressjs.com/) - Web framework
 * [Socket.IO](https://socket.io/)
 * [Mongo DB](https://www.mongodb.com/) - Application database
@@ -26,9 +26,9 @@ The system processes the impact measures of each break from learning activity fo
 
 ## Authors && Contributes
 
-* **Uri Elimelech
+* **Uri Elimelech*
 
-* **Shoham Roditi
+* **Shoham Roditi*
 
 
 
