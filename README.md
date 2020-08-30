@@ -26,9 +26,9 @@ The system processes the impact measures of each break from learning activity fo
 
 ## Authors && Contributes
 
-* **Uri Elimelech*
+* **Uri Elimelech**
 
-* **Shoham Roditi*
+* **Shoham Roditi**
 
 
 
