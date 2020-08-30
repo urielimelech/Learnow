@@ -18,8 +18,8 @@ The system processes the impact measures of each break from learning activity fo
 * [Mongo DB](https://www.mongodb.com/) - Application database
 * [JWT](https://www.npmjs.com/package/jsonwebtoken) - Token based authentication management
 * [NeuroSky Sensor](https://store.neurosky.com/pages/mindwave) - brain wave sensor
-* [firebase]
-* [heroku]
+* [firebase](https://firebase.google.com/)
+* [heroku](https://www.heroku.com/)
 * [React.js](https://reactjs.org/) 
 * [Redux](https://redux.js.org/)
 
